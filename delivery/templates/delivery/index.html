@@ -1,0 +1,403 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+
+{% block title %}<title>Home</title>{% endblock %}
+
+{% block content %}
+<div id="slider" class="slider">
+    <div id="slider__button" class="slider__button">
+        <div class="slider__button-decorator"></div>
+        <div class="slider__button-decorator"></div>
+        <div class="slider__button-decorator"></div>
+        <div class="slider__button-decorator"></div>
+        <div class="slider__button-decorator"></div>
+        <div class="slider__button-arrow">&#62;</div>
+    </div>
+    <ul id="slider__list" class="slider__list">
+        <li class="slider__item">
+            <div class="slider__item-shadow"></div>
+            <div class="slider__text">
+                <div class="slider__text-title">Ground, Air or Sea</div>
+                <div class="slider__text-extra-title">we deliver your package in no-time</div>
+            </div>
+            <img src="{% static 'images/unnamed.jpg' %}" alt="">
+        </li>
+        <li class="slider__item">
+            <div class="slider__item-shadow"></div>
+            <div class="slider__text">
+                <div class="slider__text-title">Ground, Air or Sea</div>
+                <div class="slider__text-extra-title">we deliver your package in no-time</div>
+            </div>
+            <img src="{% static 'images/unnamed.jpg' %}" alt="">
+        </li>
+        <li class="slider__item">
+            <div class="slider__item-shadow"></div>
+            <div class="slider__text">
+                <div class="slider__text-title">Ground, Air or Sea</div>
+                <div class="slider__text-extra-title">we deliver your package in no-time</div>
+            </div>
+            <img src="{% static 'images/unnamed.jpg' %}" alt="">
+        </li>
+    </ul>
+    <div class="slider__triangle slider__triangle_left"></div>
+    <div class="slider__triangle slider__triangle_right"></div>
+</div>
+<div class="action-box__container">
+    <div class="action-box">
+        <div class="action-box__shadow-decorator"></div>
+        <div class="action-box__triangle"></div>
+        <ul class="action-box__actions-list">
+            <li class="action-box__action">
+                <div class="action-box__icon"><i class="far fa-clock"></i></div>
+                <div class="action-box__text-title">opening hours</div>
+                <div class="action-box__text">Monday - Friday 09.00 - 18.00</div>
+                <div class="action-box__text">Saturday 09.00 - 14.00</div>
+            </li>
+            <li class="action-box__action">
+                <div class="action-box__icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="action-box__text-title">call us anytime</div>
+                <div class="action-box__text">1-999-234-9485</div>
+                <div class="action-box__text">2-453-345-2348</div>
+            </li>
+            <li class="action-box__action">
+                <div class="action-box__icon"><i class="far fa-envelope"></i></div>
+                <div class="action-box__text-title">email us</div>
+                <div class="action-box__text">info@kallyas-cargo.com</div>
+                <div class="action-box__text">office@kallyas-cargo.com</div>
+            </li>
+            <li class="action-box__action action-box__action_button">
+                <button class="action-box__button">buy kallyas now</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="delivery-info">
+    <div class="title title_delivery-info">
+        <div class="title__extra">welcome to</div>
+        <div class="title__header">kallyas cargo</div>
+        <div class="title__underline"></div>
+    </div>
+    <div class="delivery-info__methods">
+        <ul class="delivery-info__methods-list">
+            <li class="delivery-info__method">
+                <div class="delivery-info__method-shadow"></div>
+                <a href="{% url 'delivery_method' method='ground' %}" class="delivery-info__text-container">
+                    <div class="delivery-info__icon"><i class="fas fa-truck"></i></div>
+                    <div class="delivery-info__method-name">Ground Delivery</div>
+                </a>
+                <img src="{% static 'images/ground-delivery.jpg' %}" alt="image" class="delivery-info__image">
+            </li>
+            <li class="delivery-info__method">
+                <div class="delivery-info__method-shadow"></div>
+                <a href="{% url 'delivery_method' method='air' %}" class="delivery-info__text-container">
+                    <div class="delivery-info__icon"><i class="fas fa-plane-departure"></i></div>
+                    <div class="delivery-info__method-name">air delivery</div>
+                </a>
+                <img src="{% static 'images/air-delivery.jpg' %}" alt="image" class="delivery-info__image">
+            </li>
+            <li class="delivery-info__method">
+                <div class="delivery-info__method-shadow"></div>
+                <a href="{% url 'delivery_method' method='sea' %}" class="delivery-info__text-container">
+                    <div class="delivery-info__icon"><i class="fas fa-ship"></i></div>
+                    <div class="delivery-info__method-name">Sea delivery</div>
+                </a>
+                <img src="{% static 'images/sea-delivery.jpg' %}" alt="image" class="delivery-info__image">
+            </li>
+        </ul>
+
+        <ul class="features">
+            <li class="features__item">
+                <div class="features__icon"><i class="fas fa-truck"></i></div>
+                <div class="features__title">forwarding services</div>
+                <div class="features__text">
+                    Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                    Efficiently cultivate empowered e-services whereas orthogonal human capital.
+                    Intrinsicly evisculate cross functional
+                </div>
+            </li>
+            <li class="features__item">
+                <div class="features__icon"><i class="fas fa-box"></i></div>
+                <div class="features__title">transport of packaged goods</div>
+                <div class="features__text">
+                    Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                    Efficiently cultivate empowered e-services whereas orthogonal human capital.
+                    Intrinsicly evisculate cross functional
+                </div>
+            </li>
+            <li class="features__item">
+                <div class="features__icon"><i class="fas fa-globe-americas"></i></div>
+                <div class="features__title">international road transport</div>
+                <div class="features__text">
+                    Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                    Efficiently cultivate empowered e-services whereas orthogonal human capital.
+                    Intrinsicly evisculate cross functional
+                </div>
+            </li>
+            <li class="features__item">
+                <div class="features__icon"><i class="fas fa-warehouse"></i></div>
+                <div class="features__title">warehousing and storage</div>
+                <div class="features__text">
+                    Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                    Efficiently cultivate empowered e-services whereas orthogonal human capital.
+                    Intrinsicly evisculate cross functional
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div id="fleet-gallery" class="fleet-gallery">
+        <div class="fleet-gallery__background-decorator"></div>
+        <div id="fleet-gallery__slider-button_left"
+            class="fleet-gallery__slider-button fleet-gallery__slider-button_left">&lt;</div>
+        <div id="fleet-gallery__slider-button_right"
+            class="fleet-gallery__slider-button fleet-gallery__slider-button_right">&gt;</div>
+        <div class="fleet-gallery__description">
+            <div class="fleet-gallery__title">fleet gallery</div>
+            <div class="fleet-gallery__text">
+                Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique
+                metrics.
+                Efficiently cultivate empowered</div>
+            <button class="fleet-gallery__button">view all</button>
+        </div>
+        <div class="fleet-gallery__slider">
+            <ul id="fleet-gallery__slider-list" class="fleet-gallery__slider-list">
+                <li class="fleet-gallery__slider-item">
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
+                </li>
+                <li class="fleet-gallery__slider-item">
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
+                </li>
+                <li class="fleet-gallery__slider-item">
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
+                </li>
+                <li class="fleet-gallery__slider-item">
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="customer-action">
+        <div class="customer-action__info-container">
+            <div class="title title_customer-action">
+                <div class="title__header">what are you looking for</div>
+                <div class="title__underline"></div>
+                <div class="title__text">
+                    Compellingly evisculate error-free e-commerce and cutting-edge best practices. Competently deploy
+                    customer directed benefits without premium opportunities. Completely productivate stand-alone
+                    materials
+                    with prospective scenarios.
+                </div>
+            </div>
+            <ul class="features features_customer-action">
+                <li class="features__item">
+                    <div class="features__icon"><i class="fas fa-truck"></i></div>
+                    <div class="features__title">forwarding services</div>
+                    <div class="features__text">
+                        Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                        Efficiently cultivate
+                    </div>
+                </li>
+                <li class="features__item">
+                    <div class="features__icon"><i class="fas fa-box"></i></div>
+                    <div class="features__title">transport of packaged goods</div>
+                    <div class="features__text">
+                        Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                        Efficiently cultivate empowered
+                    </div>
+                </li>
+                <li class="features__item">
+                    <div class="features__icon"><i class="fas fa-globe-americas"></i></div>
+                    <div class="features__title">international road transport</div>
+                    <div class="features__text">
+                        Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                        Efficiently
+                    </div>
+                </li>
+                <li class="features__item">
+                    <div class="features__icon"><i class="fas fa-warehouse"></i></div>
+                    <div class="features__title">warehousing and storage</div>
+                    <div class="features__text">
+                        Intrinsicly drive stand-alone strategic theme areas vis-a-vis unique metrics.
+                        Efficiently cultivate empowered
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <form class="customer-action__quote-form" action="" method="POST" name="customer-quote">
+            {% csrf_token %}
+
+            <div class="customer-action__form-header">request a quick quote</div>
+            <div class="customer-action__input-container">
+                <div class="customer-action__input-title">your name</div>
+                <input type="text" class="customer-action__input" name="customer-action__name" placeholder="Your Name">
+            </div>
+            <div class="customer-action__input-container">
+                <div class="customer-action__input-title">Subject</div>
+                <input type="text" class="customer-action__input" name="customer-action__subject" placeholder="Subject">
+            </div>
+            <div class="customer-action__input-container">
+                <div class="customer-action__input-title">E-mail Adress</div>
+                <input type="email" class="customer-action__input" name="customer-action__email"
+                    placeholder="E-mail Adress">
+            </div>
+            <div class="customer-action__input-container">
+                <div class="customer-action__input-title">Phone number</div>
+                <input type="number" class="customer-action__input" name="customer-action__phone"
+                    placeholder="Phone Number">
+            </div>
+            <div class="customer-action__input-container customer-action__input-container_extended">
+                <div class="customer-action__input-title">Service</div>
+                <input type="text" class="customer-action__input customer-action__input_extended"
+                    name="customer-action__service" placeholder="Service">
+            </div>
+            <div class="customer-action__input-container customer-action__input-container_extended">
+                <div class="customer-action__input-title">Message</div>
+                <textarea class="customer-action__message" name="customer-action__message"
+                    id="customer-action__message"></textarea>
+            </div>
+
+            <button class="customer-action__form-submit" type="submit">send message</button>
+        </form>
+    </div>
+    <div class="facts">
+        <div class="title">
+            <div class="title title_facts">
+                <div class="title__extra">true facts</div>
+                <div class="title__header">the facts speaks for themselves</div>
+                <div class="title__underline"></div>
+            </div>
+        </div>
+        <ul class="facts__list">
+            <li class="facts__item">
+                <div class="facts__number">9800</div>
+                <div class="facts__text-container">
+                    <div class="facts__icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <div class="facts__header">employees all over the world</div>
+                    <div class="facts__text">
+                        Compellingly evisculate error-free e-commerce and cutting-edge best practices.
+                        Competently deploy
+                        customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                </div>
+            </li>
+            <li class="facts__item">
+                <div class="facts__number">+895K</div>
+                <div class="facts__text-container">
+                    <div class="facts__icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="facts__header">kilometers per year</div>
+                    <div class="facts__text">
+                        Compellingly evisculate error-free e-commerce and cutting-edge best practices.
+                        Competently deploy
+                        customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                </div>
+            </li>
+            <li class="facts__item">
+                <div class="facts__number">564</div>
+                <div class="facts__text-container">
+                    <div class="facts__icon">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <div class="facts__header">fleet size</div>
+                    <div class="facts__text">
+                        Compellingly evisculate error-free e-commerce and cutting-edge best practices.
+                        Competently deploy
+                        customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                </div>
+            </li>
+            <li class="facts__item">
+                <div class="facts__number">327</div>
+                <div class="facts__text-container">
+                    <div class="facts__icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="facts__header">clients worldwide</div>
+                    <div class="facts__text">
+                        Compellingly evisculate error-free e-commerce and cutting-edge best practices.
+                        Competently deploy
+                        customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="company-life">
+        <div class="clients">
+            <div class="title title_company-life">
+                <div class="title__header">some of our clients</div>
+                <div class="title__underline"></div>
+            </div>
+
+            <ul class="clients__list">
+                <li class="clients__item">
+                    <div class="clients__text">
+                        Customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                    <div class="clients__client">
+                        <div class="clients__client-photo">
+                            <img src="{% static 'images/client.png' %}" alt="">
+                        </div>
+                        <div class="clients__client-info">
+                            <div class="clients__client-name">Clara seinfield</div>
+                            <div class="clients__client-position">Client</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="news">
+            <div class="title title_company-life">
+                <div class="title__header">latest news</div>
+                <div class="title__underline"></div>
+            </div>
+
+            <a href="#" class="news__view-all">view all</a>
+
+            <ul class="news__list">
+                {% for news in news_list %}
+                <li class="news__item">
+                    <div class="news__image">
+                        <img src="{{ news.title_image.url }}" alt="title-image">
+                    </div>
+                    <div class="news__text-container">
+                        <div class="news__header">{{news.title}}</div>
+                        <div class="news__text">
+                            {{news.short_description}}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="quote">
+        <div class="quote__elems-container">
+            <div class="quote__text-container">
+                <div class="quote__header">we're ready to collect your package</div>
+                <div class="quote__text">uniquely redefine accurate architectures vis-a-vis front-end alignments.</div>
+            </div>
+            <button class="quote__button">get a quote</button>
+        </div>
+    </div>
+</div>
+<script src="{% static 'index.js' %}"></script>
+{% endblock %}

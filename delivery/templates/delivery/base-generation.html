@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans:300,400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5d8af9cd0e.js"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% block title %}<title>Document</title>{% endblock %}
+</head>
+
+<body>
+    <div class="wrapper">
+
+        {% block sidebar %}
+        <header id="header" class="header">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+                <div class="logo__title">Cargo</div>
+                <div class="logo__company-name">kallyas</div>
+            </div>
+            <div class="trigram" id="trigram">
+                <div class="trigram__line"></div>
+                <div class="trigram__line"></div>
+                <div class="trigram__line"></div>
+            </div>
+            <div class="header__options">
+                <a href="#" class="header__logout">logout</a>
+                <a href="" class="header__languages">languages</a>
+                <ul class="header__social-networks">
+                    <li class="header__icon"><i class="fab fa-telegram-plane"></i></li>
+                    <li class="header__icon"><i class="fab fa-vk"></i></li>
+                    <li class="header__icon"><i class="fab fa-twitter"></i></li>
+                </ul>
+                <input type="text" class="header__search" placeholder="Search...">
+            </div>
+        </nav>
+            <nav class="nav">
+                <ul class="nav__menu">
+                    <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">company</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">global coverage</a></li>
+                    <li class="nav__item"><a href="" class="nav__link">news</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <script src="{% static 'defaultHeader.js' %}"></script>
+        {% endblock %}
+
+        {% block content %} {% endblock %}
+
+        <footer class="footer">
+            <div class="footer__elems-container">
+                <div class="about-company">
+                    <div class="about-company__logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="161px"
+                            height="23px">
+                            <image x="0px" y="0px" width="161px" height="23px"
+                                xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAAAXCAQAAADJy+dVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfkAwcXITAoWSHnAAAERUlEQVRYw8WZ53bDNgyFP2rZVpL2/V+z8dKg1B8aBDg03PYUOVkSSF5eAiAAm5H/QTIycgAsljQEM2tNMmIDjSI6Lqb5GYJJcjKylHbBD2Zj8MiLXi19oxCTWF4MJ8gzVFQznEU6WrWGk4qrwvJXoPGVXCk1a0Z5AkFGRRlo97RiS+MfmxTCyFNNn1OrKS3PwyReuCRW63hFbOHHA/+S0AH4c3O9lrc3axpBqLulbXktlp6xJ4aaUg1+KDfxKU3LjWvyuEq+gndFMG/BOdFWvI2gChBsaed8LUHmyOYNNwV+4PkBiTeqzfc5tfekDHTKg4cliXHI9xHcTuA1C4nHztVQK3ceeFKLUJ9T77hzqQCNdPSMZJQCQUElHNVEKISSJrFCv+IzVMJ6yvl55SFosYzkFApBEdUe6OiBjEKgMtT8HncNQ82L7mMSpUPJuNdSrWffq/GloKFfcVYbFLo3Dd+rvS4jL1EEPc2KoKFZcUltGSVbCuoVWUZFe9wx/ok7Swe0PFXYbnkDLb881LVVihHONrNDhz6qERP1DkEfQdDyK4iSeP2Lruch/quOxUJHYv0hiXLUM3jb8BukRpKqjk5sIubeofg4ZH75iiDQ60u870BbHmlOdi48+7fzURLdBmzU2cNnMhJ18/dC4XYSBoaLGN97CFy4yCiCrzypLaUTf+dn0wTDTU0x8FQOnlO7jClCYccxkW48AP1KiqEMskOAq5fApCl0a1wj2o+EdjjnJCetcNqCzpYGz9RzFYo/Ex2Lpp9nXXmSMUr3vyrnKRy9LD7zztIm70xg1wknkb7Reb9jKXca6yOoOI4h2NZWT89SOKrUZqmZnQwRN9bOcwS2i2QudsZv6y3pRR11DoHTjgc6+dSei4UhgbW66wYe0fBr10WzNXmVlOnoVqp3sUZCLDscGGDtqEy1vWyHhAjsGoL8toPTziN49WVnz1jhHoHphoMcdQuc48qNH1FRVGoNd1vKp6EttTx4iITFeOm8kyU17mnmLx+11A7r5EolXONxCmMurC3wlezSWXGSGd8Cgplr0WymkbWPty0p75FJSKUSeofA8KPGV8GKUls0FAC4qEq6PV7gferCi7z5FmO/sGuN7M7YMMBOce+2/U40ShuxxYuwykYdnEMQv5walah9Y+nAwzvX5cco3LPA/car5aVOL4/YWkPP8ZSlTKQrLZeVlGpuD0zb3UfgXPiItp0qrWMV5ye3cLg1FKjw/RudEQ78ejqVmKFKZnzaDnuxwjaCkbeYc0/bLgnTfiyMufBWpbxF0j2R7Y+8Z5eTNhhWMqqwSmJvhUfoa6jlnsTac/cOpfWay1Ial3EWOx+9jLwVcMOVXIw5ZoGLWB4UlCr+WDraeUbdIwytbKQVsbKKtACWDTr7uXJXCO4BgoGOLrqLnjslhYqAlo5Ohi3zv3yCB1MI2f+k7b9GkKqCfZk+S4zi/RuRIKJPrRwY8AAAAABJRU5ErkJggg==" />
+                        </svg>
+                    </div>
+
+                    <div class="about-company__description">
+                        Compellingly evisculate error-free e-commerce and cutting-edge best practices.
+                        Competently deploy
+                        customer directed benefits without premium opportunities. Completely productivate stand-alone
+                        materials
+                        with prospective scenarios.
+                    </div>
+                </div>
+                <div class="custom-nav__wrapper">
+                    <nav class="custom-nav">
+                        <ul class="custom-nav__menu">
+                            <div class="custom-nav__header">custom menu</div>
+                            <li class="custom-nav__item"><a href="{% url 'index' %}" class="custom-nav__link">home</a>
+                            </li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">company</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">global coverage</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">news</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">contact</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="custom-nav">
+                        <ul class="custom-nav__menu">
+                            <div class="custom-nav__header">custom menu</div>
+                            <li class="custom-nav__item"><a href="{% url 'index' %}" class="custom-nav__link">home</a>
+                            </li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">company</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">global coverage</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">news</a></li>
+                            <li class="custom-nav__item"><a href="#" class="custom-nav__link">contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="company-info">
+                    <div class="company-info__header">company info</div>
+                    <div class="company-info__info">
+                        <div class="company-info__text">
+                            <i class="far fa-clock"></i>
+                            Monday - Friday 09.00 - 18.00
+                        </div>
+                    </div>
+                    <div class="company-info__info">
+                        <div class="company-info__text">
+                            <i class="fas fa-mobile-alt"></i>
+                            Monday - Friday 09.00 - 18.00
+                        </div>
+                    </div>
+                    <div class="company-info__info">
+                        <div class="company-info__text">
+                            <i class="far fa-envelope"></i>
+                            Monday - Friday 09.00 - 18.00
+                        </div>
+                    </div>
+                    <div class="company-info__header">we're social</div>
+                    <ul class="company-info__social-networks">
+                        <li class="company-info__icon"><i class="fab fa-telegram-plane"></i></li>
+                        <li class="company-info__icon"><i class="fab fa-vk"></i></li>
+                        <li class="company-info__icon"><i class="fab fa-twitter"></i></li>
+                    </ul>
+                </div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+$ cat .gitignore
+
+
+assets/node_modules/
+.vscode/
+db.sqlite3
+media/*
