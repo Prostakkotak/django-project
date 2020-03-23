@@ -8,14 +8,14 @@ module.exports = {
     mode: 'production',
     entry: {
         index: '@js_modules/index-scripts.js',
-        defaultHeader: '@js_modules/header-script.js'
+        defaultHeader: '@js_modules/header-script.js',
+        styles: '@styles/styles.scss'
     },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, '../static')
     },
     resolve: {
-        extensions: ['.js', '.scss', '.css'],
         alias: {
             '@js_modules': path.resolve(__dirname, 'js_modules'),
             '@styles': path.resolve(__dirname, 'styles')
@@ -51,8 +51,14 @@ module.exports = {
     ],
     optimization: {
         minimizer: [
-            new CSSNanoPlugin(),
-            new TerserPlugin()
+            new TerserPlugin(),
+            new CSSNanoPlugin({
+                cssProcessorOptions: {
+                    "preset": "advanced",
+                    "safe": true,
+                    "map": { "inline": false },
+                },
+            })
         ]
     }
 }
