@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehisle, DeliveryClass, News
+from .models import Vehisle, DeliveryClass, News, QuickQuote
 
 @admin.register(Vehisle)
 class VehisleAdmin(admin.ModelAdmin) :
@@ -19,3 +19,4 @@ class DeliveryClassAdmin(admin.ModelAdmin) :
     list_display = ('delivery_class', 'price_multiplier')
 
 admin.site.register(News)
+admin.site.register(QuickQuote)

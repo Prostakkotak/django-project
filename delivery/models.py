@@ -60,3 +60,11 @@ class News(models.Model) :
 
     def __str__(self) :
         return self.title
+
+class QuickQuote(models.Model):
+    name = models.CharField(max_length=50, default='Your Name')
+    subject = models.CharField(max_length=50, default='Subject')
+    email = models.EmailField(default='Your@EmailAdress')
+    phone = models.IntegerField(default=0)
+    service = models.CharField(max_length=50, default='Service')
+    message = models.CharField(max_length=200, default='Message')

@@ -163,18 +163,13 @@
         </div>
         <div class="fleet-gallery__slider">
             <ul id="fleet-gallery__slider-list" class="fleet-gallery__slider-list">
+                {% for vehisle in vehisle_list %}
+
                 <li class="fleet-gallery__slider-item">
-                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
+                    <img src="{{vehisle.photo.url}}" alt="" class="fleet-gallery__image">
                 </li>
-                <li class="fleet-gallery__slider-item">
-                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
-                </li>
-                <li class="fleet-gallery__slider-item">
-                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
-                </li>
-                <li class="fleet-gallery__slider-item">
-                    <img src="{% static 'images/placeholder.jpg' %}" alt="" class="fleet-gallery__image">
-                </li>
+
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -226,39 +221,33 @@
                 </li>
             </ul>
         </div>
-        <form class="customer-action__quote-form" action="" method="POST" name="customer-quote">
+        <form class="customer-action__quote-form" method="POST" name="customer-quote">
             {% csrf_token %}
-
             <div class="customer-action__form-header">request a quick quote</div>
             <div class="customer-action__input-container">
                 <div class="customer-action__input-title">your name</div>
-                <input type="text" class="customer-action__input" name="customer-action__name" placeholder="Your Name">
+                {{quick_quote_form.name}}
             </div>
             <div class="customer-action__input-container">
                 <div class="customer-action__input-title">Subject</div>
-                <input type="text" class="customer-action__input" name="customer-action__subject" placeholder="Subject">
+                {{quick_quote_form.subject}}
             </div>
             <div class="customer-action__input-container">
                 <div class="customer-action__input-title">E-mail Adress</div>
-                <input type="email" class="customer-action__input" name="customer-action__email"
-                    placeholder="E-mail Adress">
+                {{quick_quote_form.email}}
             </div>
             <div class="customer-action__input-container">
                 <div class="customer-action__input-title">Phone number</div>
-                <input type="number" class="customer-action__input" name="customer-action__phone"
-                    placeholder="Phone Number">
+                {{quick_quote_form.phone}}
             </div>
             <div class="customer-action__input-container customer-action__input-container_extended">
                 <div class="customer-action__input-title">Service</div>
-                <input type="text" class="customer-action__input customer-action__input_extended"
-                    name="customer-action__service" placeholder="Service">
+                {{quick_quote_form.service}}
             </div>
             <div class="customer-action__input-container customer-action__input-container_extended">
                 <div class="customer-action__input-title">Message</div>
-                <textarea class="customer-action__message" name="customer-action__message"
-                    id="customer-action__message"></textarea>
+                {{quick_quote_form.message}}
             </div>
-
             <button class="customer-action__form-submit" type="submit">send message</button>
         </form>
     </div>
@@ -369,7 +358,7 @@
                 <div class="title__underline"></div>
             </div>
 
-            <a href="#" class="news__view-all">view all</a>
+            <a href="{% url 'news' %}" class="news__view-all">view all</a>
 
             <ul class="news__list">
                 {% for news in news_list %}
@@ -378,7 +367,7 @@
                         <img src="{{ news.title_image.url }}" alt="title-image">
                     </div>
                     <div class="news__text-container">
-                        <div class="news__header">{{news.title}}</div>
+                        <a href="{% url 'news_single' pk=news.pk %}" class="news__header">{{news.title}}</a>
                         <div class="news__text">
                             {{news.short_description}}
                         </div>
