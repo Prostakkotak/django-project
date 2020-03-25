@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Vehisle, DeliveryClass, News, QuickQuote
 from .forms import QuickQuoteForm
+from django.urls import reverse
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -52,6 +54,20 @@ def news_single(request, pk):
 
 def news(request):
     news_list = News.objects.all()
+    news_count = len(news_list)
+    pages = Paginator(news_list, 3)
+
+    page_num = request.GET.get('page')
+
+    try :
+        page_obj = pages.get_page(page_num)
+    except PageNotAnInteger :
+        page_obj = pages.get_page(1)
+    except EmptyPage :
+        page_obj = pages.get_page(pages.num_pages)
+
     return render(request, 'delivery/news.html', context={
-        'news_list': news_list
+        'page_obj': page_obj,
+        'news_count': news_count,
+        'page_num': page_num
     })

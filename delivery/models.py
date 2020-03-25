@@ -1,5 +1,6 @@
 from django.db import models
 from tinymce.models import HTMLField
+from datetime import datetime
 
 class DeliveryClass(models.Model) :
     delivery_class = models.CharField(max_length=50, default='econom')
@@ -53,8 +54,10 @@ class News(models.Model) :
     title_image = models.ImageField(default='none')
     short_description = models.CharField(max_length=200, default='Desctiption')
     content = HTMLField()
+    pub_date = models.DateTimeField(default=datetime.now(), blank=True)
 
     class Meta :
+        ordering = ['-pub_date']
         verbose_name = 'News'
         verbose_name_plural = 'News'
 

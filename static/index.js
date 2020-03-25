@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js_modules/index-scripts.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js_modules/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -98,15 +98,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./js_modules/index-scripts.js":
-/*!*************************************!*\
-  !*** ./js_modules/index-scripts.js ***!
-  \*************************************/
+/***/ "./js_modules/index.js":
+/*!*****************************!*\
+  !*** ./js_modules/index.js ***!
+  \*****************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ \"./js_modules/slider.js\");\n/* harmony import */ var _animated_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animated-slider */ \"./js_modules/animated-slider.js\");\n\r\n\r\n\r\nlet fleetGallery = {\r\n    container: document.getElementById('fleet-gallery'),\r\n    list: document.getElementById('fleet-gallery__slider-list'),\r\n    items: document.getElementsByClassName('fleet-gallery__slider-item'),\r\n    leftButton: document.getElementById('fleet-gallery__slider-button_left'),\r\n    rightButton: document.getElementById('fleet-gallery__slider-button_right')\r\n}\r\n\r\nlet headerSlider = {\r\n    container: document.getElementById('slider'),\r\n    list: document.getElementById('slider__list'),\r\n    items: document.getElementsByClassName('slider__item'),\r\n    rightButton: document.getElementById('slider__button')\r\n}\r\n\r\nObject(_animated_slider__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(headerSlider)\r\nObject(_slider__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(fleetGallery)\n\n//# sourceURL=webpack:///./js_modules/index-scripts.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _animated_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animated-slider */ \"./js_modules/animated-slider.js\");\n/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slider */ \"./js_modules/slider.js\");\n\r\n\r\n\r\nlet fleetGallery = {\r\n    container: document.getElementById('fleet-gallery'),\r\n    list: document.getElementById('fleet-gallery__slider-list'),\r\n    items: document.getElementsByClassName('fleet-gallery__slider-item'),\r\n    leftButton: document.getElementById('fleet-gallery__slider-button_left'),\r\n    rightButton: document.getElementById('fleet-gallery__slider-button_right')\r\n}\r\n\r\nlet headerSlider = {\r\n    container: document.getElementById('slider'),\r\n    list: document.getElementById('slider__list'),\r\n    items: document.getElementsByClassName('slider__item'),\r\n    rightButton: document.getElementById('slider__button')\r\n}\r\n\r\nObject(_animated_slider__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(headerSlider)\r\nObject(_slider__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(fleetGallery)\n\n//# sourceURL=webpack:///./js_modules/index.js?");
 
 /***/ }),
 

@@ -7,8 +7,8 @@ const path = require('path'),
 module.exports = {
     mode: 'production',
     entry: {
-        index: '@js_modules/index-scripts.js',
-        defaultHeader: '@js_modules/header-script.js',
+        index: '@js_modules/index.js',
+        header: '@js_modules/header.js',
         styles: '@styles/styles.scss'
     },
     output: {

@@ -81,19 +81,19 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./js_modules/header-script.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js_modules/header.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./js_modules/header-script.js":
-/*!*************************************!*\
-  !*** ./js_modules/header-script.js ***!
-  \*************************************/
+/***/ "./js_modules/header.js":
+/*!******************************!*\
+  !*** ./js_modules/header.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("let trigram = document.getElementById('trigram');\r\n\r\nlet bodyShadow = document.createElement('div');\r\nbodyShadow.classList.add('body-shadow');\r\nbodyShadow.id = 'body-shadow';\r\n\r\ndocument.getElementsByClassName('wrapper')[0].appendChild(bodyShadow);\r\n\r\nbodyShadow = document.getElementById('body-shadow');\r\n\r\ndocument.getElementById('header').onclick = function(e) {\r\n\r\n    target = e.target\r\n\r\n    while (target != this) {\r\n\r\n        if (target == trigram) {\r\n            trigram.classList.toggle('open')\r\n            document.getElementsByClassName('nav')[0].classList.toggle('open');\r\n            document.getElementsByClassName('header__options')[0].classList.toggle('open');\r\n            bodyShadow.classList.toggle('active');\r\n        }\r\n\r\n        target = target.parentNode;\r\n    }\r\n}\r\n\r\naddEventListener('resize', function () {\r\n    if (document.body.offsetWidth >= 750) {\r\n        if (bodyShadow.classList.contains('active')) {\r\n            bodyShadow.classList.remove('active');\r\n        }\r\n    } else {\r\n        if (trigram.classList.contains('open')) {\r\n            bodyShadow.classList.add('active');\r\n        }\r\n    }\r\n})\n\n//# sourceURL=webpack:///./js_modules/header-script.js?");
+eval("let trigram = document.getElementById('trigram');\r\n\r\nlet bodyShadow = document.createElement('div');\r\nbodyShadow.classList.add('body-shadow');\r\nbodyShadow.id = 'body-shadow';\r\n\r\ndocument.getElementsByClassName('wrapper')[0].appendChild(bodyShadow);\r\n\r\nbodyShadow = document.getElementById('body-shadow');\r\n\r\ndocument.getElementById('header').onclick = function(e) {\r\n\r\n    target = e.target\r\n\r\n    while (target != this) {\r\n\r\n        if (target == trigram) {\r\n            trigram.classList.toggle('open')\r\n            document.getElementsByClassName('nav')[0].classList.toggle('open');\r\n            document.getElementsByClassName('header__options')[0].classList.toggle('open');\r\n            bodyShadow.classList.toggle('active');\r\n        }\r\n\r\n        target = target.parentNode;\r\n    }\r\n}\r\n\r\naddEventListener('resize', function () {\r\n    if (document.body.offsetWidth >= 750) {\r\n        if (bodyShadow.classList.contains('active')) {\r\n            bodyShadow.classList.remove('active');\r\n        }\r\n    } else {\r\n        if (trigram.classList.contains('open')) {\r\n            bodyShadow.classList.add('active');\r\n        }\r\n    }\r\n})\n\n//# sourceURL=webpack:///./js_modules/header.js?");
 
 /***/ })
 

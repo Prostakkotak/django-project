@@ -1,5 +1,5 @@
-import createSlider from './slider'
 import createAnimatedSlider from './animated-slider'
+import createSlider from './slider'
 
 let fleetGallery = {
     container: document.getElementById('fleet-gallery'),
