@@ -42,13 +42,70 @@
 
 {% block content %}
 <div class="important-news">
-    <div class="important-news__header">Important news</div>
+    <div class="title title_important-news">
+        <div class="title__header">Important</div>
+        <div class="title__underline"></div>
+    </div>
     <ul class="important-news__list">
-        <li class="important-news__item"></li>
+        {% for important_news in important_news_list %}
+        {% if important_news.important_status %}
+
+        <li class="important-news__item">
+            <img src="{{important_news.title_image.url}}" alt="" class="important-news__image">
+            <div class="important-news__header">
+                <a href="{% url 'news_single' pk=important_news.pk %}"
+                    class="important-news__link">{{important_news.title}}</a>
+            </div>
+            <div class="important-news__shadow"></div>
+        </li>
+
+        {% endif %}
+        {% endfor %}
     </ul>
 </div>
-<div class="page-counter">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div>
+<div class="news-content">
+    <div class="title title_news-content">
+        <div class="title__header">News</div>
+        <div class="title__extra">All news about our company</div>
+    </div>
+    <ul class="news-content__list">
+        {% for news in page_obj %}
+        <li class="news-content__item">
+            <div class="news-content__header"><a href="{% url 'news_single' pk=news.pk %}" class="news-content__link">{{news.title}}</a></div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 <div class="pagination">
-    =
+    <ul class="pagination__list">
+        {% if page_obj.number != 1 %}
+
+        <li class="pagination__item">
+            <a href="?page=1" class="pagination__link">&lt;&lt;</a>
+        </li>
+
+        <li class="pagination__item">
+            <a href="?page={{page_obj.previous_page_number}}"
+                class="pagination__link">{{page_obj.previous_page_number}}</a>
+        </li>
+
+        {% endif %}
+
+        <li class="pagination__item pagination__item_current">
+            <a href="?page={{page_obj.number}}" class="pagination__link">{{page_obj.number}}</a>
+        </li>
+
+        {% if page_obj.number != page_obj.paginator.num_pages %}
+
+        <li class="pagination__item">
+            <a href="?page={{page_obj.next_page_number}}" class="pagination__link">{{page_obj.next_page_number}}</a>
+        </li>
+
+        <li class="pagination__item">
+            <a href="?page={{page_obj.paginator.num_pages}}" class="pagination__link">&gt;&gt;</a>
+        </li>
+
+        {% endif %}
+    </ul>
 </div>
 {% endblock %}

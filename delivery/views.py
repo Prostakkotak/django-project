@@ -54,8 +54,9 @@ def news_single(request, pk):
 
 def news(request):
     news_list = News.objects.all()
-    news_count = len(news_list)
-    pages = Paginator(news_list, 3)
+    pages = Paginator(news_list, 2)
+
+    important_news_list = News.objects.filter(important_status=True)
 
     page_num = request.GET.get('page')
 
@@ -68,6 +69,6 @@ def news(request):
 
     return render(request, 'delivery/news.html', context={
         'page_obj': page_obj,
-        'news_count': news_count,
-        'page_num': page_num
+        'page_num': page_num,
+        'important_news_list': important_news_list,
     })

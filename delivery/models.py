@@ -55,6 +55,7 @@ class News(models.Model) :
     short_description = models.CharField(max_length=200, default='Desctiption')
     content = HTMLField()
     pub_date = models.DateTimeField(default=datetime.now(), blank=True)
+    important_status = models.BooleanField(default=False, help_text='Are this news important or not')
 
     class Meta :
         ordering = ['-pub_date']
