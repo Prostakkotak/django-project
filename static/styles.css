@@ -1615,7 +1615,17 @@ body {
   .custom-nav:last-child {
     margin: 30px auto; }
   .custom-nav__wrapper {
-    display: block; } }
+    display: block; }
+  .important-news__button {
+    height: 125px; }
+  .important-news__item {
+    width: 250px;
+    height: 125px; }
+  .news-content__item {
+    margin-right: 0;
+    width: 100%;
+    min-width: auto;
+    max-width: 250px; } }
 
 @media screen and (max-width: 300px) {
   .action-box__action_button {
