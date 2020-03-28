@@ -54,7 +54,7 @@ def news_single(request, pk):
 
 def news(request):
     news_list = News.objects.all()
-    pages = Paginator(news_list, 2)
+    pages = Paginator(news_list, 5)
 
     important_news_list = News.objects.filter(important_status=True)
 
@@ -67,8 +67,10 @@ def news(request):
     except EmptyPage :
         page_obj = pages.get_page(pages.num_pages)
 
+    penultimate_page = page_obj.paginator.num_pages - 1
+
     return render(request, 'delivery/news.html', context={
         'page_obj': page_obj,
-        'page_num': page_num,
         'important_news_list': important_news_list,
+        'penultimate_page': penultimate_page,
     })

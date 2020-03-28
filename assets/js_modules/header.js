@@ -1,14 +1,21 @@
-let trigram = document.getElementById('trigram');
+let trigram = document.getElementById('trigram'),
+    header = document.getElementById('header'),
+    bodyShadow = document.createElement('div');
 
-let bodyShadow = document.createElement('div');
+let wrapper = document.getElementsByClassName('wrapper')[0];
+
+if (document.body.offsetWidth <= 750) {
+    wrapper.style.marginTop = header.offsetHeight + 'px';
+}
+
 bodyShadow.classList.add('body-shadow');
 bodyShadow.id = 'body-shadow';
 
-document.getElementsByClassName('wrapper')[0].appendChild(bodyShadow);
+wrapper.appendChild(bodyShadow);
 
 bodyShadow = document.getElementById('body-shadow');
 
-document.getElementById('header').onclick = function(e) {
+header.addEventListener('click', function (e) {
 
     target = e.target
 
@@ -23,14 +30,20 @@ document.getElementById('header').onclick = function(e) {
 
         target = target.parentNode;
     }
-}
+})
 
 addEventListener('resize', function () {
     if (document.body.offsetWidth >= 750) {
+
+        wrapper.style.marginTop = '';
+
         if (bodyShadow.classList.contains('active')) {
             bodyShadow.classList.remove('active');
         }
     } else {
+
+        wrapper.style.marginTop = header.offsetHeight + 'px';
+
         if (trigram.classList.contains('open')) {
             bodyShadow.classList.add('active');
         }

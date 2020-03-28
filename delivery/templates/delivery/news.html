@@ -41,12 +41,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="important-news">
+<div id="important-news" class="important-news">
     <div class="title title_important-news">
         <div class="title__header">Important</div>
         <div class="title__underline"></div>
     </div>
-    <ul class="important-news__list">
+    <div id="important-news__button_right" class="important-news__button important-news__button_right">&gt;</div>
+    <ul id="important-news__list" class="important-news__list">
         {% for important_news in important_news_list %}
         {% if important_news.important_status %}
 
@@ -70,19 +71,44 @@
     </div>
     <ul class="news-content__list">
         {% for news in page_obj %}
+        {% if news.title_image != 'none' %}
         <li class="news-content__item">
-            <div class="news-content__header"><a href="{% url 'news_single' pk=news.pk %}" class="news-content__link">{{news.title}}</a></div>
+            <img class="news-content__image" src="{{news.title_image.url}}">
+            <div class="news-content__text-container">
+                <div class="news-content__header">
+                    <a href="{% url 'news_single' pk=news.pk %}" class="news-content__link">{{news.title}}</a>
+                </div>
+                <div maxlength=100 class="news-content__text">{{news.short_description}}</div>
+            </div>
         </li>
+        {% else %}
+        <li class="news-content__item">
+            <div class="news-content__text-container">
+                <div class="title title_news-content__item">
+                    <div class="title__header">{{news.title}}</div>
+                    <div class="title__underline"></div>
+                </div>
+                <div class="news-content__description">
+                    {{news.short_description}}
+                </div>
+            </div>
+        </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>
 <div class="pagination">
     <ul class="pagination__list">
+
         {% if page_obj.number != 1 %}
+
+        {% if page_obj.number != 2 %}
 
         <li class="pagination__item">
             <a href="?page=1" class="pagination__link">&lt;&lt;</a>
         </li>
+
+        {% endif %}
 
         <li class="pagination__item">
             <a href="?page={{page_obj.previous_page_number}}"
@@ -101,11 +127,16 @@
             <a href="?page={{page_obj.next_page_number}}" class="pagination__link">{{page_obj.next_page_number}}</a>
         </li>
 
+        {% if page_obj.number != penultimate_page %}
+
         <li class="pagination__item">
             <a href="?page={{page_obj.paginator.num_pages}}" class="pagination__link">&gt;&gt;</a>
         </li>
 
         {% endif %}
+
+        {% endif %}
     </ul>
 </div>
+<script src="{% static 'news.js' %}"></script>
 {% endblock %}

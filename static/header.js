@@ -1,1 +1,100 @@
-!function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:o})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(o,r,function(t){return e[t]}.bind(null,r));return o},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t){let n=document.getElementById("trigram"),o=document.createElement("div");o.classList.add("body-shadow"),o.id="body-shadow",document.getElementsByClassName("wrapper")[0].appendChild(o),o=document.getElementById("body-shadow"),document.getElementById("header").onclick=function(e){for(target=e.target;target!=this;)target==n&&(n.classList.toggle("open"),document.getElementsByClassName("nav")[0].classList.toggle("open"),document.getElementsByClassName("header__options")[0].classList.toggle("open"),o.classList.toggle("active")),target=target.parentNode},addEventListener("resize",(function(){document.body.offsetWidth>=750?o.classList.contains("active")&&o.classList.remove("active"):n.classList.contains("open")&&o.classList.add("active")}))}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./js_modules/header.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./js_modules/header.js":
+/*!******************************!*\
+  !*** ./js_modules/header.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("let trigram = document.getElementById('trigram'),\r\n    header = document.getElementById('header'),\r\n    bodyShadow = document.createElement('div');\r\n\r\nlet wrapper = document.getElementsByClassName('wrapper')[0];\r\n\r\nif (document.body.offsetWidth <= 750) {\r\n    wrapper.style.marginTop = header.offsetHeight + 'px';\r\n}\r\n\r\nbodyShadow.classList.add('body-shadow');\r\nbodyShadow.id = 'body-shadow';\r\n\r\nwrapper.appendChild(bodyShadow);\r\n\r\nbodyShadow = document.getElementById('body-shadow');\r\n\r\nheader.addEventListener('click', function (e) {\r\n\r\n    target = e.target\r\n\r\n    while (target != this) {\r\n\r\n        if (target == trigram) {\r\n            trigram.classList.toggle('open')\r\n            document.getElementsByClassName('nav')[0].classList.toggle('open');\r\n            document.getElementsByClassName('header__options')[0].classList.toggle('open');\r\n            bodyShadow.classList.toggle('active');\r\n        }\r\n\r\n        target = target.parentNode;\r\n    }\r\n})\r\n\r\naddEventListener('resize', function () {\r\n    if (document.body.offsetWidth >= 750) {\r\n\r\n        wrapper.style.marginTop = '';\r\n\r\n        if (bodyShadow.classList.contains('active')) {\r\n            bodyShadow.classList.remove('active');\r\n        }\r\n    } else {\r\n\r\n        wrapper.style.marginTop = header.offsetHeight + 'px';\r\n\r\n        if (trigram.classList.contains('open')) {\r\n            bodyShadow.classList.add('active');\r\n        }\r\n    }\r\n})\n\n//# sourceURL=webpack:///./js_modules/header.js?");
+
+/***/ })
+
+/******/ });
