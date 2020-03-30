@@ -1,0 +1,106 @@
+{% extends 'delivery/base-generation.html' %}
+{% load static %}
+
+{% block title %}<title>Vehisles</title>{% endblock %}
+
+{% block sidebar %}
+<header id="header" class="header header_vehisles">
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <div class="logo__title">Vehisles</div>
+        <div class="logo__company-name">kallyas</div>
+    </div>
+    <div class="trigram" id="trigram">
+        <div class="trigram__line"></div>
+        <div class="trigram__line"></div>
+        <div class="trigram__line"></div>
+    </div>
+    <div class="header__options">
+        <a href="#" class="header__logout">logout</a>
+        <a href="" class="header__languages">languages</a>
+        <ul class="header__social-networks">
+            <li class="header__icon"><i class="fab fa-telegram-plane"></i></li>
+            <li class="header__icon"><i class="fab fa-vk"></i></li>
+            <li class="header__icon"><i class="fab fa-twitter"></i></li>
+        </ul>
+        <input type="text" class="header__search" placeholder="Search...">
+    </div>
+    </nav>
+    <nav class="nav">
+        <ul class="nav__menu">
+            <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">company</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">global coverage</a></li>
+            <li class="nav__item"><a href="{% url 'news' %}" class="nav__link">news</a></li>
+            <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
+        </ul>
+    </nav>
+</header>
+<script src="{% static 'header.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="filters">
+    <form method="GET" class="filters__form" name="filters__form" id='filters__form'>
+        {% csrf_token %}
+        <input type="checkbox" value="Can be booked?">
+        {% for filter in filters.form %}
+        {{filter}}
+        {% endfor %}
+        <input type="submit">
+    </form>
+</div>
+
+<div class="vehisles">
+    {% for vehisle in page_obj %}
+    {{vehisle}}
+    {% endfor %}
+</div>
+<div class="pagination">
+    <ul class="pagination__list">
+        {% if page_obj.number != 1 %}
+        {% if page_obj.number != 2 %}
+        <li class="pagination__item">
+            <a href="?page=1&vehisles_per_page={{vehisles_per_page}}{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">&lt;&lt;</a>
+        </li>
+        {% endif %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.previous_page_number}}&vehisles_per_page={{vehisles_per_page}}{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">{{page_obj.previous_page_number}}</a>
+        </li>
+        {% endif %}
+        <li class="pagination__item pagination__item_current">
+            <a href="?page={{page_obj.number}}&vehisles_per_page={{vehisles_per_page}}{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">{{page_obj.number}}</a>
+        </li>
+        {% if page_obj.number != page_obj.paginator.num_pages %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.next_page_number}}&vehisles_per_page={{vehisles_per_page}}{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">{{page_obj.next_page_number}}</a>
+        </li>
+        {% if page_obj.number != penultimate_page %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.paginator.num_pages}}&vehisles_per_page={{vehisles_per_page}}{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">&gt;&gt;</a>
+        </li>
+        {% endif %}
+        {% endif %}
+    </ul>
+    <ul class="pagination__list pagination__list_options">
+        <div class="pagination__text">Vehisles per page</div>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&vehisles_per_page=1{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">10</a>
+        </li>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&vehisles_per_page=2{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">20</a>
+        </li>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&vehisles_per_page=3{% for key,value in request.GET.items %}{% ifnotequal key 'vehisles_per_page' %}{% ifnotequal key 'page' %}&{{ key }}={{ value }}{% endifnotequal %}{% endifnotequal %}{% endfor %}"
+                class="pagination__link">50</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

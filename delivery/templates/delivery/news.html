@@ -85,7 +85,7 @@
         <li class="news-content__item">
             <div class="news-content__text-container">
                 <div class="title title_news-content__item">
-                    <div class="title__header">{{news.title}}</div>
+                    <a href="{% url 'news_single' pk=news.pk %}" class="title__header">{{news.title}}</a>
                     <div class="title__underline"></div>
                 </div>
                 <div class="news-content__description">
@@ -99,43 +99,42 @@
 </div>
 <div class="pagination">
     <ul class="pagination__list">
-
         {% if page_obj.number != 1 %}
-
-        {% if page_obj.number != 2 %}
-
-        <li class="pagination__item">
-            <a href="?page=1" class="pagination__link">&lt;&lt;</a>
-        </li>
-
+            {% if page_obj.number != 2 %}
+                <li class="pagination__item">
+                    <a href="?page=1&news_per_page={{news_per_page}}" class="pagination__link">&lt;&lt;</a>
+                </li>
+            {% endif %}
+            <li class="pagination__item">
+                <a href="?page={{page_obj.previous_page_number}}&news_per_page={{news_per_page}}"
+                    class="pagination__link">{{page_obj.previous_page_number}}</a>
+            </li>
         {% endif %}
-
-        <li class="pagination__item">
-            <a href="?page={{page_obj.previous_page_number}}"
-                class="pagination__link">{{page_obj.previous_page_number}}</a>
-        </li>
-
-        {% endif %}
-
         <li class="pagination__item pagination__item_current">
-            <a href="?page={{page_obj.number}}" class="pagination__link">{{page_obj.number}}</a>
+            <a href="?page={{page_obj.number}}&news_per_page={{news_per_page}}" class="pagination__link">{{page_obj.number}}</a>
         </li>
-
         {% if page_obj.number != page_obj.paginator.num_pages %}
-
-        <li class="pagination__item">
-            <a href="?page={{page_obj.next_page_number}}" class="pagination__link">{{page_obj.next_page_number}}</a>
-        </li>
-
-        {% if page_obj.number != penultimate_page %}
-
-        <li class="pagination__item">
-            <a href="?page={{page_obj.paginator.num_pages}}" class="pagination__link">&gt;&gt;</a>
-        </li>
-
+            <li class="pagination__item">
+                <a href="?page={{page_obj.next_page_number}}&news_per_page={{news_per_page}}" class="pagination__link">{{page_obj.next_page_number}}</a>
+            </li>
+            {% if page_obj.number != penultimate_page %}
+                <li class="pagination__item">
+                    <a href="?page={{page_obj.paginator.num_pages}}&news_per_page={{news_per_page}}" class="pagination__link">&gt;&gt;</a>
+                </li>
+            {% endif %}
         {% endif %}
-
-        {% endif %}
+    </ul>
+    <ul class="pagination__list pagination__list_options">
+        <div class="pagination__text">News per page</div>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&news_per_page=10" class="pagination__link">10</a>
+        </li>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&news_per_page=20" class="pagination__link">20</a>
+        </li>
+        <li class="pagination__item">
+            <a href="?page={{page_obj.number}}&news_per_page=50" class="pagination__link">50</a>
+        </li>
     </ul>
 </div>
 <script src="{% static 'news.js' %}"></script>

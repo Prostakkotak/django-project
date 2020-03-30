@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'delivery.apps.DeliveryConfig',
     'tinymce',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
