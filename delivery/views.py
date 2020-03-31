@@ -2,8 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Vehisle, DeliveryClass, News, QuickQuote
 from .forms import QuickQuoteForm
 from .filters import VehisleFilter
-from django.urls import reverse
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def index(request):
@@ -38,7 +37,7 @@ def delivery_method(request, method):
     elif (method == 'air'):
         htmlPath = 'delivery/air-delivery.html'
     elif (method == 'sea'):
-       htmlPath = 'delivery/sea-delivery.html'
+        htmlPath = 'delivery/sea-delivery.html'
 
     return render(request, htmlPath, context={
         'vehisle_list': vehisle_list,
@@ -87,18 +86,30 @@ def news(request):
 
 
 def vehisles(request):
-    
-    filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
 
-    vehisles_per_page = request.GET.get('vehisles_per_page')
+    if request.GET.get('filters') == 'off':
+        vehisles_list = Vehisle.objects.all()
+        vehisles_per_page = request.GET.get('vehisles_per_page')
 
-    try:
-        paginator = Paginator(filters.qs, vehisles_per_page)
-    except TypeError:
-        paginator = Paginator(filters.qs, 10)
-        vehisles_per_page = 10
+        filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
 
-    page_num = request.GET.get('page') 
+        try:
+            paginator = Paginator(vehisles_list, vehisles_per_page)
+        except TypeError:
+            paginator = Paginator(vehisles_list, 10)
+            vehisles_per_page = 10
+    else:
+        filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
+
+        vehisles_per_page = request.GET.get('vehisles_per_page')
+
+        try:
+            paginator = Paginator(filters.qs, vehisles_per_page)
+        except TypeError:
+            paginator = Paginator(filters.qs, 10)
+            vehisles_per_page = 10
+
+    page_num = request.GET.get('page')
 
     try:
         page_obj = paginator.get_page(page_num)

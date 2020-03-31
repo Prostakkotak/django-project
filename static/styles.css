@@ -1221,11 +1221,115 @@ body {
   max-width: 1336px;
   margin: 0 auto; }
 
-.filters__form {
-  padding: 20px 0;
+.filters__header-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly; }
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0; }
+
+.filters__header {
+  margin-right: 10px;
+  font-family: "Montserrat";
+  font-size: 16px;
+  text-transform: uppercase; }
+
+.filters__open-button {
+  width: 30px;
+  height: 30px;
+  transform: rotate(90deg);
+  border-radius: 2px;
+  font-size: 150%;
+  text-align: center;
+  line-height: 30px;
+  background-color: #0d5195;
+  color: #ffffff;
+  transition: 400ms; }
+
+.filters__open-button:hover {
+  background-color: #181834;
+  transition: 200ms;
+  cursor: pointer; }
+
+.filters__open-button.open {
+  transform: rotate(-90deg);
+  transition: 400ms; }
+
+.filters__form {
+  max-height: 0;
+  overflow: hidden;
+  transition: 600ms; }
+
+.filters__form.open {
+  max-height: 1000px; }
+
+.filters__text {
+  font-size: 13.5px;
+  text-transform: uppercase; }
+
+.filters__filter-container {
+  padding: 7px 0; }
+  .filters__filter-container .filters__text {
+    margin-right: 10px; }
+  .filters__filter-container input,
+  .filters__filter-container select {
+    border-radius: 2px;
+    border: 1px solid #0d5195; }
+
+.filters__submit {
+  padding: 10px;
+  border-radius: 2px;
+  border: 0;
+  text-transform: uppercase;
+  background-color: #0d5195;
+  color: #ffffff; }
+
+.vehisles {
+  margin: 0 auto;
+  padding: 50px 5px;
+  max-width: 1336px; }
+
+.vehisles__list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap; }
+
+.vehisles__item {
+  margin: 0 20px 20px 0;
+  width: 100%;
+  max-width: 300px;
+  overflow: hidden;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15); }
+
+.vehisles__image {
+  width: 100%;
+  max-height: 180px; }
+
+.vehisles__text-container {
+  padding: 5px 7px; }
+
+.vehisles__text {
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 5px 0; }
+
+.vehisles__text_bold {
+  font-family: "Montserrat"; }
+
+.vehisles__text_degree {
+  font-size: 11px;
+  vertical-align: top; }
+
+.vehisles__model {
+  font-family: "Montserrat";
+  font-size: 14px;
+  text-transform: uppercase; }
+
+.vehisles__type {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8); }
+
+.vehisles__extra-info {
+  margin-top: 10px; }
 
 .pagination {
   display: flex;
@@ -1692,6 +1796,8 @@ body {
     display: flex;
     justify-content: center;
     max-width: 1336px; }
+  .vehisles__item {
+    margin: 0 0 20px 0; }
   .pagination {
     flex-wrap: wrap; }
   .pagination__list {

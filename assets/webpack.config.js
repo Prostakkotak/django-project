@@ -10,7 +10,8 @@ module.exports = {
         index: '@js_modules/index.js',
         news: '@js_modules/news.js',
         header: '@js_modules/header.js',
-        styles: '@styles/styles.scss'
+        vehisles: '@js_modules/vehisles.js',
+        styles: '@styles/styles.scss',
     },
     output: {
         filename: '[name].js',
