@@ -756,7 +756,7 @@ body {
 }
 
 .fleet-gallery__button {
-	display: block;
+	display: inline-block;
 	width: 114px;
 	height: 52px;
 	border: 0;
@@ -1416,6 +1416,7 @@ body {
 .filters {
 	max-width: 1336px;
 	margin: 0 auto;
+	padding: 0 5px;
 }
 
 .filters__header-container {
@@ -1432,12 +1433,10 @@ body {
 	text-transform: uppercase;
 }
 
-.filters__open-button {
-	width: 30px;
+.filters__button {
 	height: 30px;
-	transform: rotate(90deg);
+	display: block;
 	border-radius: 2px;
-	font-size: 150%;
 	text-align: center;
 	line-height: 30px;
 	background-color: $primary-color-light-blue;
@@ -1445,13 +1444,26 @@ body {
 	transition: 400ms;
 }
 
-.filters__open-button:hover {
+.filters__button_open {
+	transform: rotate(90deg);
+	margin-right: 10px;
+	width: 30px;
+	font-size: 150%;
+}
+
+.filters__button_reset {
+	padding: 0 10px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.filters__button:hover {
 	background-color: $primary-color-dark-blue;
 	transition: 200ms;
 	cursor: pointer;
 }
 
-.filters__open-button.open {
+.filters__button_open.open {
 	transform: rotate(-90deg);
 	transition: 400ms;
 }
@@ -1469,6 +1481,10 @@ body {
 .filters__text {
 	font-size: 13.5px;
 	text-transform: uppercase;
+}
+
+.filters__text_bold {
+	font-family: $montserrat-bold-font;
 }
 
 .filters__filter-container {
@@ -1492,6 +1508,19 @@ body {
 	text-transform: uppercase;
 	background-color: $primary-color-light-blue;
 	color: #ffffff;
+}
+
+.filters__results {
+	max-width: 1336px;
+	margin: 0 auto;
+	padding: 0 5px;
+}
+
+.filters__results_error {
+	padding: 20px 5px;
+	font-size: 20px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 .vehisles {
@@ -2288,12 +2317,18 @@ body {
 	.filters {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 	}
 
 	.filters__form {
 		display: flex;
 		justify-content: center;
-		max-width: 1336px;
+		flex-wrap: wrap;
+	}
+
+	.filters__filter-container {
+		width: 100%;
+		text-align: center;
 	}
 
 	.vehisles__item {

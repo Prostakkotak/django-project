@@ -5,16 +5,15 @@ const path = require('path'),
     TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: {
-        index: '@js_modules/index.js',
-        news: '@js_modules/news.js',
-        header: '@js_modules/header.js',
-        vehisles: '@js_modules/vehisles.js',
+        index: ['@js_modules/index.js', '@js_modules/header.js'],
+        news: ['@js_modules/news.js', '@js_modules/header.js'],
+        vehisles: ['@js_modules/vehisles.js', '@js_modules/header.js'],
         styles: '@styles/styles.scss',
     },
     output: {
-        filename: '[name].js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, '../static')
     },
     resolve: {

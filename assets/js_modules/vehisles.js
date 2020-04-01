@@ -1,7 +1,8 @@
-var filtersOpenButton = document.getElementById('filters__open-button'),
-    filtersForm = document.getElementById('filters__form');
+import connectFiltersButton from './filters'
 
-filtersOpenButton.addEventListener('click', function() {
-    filtersOpenButton.classList.toggle('open')
-    filtersForm.classList.toggle('open')
-})
+let vehislesFilters = {
+    filtersOpenButton: document.getElementById('filters__button_open'),
+    filtersForm: document.getElementById('filters__form')
+}
+
+connectFiltersButton(vehislesFilters)

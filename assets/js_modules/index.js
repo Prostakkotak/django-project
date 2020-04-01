@@ -9,7 +9,7 @@ let fleetGallery = {
     rightButton: document.getElementById('fleet-gallery__slider-button_right')
 }
 
-let headerSlider = {
+var headerSlider = {
     container: document.getElementById('slider'),
     list: document.getElementById('slider__list'),
     items: document.getElementsByClassName('slider__item'),

@@ -36,14 +36,15 @@
         </ul>
     </nav>
 </header>
-<script src="{% static 'header.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="filters">
     <div class="filters__header-container">
         <div class="filters__header">Filters</div>
-        <div id="filters__open-button" class="filters__open-button">&gt;</div>
+        <div id="filters__button_open" class="filters__button filters__button_open">&gt;</div>
+        <a href="?filters=off&vehisles_per_page={{vehisles_per_page}}&page={{page_obj.number}}"
+            class="filters__button filters__button_reset">Reset</a>
     </div>
     <form method="GET" class="filters__form" name="filters__form" id='filters__form'>
         {% csrf_token %}
@@ -72,6 +73,19 @@
     </form>
 </div>
 
+{% if filter_res_count %}
+<div class="filters__results">
+    <span class="filters__text">Filters results: {{filter_res_count}}
+        vehisle{% if filter_res_count > 1 %}s{% endif %}</span>
+</div>
+{% endif %}
+
+{% if filter_res_error %}
+<div class="filters__results filters__results_error">
+    {{filter_res_error}}
+</div>
+{% endif %}
+
 <div class="vehisles">
 
     <ul class="vehisles__list">
@@ -92,7 +106,8 @@
                         <span class="vehisles__text_bold">Max load:</span> {{vehisle.maximum_load}}kg
                     </div>
                     <div class="vehisles__text">
-                        <span class="vehisles__text_bold">Cargo volume:</span> {{vehisle.cargo_volume}}M<span class="vehisles__text_degree">3</span>
+                        <span class="vehisles__text_bold">Cargo volume:</span> {{vehisle.cargo_volume}}M<span
+                            class="vehisles__text_degree">3</span>
                     </div>
                     <div class="vehisles__text">
                         <span class="vehisles__text_bold">Price per km:</span> {{vehisle.cargo_volume}} $/km
@@ -154,5 +169,5 @@
         </li>
     </ul>
 </div>
-<script src="{% static 'vehisles.js' %}"></script>
+<script src="{% static 'vehisles.bundle.js' %}"></script>
 {% endblock %}

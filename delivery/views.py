@@ -87,9 +87,11 @@ def news(request):
 
 def vehisles(request):
 
+    error_msg = ''
+    vehisles_per_page = request.GET.get('vehisles_per_page')
+
     if request.GET.get('filters') == 'off':
         vehisles_list = Vehisle.objects.all()
-        vehisles_per_page = request.GET.get('vehisles_per_page')
 
         filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
 
@@ -101,13 +103,16 @@ def vehisles(request):
     else:
         filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
 
-        vehisles_per_page = request.GET.get('vehisles_per_page')
-
         try:
             paginator = Paginator(filters.qs, vehisles_per_page)
         except TypeError:
             paginator = Paginator(filters.qs, 10)
             vehisles_per_page = 10
+
+        if len(filters.qs) == 0 :
+            filter_res_error = 'Nothing found by the specified parameters'
+        else :
+            filter_res_count = len(filters.qs)
 
     page_num = request.GET.get('page')
 
@@ -120,9 +125,19 @@ def vehisles(request):
 
     penultimate_page = page_obj.paginator.num_pages - 1
 
-    return render(request, 'delivery/vehisles.html', context={
+    context={
         'page_obj': page_obj,
         'penultimate_page': penultimate_page,
         'vehisles_per_page': vehisles_per_page,
         'filters': filters,
-    })
+    }
+
+    try :
+        context['filter_res_count'] = filter_res_count
+    except UnboundLocalError :
+        try :
+            context['filter_res_error'] = filter_res_error
+        except UnboundLocalError :
+            pass
+
+    return render(request, 'delivery/vehisles.html', context)
