@@ -32,7 +32,7 @@ def delivery_method(request, method):
     vehisle_list = Vehisle.objects.all()
     delivery_class_list = DeliveryClass.objects.all()
 
-    if (method == 'ground'):
+    if (method == 'ground'):  # Method это метод доставки, для каждого типа доставки своя страница и шаблон
         htmlPath = 'delivery/ground-delivery.html'
     elif (method == 'air'):
         htmlPath = 'delivery/air-delivery.html'
@@ -54,9 +54,30 @@ def news_single(request, pk):
 
 def news(request):
 
-    news_per_page = request.GET.get('news_per_page')
+    # Функция берет данные из GET запроса и возвращает список для сортировки
+    def ordering(datatype=''):
 
-    news_list = News.objects.all()
+        ordering_list = [  # Имена полей, по которым будет идти фильтрация
+            'pub_date',
+            'title',
+            'short_description'
+        ]
+
+        # Проверка GET данных из чекбоксов в форме сортировки
+        for i in range(len(ordering_list)):
+            if request.GET.get('ordering__' + ordering_list[i]) == 'on':
+                ordering_list[i] = '-' + ordering_list[i]
+            else:
+                pass
+
+        return ordering_list
+
+    if request.GET.get('ordering') == 'off':
+        news_list = News.objects.all().order_by('-pub_date')
+    else:
+        news_list = News.objects.all().order_by(*ordering())
+
+    news_per_page = request.GET.get('news_per_page')
 
     try:
         paginator = Paginator(news_list, news_per_page)
@@ -81,18 +102,18 @@ def news(request):
         'page_obj': page_obj,
         'important_news_list': important_news_list,
         'penultimate_page': penultimate_page,
-        'news_per_page': news_per_page
+        'news_per_page': news_per_page,
     })
 
 
 def vehisles(request):
 
-    error_msg = ''
     vehisles_per_page = request.GET.get('vehisles_per_page')
 
     if request.GET.get('filters') == 'off':
         vehisles_list = Vehisle.objects.all()
 
+        # Здесь фильтры нужны только для вывода формы на страницу
         filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
 
         try:
@@ -109,9 +130,10 @@ def vehisles(request):
             paginator = Paginator(filters.qs, 10)
             vehisles_per_page = 10
 
-        if len(filters.qs) == 0 :
+        # Если по итогам фильтрации ничего не нашлось, то будет создана переменная с ошибкой
+        if len(filters.qs) == 0:
             filter_res_error = 'Nothing found by the specified parameters'
-        else :
+        else:
             filter_res_count = len(filters.qs)
 
     page_num = request.GET.get('page')
@@ -125,19 +147,17 @@ def vehisles(request):
 
     penultimate_page = page_obj.paginator.num_pages - 1
 
-    context={
+    context = {
         'page_obj': page_obj,
         'penultimate_page': penultimate_page,
         'vehisles_per_page': vehisles_per_page,
         'filters': filters,
     }
 
-    try :
-        context['filter_res_count'] = filter_res_count
-    except UnboundLocalError :
-        try :
+    if request.GET.get('filters') != 'off':
+        try:  # Проверка на существование переменных с результатами фильтрации
+            context['filter_res_count'] = filter_res_count
+        except UnboundLocalError: # Если ничего нет, то в шаблон передается ошибка вместо результатов
             context['filter_res_error'] = filter_res_error
-        except UnboundLocalError :
-            pass
 
     return render(request, 'delivery/vehisles.html', context)

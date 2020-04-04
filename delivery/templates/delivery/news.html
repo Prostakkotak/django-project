@@ -32,7 +32,7 @@
             <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
             <li class="nav__item"><a href="#" class="nav__link">company</a></li>
             <li class="nav__item"><a href="{% url 'vehisles' %}?filters=off" class="nav__link">vehisles</a></li>
-            <li class="nav__item"><a href="{% url 'news' %}" class="nav__link">news</a></li>
+            <li class="nav__item"><a href="{% url 'news' %}?ordering=off" class="nav__link">news</a></li>
             <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
         </ul>
     </nav>
@@ -64,6 +64,34 @@
     </ul>
 </div>
 
+<div class="ordering">
+    <div class="ordering__header">Sort by:</div>
+    <form method="GET" id="ordering__form" class="ordering__form">
+        <ul class="ordering__list">
+            <li class="ordering__item">
+                <input {% if request.GET.ordering__pub_date == 'on' %}checked{% endif %} class="ordering__checkbox"
+                    type="checkbox" name="ordering__pub_date" id="ordering__pub_date" hidden>
+                <label for='ordering__pub_date' class="ordering__label">&lt;</label>
+                <div class="ordering__text">pub date</div>
+            </li>
+            <li class="ordering__item">
+                <input {% if request.GET.ordering__title == 'on' %}checked{% endif %} class="ordering__checkbox"
+                    type="checkbox" name="ordering__title" id="ordering__title" hidden>
+                <label for='ordering__title' class="ordering__label">&lt;</label>
+                <div class="ordering__text">title</div>
+            </li>
+            <li class="ordering__item">
+                <input {% if request.GET.ordering__short_description == 'on' %}checked{% endif %}
+                    class="ordering__checkbox" type="checkbox" name="ordering__short_description"
+                    id="ordering__short_description" hidden>
+                <label for='ordering__short_description' class="ordering__label">&lt;</label>
+                <div class="ordering__text">short description</div>
+            </li>
+            <input type="submit" class="ordering__submit">
+        </ul>
+    </form>
+</div>
+
 <div class="news-content">
     <div class="title title_news-content">
         <div class="title__header">News</div>
@@ -79,6 +107,7 @@
                     <a href="{% url 'news_single' pk=news.pk %}" class="news-content__link">{{news.title}}</a>
                 </div>
                 <div maxlength=100 class="news-content__text">{{news.short_description}}</div>
+                <div class="news-content__pub-date">{{news.pub_date}}</div>
             </div>
         </li>
         {% else %}
@@ -91,6 +120,7 @@
                 <div class="news-content__description">
                     {{news.short_description}}
                 </div>
+                <div class="news-content__pub-date">{{news.pub_date}}</div>
             </div>
         </li>
         {% endif %}
@@ -100,40 +130,47 @@
 <div class="pagination">
     <ul class="pagination__list">
         {% if page_obj.number != 1 %}
-            {% if page_obj.number != 2 %}
-                <li class="pagination__item">
-                    <a href="?page=1&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">&lt;&lt;</a>
-                </li>
-            {% endif %}
-            <li class="pagination__item">
-                <a href="?page={{page_obj.previous_page_number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                    class="pagination__link">{{page_obj.previous_page_number}}</a>
-            </li>
+        {% if page_obj.number != 2 %}
+        <li class="pagination__item">
+            <a href="?page=1&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">&lt;&lt;</a>
+        </li>
+        {% endif %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.previous_page_number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">{{page_obj.previous_page_number}}</a>
+        </li>
         {% endif %}
         <li class="pagination__item pagination__item_current">
-            <a href="?page={{page_obj.number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">{{page_obj.number}}</a>
+            <a href="?page={{page_obj.number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">{{page_obj.number}}</a>
         </li>
         {% if page_obj.number != page_obj.paginator.num_pages %}
-            <li class="pagination__item">
-                <a href="?page={{page_obj.next_page_number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">{{page_obj.next_page_number}}</a>
-            </li>
-            {% if page_obj.number != penultimate_page %}
-                <li class="pagination__item">
-                    <a href="?page={{page_obj.paginator.num_pages}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">&gt;&gt;</a>
-                </li>
-            {% endif %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.next_page_number}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">{{page_obj.next_page_number}}</a>
+        </li>
+        {% if page_obj.number != penultimate_page %}
+        <li class="pagination__item">
+            <a href="?page={{page_obj.paginator.num_pages}}&news_per_page={{news_per_page}}{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">&gt;&gt;</a>
+        </li>
+        {% endif %}
         {% endif %}
     </ul>
     <ul class="pagination__list pagination__list_options">
         <div class="pagination__text">News per page</div>
         <li class="pagination__item">
-            <a href="?page={{page_obj.number}}&news_per_page=10{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">10</a>
+            <a href="?page={{page_obj.number}}&news_per_page=10{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">10</a>
         </li>
         <li class="pagination__item">
-            <a href="?page={{page_obj.number}}&news_per_page=20{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">20</a>
+            <a href="?page={{page_obj.number}}&news_per_page=20{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">20</a>
         </li>
         <li class="pagination__item">
-            <a href="?page={{page_obj.number}}&news_per_page=50{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pagination__link">50</a>
+            <a href="?page={{page_obj.number}}&news_per_page=50{% for key,value in request.GET.items %}{% if key != 'page' and key != 'news_per_page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="pagination__link">50</a>
         </li>
     </ul>
 </div>
