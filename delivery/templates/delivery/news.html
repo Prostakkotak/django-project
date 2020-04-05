@@ -68,25 +68,14 @@
     <div class="ordering__header">Sort by:</div>
     <form method="GET" id="ordering__form" class="ordering__form">
         <ul class="ordering__list">
+            {% for key, value in ordering_obj.items %}
             <li class="ordering__item">
-                <input {% if request.GET.ordering__pub_date == 'on' %}checked{% endif %} class="ordering__checkbox"
-                    type="checkbox" name="ordering__pub_date" id="ordering__pub_date" hidden>
-                <label for='ordering__pub_date' class="ordering__label">&lt;</label>
-                <div class="ordering__text">pub date</div>
+                <input {% if 'ordering__'|add:key in request.GET %}checked{% endif %} class="ordering__checkbox"
+                    type="checkbox" name="ordering__{{key}}" id="ordering__{{key}}" hidden>
+                <label for='ordering__{{key}}' class="ordering__label">&lt;</label>
+                <div class="ordering__text">{{value}}</div>
             </li>
-            <li class="ordering__item">
-                <input {% if request.GET.ordering__title == 'on' %}checked{% endif %} class="ordering__checkbox"
-                    type="checkbox" name="ordering__title" id="ordering__title" hidden>
-                <label for='ordering__title' class="ordering__label">&lt;</label>
-                <div class="ordering__text">title</div>
-            </li>
-            <li class="ordering__item">
-                <input {% if request.GET.ordering__short_description == 'on' %}checked{% endif %}
-                    class="ordering__checkbox" type="checkbox" name="ordering__short_description"
-                    id="ordering__short_description" hidden>
-                <label for='ordering__short_description' class="ordering__label">&lt;</label>
-                <div class="ordering__text">short description</div>
-            </li>
+            {% endfor %}
             <input type="submit" class="ordering__submit">
         </ul>
     </form>

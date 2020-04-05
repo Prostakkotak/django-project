@@ -1,1 +1,147 @@
-!function(t){var e={};function s(i){if(e[i])return e[i].exports;var n=e[i]={i:i,l:!1,exports:{}};return t[i].call(n.exports,n,n.exports,s),n.l=!0,n.exports}s.m=t,s.c=e,s.d=function(t,e,i){s.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},s.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},s.t=function(t,e){if(1&e&&(t=s(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(s.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)s.d(i,n,function(e){return t[e]}.bind(null,n));return i},s.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return s.d(e,"a",e),e},s.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},s.p="",s(s.s=2)}([function(t,e){let s=document.getElementById("trigram"),i=document.getElementById("header"),n=document.createElement("div"),o=document.getElementsByClassName("wrapper")[0];document.body.offsetWidth<=750&&(o.style.marginTop=i.offsetHeight+"px"),n.classList.add("body-shadow"),n.id="body-shadow",o.appendChild(n),n=document.getElementById("body-shadow"),i.addEventListener("click",(function(t){for(target=t.target;target!=this;)target==s&&(s.classList.toggle("open"),document.getElementsByClassName("nav")[0].classList.toggle("open"),document.getElementsByClassName("header__options")[0].classList.toggle("open"),n.classList.toggle("active")),target=target.parentNode})),addEventListener("resize",(function(){document.body.offsetWidth>=750?(o.style.marginTop="",n.classList.contains("active")&&n.classList.remove("active")):(o.style.marginTop=i.offsetHeight+"px",s.classList.contains("open")&&n.classList.add("active"))}))},function(t,e,s){"use strict";function i(t){if(1!=t.items.length){t.leftButton||(t.leftButton=""),t.rightButton||(t.rightButton="");let e=t.items[0].offsetWidth,s=Math.abs(t.items[0].offsetLeft+t.items[0].offsetWidth-t.items[1].offsetLeft),i=-((t.items.length-1)*t.items[0].offsetWidth+s),n=0;t.container.onclick=function(o){let l=o.target;for(;l!=this;){if(l==t.rightButton)if(n>i){Math.floor(-n/e);n=n-e-s,t.list.style.marginLeft=n+"px"}else n=0,t.list.style.marginLeft=n+"px";else if(l==t.leftButton)if(n<0){Math.floor(-n/e);n=n+e+s,t.list.style.marginLeft=n+"px"}else n=i,t.list.style.marginLeft=n+"px";l=l.parentNode}},addEventListener("resize",(function(){let o=Math.floor(-n/e);n=o>0?-(t.items[0].offsetWidth+s)*o:0,t.list.style.marginLeft=n+"px",i=(t.items.length-1)*t.items[0].offsetWidth+s,i=-i,e=t.items[0].offsetWidth}))}}s.d(e,"a",(function(){return i}))},function(t,e,s){s(9),t.exports=s(0)},,,,,,,function(t,e,s){"use strict";s.r(e);var i=s(1);let n={container:document.getElementById("fleet-gallery"),list:document.getElementById("fleet-gallery__slider-list"),items:document.getElementsByClassName("fleet-gallery__slider-item"),leftButton:document.getElementById("fleet-gallery__slider-button_left"),rightButton:document.getElementById("fleet-gallery__slider-button_right")};!function(t){if(1!=t.items.length){for(let e=0;e<=t.items.length-1;e++)0!=e&&t.items[e].getElementsByClassName("slider__text")[0].classList.add("shadowed");t.leftButton||(t.leftButton=""),t.rightButton||(t.rightButton="");let e=t.items[0].offsetWidth,s=Math.abs(t.items[0].offsetLeft+t.items[0].offsetWidth-t.items[1].offsetLeft),i=-((t.items.length-1)*t.items[0].offsetWidth+s),n=0;t.container.onclick=function(o){let l=o.target;for(;l!=this&&!t.list.classList.contains("on-scroll");){if(l==t.rightButton)if(n>i){let i=Math.floor(-n/e);t.items[i].getElementsByClassName("slider__text")[0].classList.add("shadowed"),t.rightButton.classList.add("shadowed"),t.list.classList.add("on-scroll"),setTimeout((function(){n=n-t.items[0].offsetWidth-s,t.list.style.marginLeft=n+"px",setTimeout((function(){t.items[i+1].getElementsByClassName("slider__text")[0].classList.remove("shadowed"),t.rightButton.classList.remove("shadowed"),t.list.classList.remove("on-scroll")}),700)}),700)}else t.items[t.items.length-1].getElementsByClassName("slider__text")[0].classList.add("shadowed"),t.rightButton.classList.add("shadowed"),t.list.classList.add("on-scroll"),setTimeout((function(){n=0,t.list.style.marginLeft=n+"px",setTimeout((function(){t.items[0].getElementsByClassName("slider__text")[0].classList.remove("shadowed"),t.rightButton.classList.remove("shadowed"),t.list.classList.remove("on-scroll")}),700)}),700);l=l.parentNode}},addEventListener("resize",(function(){let o=Math.floor(-n/e);o>0?(n=(t.items[0].offsetWidth+s)*o,n=-n):n=0,t.list.style.marginLeft=n+"px",i=(t.items.length-1)*t.items[0].offsetWidth+s,i=-i,e=t.items[0].offsetWidth}))}}({container:document.getElementById("slider"),list:document.getElementById("slider__list"),items:document.getElementsByClassName("slider__item"),rightButton:document.getElementById("slider__button")}),Object(i.a)(n)}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./js_modules/animated-slider.js":
+/*!***************************************!*\
+  !*** ./js_modules/animated-slider.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return createAnimatedSlider; });\nfunction createAnimatedSlider(obj) {\r\n    if (obj.items.length != 1) {\r\n\r\n        for (let i = 0; i <= obj.items.length - 1; i++) {\r\n            if (i != 0) {\r\n                obj.items[i].getElementsByClassName('slider__text')[0].classList.add('shadowed');\r\n            }\r\n        }\r\n\r\n\r\n        if (!obj.leftButton) obj.leftButton = '';\r\n        if (!obj.rightButton) obj.rightButton = '';\r\n\r\n        let itemWidth = obj.items[0].offsetWidth\r\n\r\n        let betweenElemsDistance = Math.abs(obj.items[0].offsetLeft + obj.items[0].offsetWidth - obj.items[1].offsetLeft);\r\n\r\n        let maxScrollWidth = -((obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance);\r\n        let currentScrollWidth = 0;\r\n\r\n        obj.container.onclick = function (e) {\r\n            let target = e.target;\r\n\r\n            while (target != this && !obj.list.classList.contains('on-scroll')) {\r\n                if (target == obj.rightButton) {\r\n                    if (currentScrollWidth > maxScrollWidth) {\r\n\r\n                        let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране\r\n\r\n                        obj.items[currentItem].getElementsByClassName('slider__text')[0].classList.add('shadowed');\r\n                        obj.rightButton.classList.add('shadowed')\r\n\r\n                        obj.list.classList.add('on-scroll')\r\n\r\n                        setTimeout(function () {\r\n                            currentScrollWidth =\r\n                                currentScrollWidth - obj.items[0].offsetWidth - betweenElemsDistance;\r\n                            obj.list.style.marginLeft = currentScrollWidth + \"px\";\r\n\r\n                            setTimeout(function () {\r\n                                obj.items[currentItem + 1].getElementsByClassName('slider__text')[0].classList.remove('shadowed');\r\n                                obj.rightButton.classList.remove('shadowed')\r\n                                obj.list.classList.remove('on-scroll')\r\n                            }, 700)\r\n                        }, 700)\r\n                    } else {\r\n                        obj.items[obj.items.length - 1].getElementsByClassName('slider__text')[0].classList.add('shadowed')\r\n                        obj.rightButton.classList.add('shadowed')\r\n                        obj.list.classList.add('on-scroll')\r\n\r\n                        setTimeout(function () {\r\n                            currentScrollWidth = 0;\r\n                            obj.list.style.marginLeft = currentScrollWidth + 'px';\r\n\r\n                            setTimeout(function () {\r\n                                obj.items[0].getElementsByClassName('slider__text')[0].classList.remove('shadowed')\r\n                                obj.rightButton.classList.remove('shadowed')\r\n                                obj.list.classList.remove('on-scroll')\r\n                            }, 700)\r\n                        }, 700)\r\n                    }\r\n                }\r\n\r\n                target = target.parentNode; // Чтобы функция не повесила всю страницу\r\n            }\r\n        };\r\n\r\n        addEventListener(\"resize\", function () {\r\n            let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране\r\n\r\n            if (currentItem > 0) {\r\n                // Если это не самый первый слайд, то идет перерасчет ширины прокрути для новой ширины окна браузера\r\n                currentScrollWidth = (obj.items[0].offsetWidth + betweenElemsDistance) * currentItem;\r\n                currentScrollWidth = -currentScrollWidth;\r\n            } else {\r\n                currentScrollWidth = 0;\r\n            }\r\n\r\n            obj.list.style.marginLeft = currentScrollWidth + \"px\"; // Возврат к стартовой точке\r\n            maxScrollWidth = (obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance;\r\n            maxScrollWidth = -maxScrollWidth; // Перерасчет максимальной ширины прокрутки\r\n            itemWidth = obj.items[0].offsetWidth; // Запоминаем новую текущую ширину одного слайда\r\n        });\r\n    }\r\n}\n\n//# sourceURL=webpack:///./js_modules/animated-slider.js?");
+
+/***/ }),
+
+/***/ "./js_modules/header.js":
+/*!******************************!*\
+  !*** ./js_modules/header.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("let trigram = document.getElementById('trigram'),\r\n    header = document.getElementById('header'),\r\n    bodyShadow = document.createElement('div');\r\n\r\nlet wrapper = document.getElementsByClassName('wrapper')[0];\r\n\r\nif (document.body.offsetWidth <= 750) {\r\n    wrapper.style.marginTop = header.offsetHeight + 'px';\r\n}\r\n\r\nbodyShadow.classList.add('body-shadow');\r\nbodyShadow.id = 'body-shadow';\r\n\r\nwrapper.appendChild(bodyShadow);\r\n\r\nbodyShadow = document.getElementById('body-shadow');\r\n\r\nheader.addEventListener('click', function (e) {\r\n\r\n    target = e.target\r\n\r\n    while (target != this) {\r\n\r\n        if (target == trigram) {\r\n            trigram.classList.toggle('open')\r\n            document.getElementsByClassName('nav')[0].classList.toggle('open');\r\n            document.getElementsByClassName('header__options')[0].classList.toggle('open');\r\n            bodyShadow.classList.toggle('active');\r\n        }\r\n\r\n        target = target.parentNode;\r\n    }\r\n})\r\n\r\naddEventListener('resize', function () {\r\n    if (document.body.offsetWidth >= 750) {\r\n\r\n        wrapper.style.marginTop = '';\r\n\r\n        if (bodyShadow.classList.contains('active')) {\r\n            bodyShadow.classList.remove('active');\r\n        }\r\n    } else {\r\n\r\n        wrapper.style.marginTop = header.offsetHeight + 'px';\r\n\r\n        if (trigram.classList.contains('open')) {\r\n            bodyShadow.classList.add('active');\r\n        }\r\n    }\r\n})\n\n//# sourceURL=webpack:///./js_modules/header.js?");
+
+/***/ }),
+
+/***/ "./js_modules/index.js":
+/*!*****************************!*\
+  !*** ./js_modules/index.js ***!
+  \*****************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _animated_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animated-slider */ \"./js_modules/animated-slider.js\");\n/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slider */ \"./js_modules/slider.js\");\n\r\n\r\n\r\nlet fleetGallery = {\r\n    container: document.getElementById('fleet-gallery'),\r\n    list: document.getElementById('fleet-gallery__slider-list'),\r\n    items: document.getElementsByClassName('fleet-gallery__slider-item'),\r\n    leftButton: document.getElementById('fleet-gallery__slider-button_left'),\r\n    rightButton: document.getElementById('fleet-gallery__slider-button_right')\r\n}\r\n\r\nvar headerSlider = {\r\n    container: document.getElementById('slider'),\r\n    list: document.getElementById('slider__list'),\r\n    items: document.getElementsByClassName('slider__item'),\r\n    rightButton: document.getElementById('slider__button')\r\n}\r\n\r\nObject(_animated_slider__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(headerSlider)\r\nObject(_slider__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(fleetGallery)\n\n//# sourceURL=webpack:///./js_modules/index.js?");
+
+/***/ }),
+
+/***/ "./js_modules/slider.js":
+/*!******************************!*\
+  !*** ./js_modules/slider.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return createSlider; });\nfunction createSlider(obj) {\r\n    if (obj.items.length != 1) {\r\n\r\n        if (!obj.leftButton) obj.leftButton = '';\r\n        if (!obj.rightButton) obj.rightButton = '';\r\n\r\n        let itemWidth = obj.items[0].offsetWidth\r\n\r\n        let betweenElemsDistance = Math.abs(obj.items[0].offsetLeft + obj.items[0].offsetWidth - obj.items[1].offsetLeft);\r\n\r\n        let maxScrollWidth = -((obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance);\r\n        let currentScrollWidth = 0;\r\n\r\n        obj.container.onclick = function (e) {\r\n            let target = e.target;\r\n\r\n            while (target != this) {\r\n                if (target == obj.rightButton) {\r\n                    if (currentScrollWidth > maxScrollWidth) {\r\n                        let currentItem = Math.floor(-currentScrollWidth / itemWidth);\r\n\r\n                        currentScrollWidth =\r\n                            currentScrollWidth - itemWidth - betweenElemsDistance;\r\n                        obj.list.style.marginLeft = currentScrollWidth + \"px\";\r\n                    } else {\r\n                        currentScrollWidth = 0;\r\n                        obj.list.style.marginLeft = currentScrollWidth + 'px';\r\n                    }\r\n                } else if (target == obj.leftButton) {\r\n                    if (currentScrollWidth < 0) {\r\n                        let currentItem = Math.floor(-currentScrollWidth / itemWidth);\r\n\r\n                        currentScrollWidth =\r\n                            currentScrollWidth + itemWidth + betweenElemsDistance;\r\n                        obj.list.style.marginLeft = currentScrollWidth + 'px';\r\n                    } else {\r\n                        currentScrollWidth = maxScrollWidth;\r\n                        obj.list.style.marginLeft = currentScrollWidth + 'px';\r\n                    }\r\n                }\r\n\r\n                target = target.parentNode;\r\n            }\r\n        }\r\n\r\n        addEventListener(\"resize\", function () {\r\n            let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране\r\n\r\n            if (currentItem > 0) {\r\n                // Если это не самый первый слайд, то идет перерасчет ширины прокрутки для новой ширины окна браузера\r\n                currentScrollWidth = -((obj.items[0].offsetWidth + betweenElemsDistance) * currentItem);\r\n            } else {\r\n                currentScrollWidth = 0;\r\n            }\r\n\r\n            obj.list.style.marginLeft = currentScrollWidth + \"px\"; // Перемещение на новую точку после перерасчета\r\n            maxScrollWidth = (obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance;\r\n            maxScrollWidth = -maxScrollWidth; // Перерасчет максимальной ширины прокрутки\r\n            itemWidth = obj.items[0].offsetWidth; // Запоминаем новую текущую ширину одного слайда\r\n        });\r\n    }\r\n}\n\n//# sourceURL=webpack:///./js_modules/slider.js?");
+
+/***/ }),
+
+/***/ 0:
+/*!********************************************************!*\
+  !*** multi @js_modules/index.js @js_modules/header.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("__webpack_require__(/*! @js_modules/index.js */\"./js_modules/index.js\");\nmodule.exports = __webpack_require__(/*! @js_modules/header.js */\"./js_modules/header.js\");\n\n\n//# sourceURL=webpack:///multi_@js_modules/index.js_@js_modules/header.js?");
+
+/***/ })
+
+/******/ });

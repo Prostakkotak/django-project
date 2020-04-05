@@ -55,27 +55,32 @@ def news_single(request, pk):
 def news(request):
 
     # Функция берет данные из GET запроса и возвращает список для сортировки
-    def ordering(datatype=''):
+    def ordering(datatype):
 
-        ordering_list = [  # Имена полей, по которым будет идти фильтрация
-            'pub_date',
-            'title',
-            'short_description'
-        ]
+        ordering_obj = {
+            'pub_date': 'pub date',
+            'title': 'title',
+            'short_description': 'description',
+        }
 
-        # Проверка GET данных из чекбоксов в форме сортировки
-        for i in range(len(ordering_list)):
-            if request.GET.get('ordering__' + ordering_list[i]) == 'on':
-                ordering_list[i] = '-' + ordering_list[i]
-            else:
-                pass
+        if datatype == 'obj':
+            return ordering_obj
+        elif datatype == 'keys':
+            ordering_keys = list(ordering_obj.keys())
 
-        return ordering_list
+            # Проверка GET данных из чекбоксов в форме сортировки
+            for i in range(len(ordering_keys)):
+                if request.GET.get('ordering__' + ordering_keys[i]) == 'on':
+                    ordering_keys[i] = '-' + ordering_keys[i]
+                else:
+                    pass
+
+            return ordering_keys
 
     if request.GET.get('ordering') == 'off':
         news_list = News.objects.all().order_by('-pub_date')
     else:
-        news_list = News.objects.all().order_by(*ordering())
+        news_list = News.objects.all().order_by(*ordering('keys'))
 
     news_per_page = request.GET.get('news_per_page')
 
@@ -103,6 +108,7 @@ def news(request):
         'important_news_list': important_news_list,
         'penultimate_page': penultimate_page,
         'news_per_page': news_per_page,
+        'ordering_obj': ordering('obj')
     })
 
 
@@ -157,7 +163,7 @@ def vehisles(request):
     if request.GET.get('filters') != 'off':
         try:  # Проверка на существование переменных с результатами фильтрации
             context['filter_res_count'] = filter_res_count
-        except UnboundLocalError: # Если ничего нет, то в шаблон передается ошибка вместо результатов
+        except UnboundLocalError:  # Если ничего нет, то в шаблон передается ошибка вместо результатов
             context['filter_res_error'] = filter_res_error
 
     return render(request, 'delivery/vehisles.html', context)

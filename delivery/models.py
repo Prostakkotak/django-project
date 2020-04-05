@@ -52,7 +52,7 @@ class Vehisle(models.Model) :
 class News(models.Model) :
     title = models.CharField(max_length=50)
     title_image = models.ImageField(default='none')
-    short_description = models.CharField(max_length=200, default='Desctiption')
+    short_description = models.CharField(max_length=200, default='Description')
     content = HTMLField()
     pub_date = models.DateTimeField(default=datetime.now(), blank=True)
     important_status = models.BooleanField(default=False, help_text='Are this news important or not')
