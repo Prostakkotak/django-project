@@ -7,11 +7,7 @@ export default function createAnimatedSlider(obj) {
             }
         }
 
-
-        if (!obj.leftButton) obj.leftButton = '';
-        if (!obj.rightButton) obj.rightButton = '';
-
-        let itemWidth = obj.items[0].offsetWidth
+        let itemWidth = obj.items[0].offsetWidth;
 
         let betweenElemsDistance = Math.abs(obj.items[0].offsetLeft + obj.items[0].offsetWidth - obj.items[1].offsetLeft);
 
@@ -28,9 +24,9 @@ export default function createAnimatedSlider(obj) {
                         let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране
 
                         obj.items[currentItem].getElementsByClassName('slider__text')[0].classList.add('shadowed');
-                        obj.rightButton.classList.add('shadowed')
+                        obj.rightButton.classList.add('shadowed');
 
-                        obj.list.classList.add('on-scroll')
+                        obj.list.classList.add('on-scroll');
 
                         setTimeout(function () {
                             currentScrollWidth =
@@ -39,14 +35,14 @@ export default function createAnimatedSlider(obj) {
 
                             setTimeout(function () {
                                 obj.items[currentItem + 1].getElementsByClassName('slider__text')[0].classList.remove('shadowed');
-                                obj.rightButton.classList.remove('shadowed')
-                                obj.list.classList.remove('on-scroll')
-                            }, 700)
-                        }, 700)
+                                obj.rightButton.classList.remove('shadowed');
+                                obj.list.classList.remove('on-scroll');
+                            }, 700);
+                        }, 700);
                     } else {
-                        obj.items[obj.items.length - 1].getElementsByClassName('slider__text')[0].classList.add('shadowed')
-                        obj.rightButton.classList.add('shadowed')
-                        obj.list.classList.add('on-scroll')
+                        obj.items[obj.items.length - 1].getElementsByClassName('slider__text')[0].classList.add('shadowed');
+                        obj.rightButton.classList.add('shadowed');
+                        obj.list.classList.add('on-scroll');
 
                         setTimeout(function () {
                             currentScrollWidth = 0;
@@ -56,8 +52,8 @@ export default function createAnimatedSlider(obj) {
                                 obj.items[0].getElementsByClassName('slider__text')[0].classList.remove('shadowed')
                                 obj.rightButton.classList.remove('shadowed')
                                 obj.list.classList.remove('on-scroll')
-                            }, 700)
-                        }, 700)
+                            }, 700);
+                        }, 700);
                     }
                 }
 
@@ -69,16 +65,12 @@ export default function createAnimatedSlider(obj) {
             let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране
 
             if (currentItem > 0) {
-                // Если это не самый первый слайд, то идет перерасчет ширины прокрути для новой ширины окна браузера
-                currentScrollWidth = (obj.items[0].offsetWidth + betweenElemsDistance) * currentItem;
-                currentScrollWidth = -currentScrollWidth;
-            } else {
-                currentScrollWidth = 0;
-            }
+                /* Если это не самый первый слайд, то идет перерасчет ширины прокрути для новой ширины окна браузера */
+                currentScrollWidth = -((obj.items[0].offsetWidth + betweenElemsDistance) * currentItem);
+            } else { currentScrollWidth = 0; }
 
             obj.list.style.marginLeft = currentScrollWidth + "px"; // Возврат к стартовой точке
-            maxScrollWidth = (obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance;
-            maxScrollWidth = -maxScrollWidth; // Перерасчет максимальной ширины прокрутки
+            maxScrollWidth = -((obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance); // Перерасчет максимальной ширины прокрутки
             itemWidth = obj.items[0].offsetWidth; // Запоминаем новую текущую ширину одного слайда
         });
     }

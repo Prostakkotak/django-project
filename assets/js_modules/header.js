@@ -17,12 +17,12 @@ bodyShadow = document.getElementById('body-shadow');
 
 header.addEventListener('click', function (e) {
 
-    target = e.target
+    target = e.target;
 
     while (target != this) {
 
         if (target == trigram) {
-            trigram.classList.toggle('open')
+            trigram.classList.toggle('open');
             document.getElementsByClassName('nav')[0].classList.toggle('open');
             document.getElementsByClassName('header__options')[0].classList.toggle('open');
             bodyShadow.classList.toggle('active');
@@ -30,7 +30,7 @@ header.addEventListener('click', function (e) {
 
         target = target.parentNode;
     }
-})
+});
 
 addEventListener('resize', function () {
     if (document.body.offsetWidth >= 750) {
@@ -48,4 +48,4 @@ addEventListener('resize', function () {
             bodyShadow.classList.add('active');
         }
     }
-})
+});

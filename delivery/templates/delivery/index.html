@@ -164,11 +164,13 @@
         <div class="fleet-gallery__slider">
             <ul id="fleet-gallery__slider-list" class="fleet-gallery__slider-list">
                 {% for vehisle in vehisle_list %}
+                {% if vehisle.photo != 'photo' %}
 
                 <li class="fleet-gallery__slider-item">
                     <img src="{{vehisle.photo.url}}" alt="" class="fleet-gallery__image">
                 </li>
 
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

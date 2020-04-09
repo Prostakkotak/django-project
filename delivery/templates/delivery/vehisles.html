@@ -47,7 +47,6 @@
             class="filters__button filters__button_reset">Reset</a>
     </div>
     <form method="GET" class="filters__form" name="filters__form" id='filters__form'>
-        {% csrf_token %}
         <div class="filters__filter-container">
             <span class="filters__text">Can be booked?</span>{{filters.form.can_be_booked}}
         </div>
