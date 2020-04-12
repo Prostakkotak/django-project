@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehisle, DeliveryClass, News, QuickQuote
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag
 
 @admin.register(Vehisle)
 class VehisleAdmin(admin.ModelAdmin) :
@@ -18,5 +18,9 @@ class VehisleAdmin(admin.ModelAdmin) :
 class DeliveryClassAdmin(admin.ModelAdmin) :
     list_display = ('delivery_class', 'price_multiplier')
 
-admin.site.register(News)
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin) :
+    filter_horizontal = ('tags',)
+
 admin.site.register(QuickQuote)
+admin.site.register(NewsTag)

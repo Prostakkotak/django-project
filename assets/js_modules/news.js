@@ -1,4 +1,5 @@
 import createSlider from './slider';
+import connectTagsButton from './tags'
 
 let importantNews = {
     container: document.getElementById('important-news'),
@@ -7,4 +8,10 @@ let importantNews = {
     rightButton: document.getElementById('important-news__button_right')
 };
 
+let tags = {
+    tagsOpenButton: document.getElementById('tags__open-button'),
+    tagsList: document.getElementById('tags__list')
+};
+
+connectTagsButton(tags);
 createSlider(importantNews);

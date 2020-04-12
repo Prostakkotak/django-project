@@ -11,10 +11,10 @@ export default function createAnimatedSlider(obj) {
 
         let betweenElemsDistance = Math.abs(obj.items[0].offsetLeft + obj.items[0].offsetWidth - obj.items[1].offsetLeft);
 
-        let maxScrollWidth = -((obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance);
-        let currentScrollWidth = 0;
+        let maxScrollWidth = -((obj.items.length - 1) * obj.items[0].offsetWidth + betweenElemsDistance),
+            currentScrollWidth = 0;
 
-        obj.container.onclick = function (e) {
+        obj.container.onclick = (e) => {
             let target = e.target;
 
             while (target != this && !obj.list.classList.contains('on-scroll')) {
@@ -28,12 +28,12 @@ export default function createAnimatedSlider(obj) {
 
                         obj.list.classList.add('on-scroll');
 
-                        setTimeout(function () {
+                        setTimeout(() => {
                             currentScrollWidth =
                                 currentScrollWidth - obj.items[0].offsetWidth - betweenElemsDistance;
                             obj.list.style.marginLeft = currentScrollWidth + "px";
 
-                            setTimeout(function () {
+                            setTimeout(() => {
                                 obj.items[currentItem + 1].getElementsByClassName('slider__text')[0].classList.remove('shadowed');
                                 obj.rightButton.classList.remove('shadowed');
                                 obj.list.classList.remove('on-scroll');
@@ -44,14 +44,14 @@ export default function createAnimatedSlider(obj) {
                         obj.rightButton.classList.add('shadowed');
                         obj.list.classList.add('on-scroll');
 
-                        setTimeout(function () {
+                        setTimeout(() => {
                             currentScrollWidth = 0;
                             obj.list.style.marginLeft = currentScrollWidth + 'px';
 
-                            setTimeout(function () {
-                                obj.items[0].getElementsByClassName('slider__text')[0].classList.remove('shadowed')
-                                obj.rightButton.classList.remove('shadowed')
-                                obj.list.classList.remove('on-scroll')
+                            setTimeout(() => {
+                                obj.items[0].getElementsByClassName('slider__text')[0].classList.remove('shadowed');
+                                obj.rightButton.classList.remove('shadowed');
+                                obj.list.classList.remove('on-scroll');
                             }, 700);
                         }, 700);
                     }
@@ -61,7 +61,7 @@ export default function createAnimatedSlider(obj) {
             }
         };
 
-        addEventListener("resize", function () {
+        addEventListener("resize", () => {
             let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране
 
             if (currentItem > 0) {

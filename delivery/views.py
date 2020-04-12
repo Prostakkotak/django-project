@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Vehisle, DeliveryClass, News, QuickQuote
+from django.shortcuts import render, get_object_or_404, Http404
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag
 from .forms import QuickQuoteForm
 from .filters import VehisleFilter
+from .ordering import ordering
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import F, Q
 
 
 def index(request):
@@ -47,6 +49,8 @@ def delivery_method(request, method):
 
 def news_single(request, pk):
     news_content = get_object_or_404(News, pk=pk)
+    News.objects.filter(id=pk).update(views=F('views')+1)
+
     return render(request, 'delivery/news-single.html', context={
         'news_content': news_content,
     })
@@ -54,33 +58,29 @@ def news_single(request, pk):
 
 def news(request):
 
-    # Функция берет данные из GET запроса и возвращает список для сортировки
-    def ordering(datatype):
+    ordering_obj = {
+        'pub_date': 'pub date',
+        'title': 'title',
+        'short_description': 'description',
+        'views': 'views',
+    }
 
-        ordering_obj = {
-            'pub_date': 'pub date',
-            'title': 'title',
-            'short_description': 'description',
-        }
+    tags_list = NewsTag.objects.all()
 
-        if datatype == 'obj':
-            return ordering_obj
-        elif datatype == 'keys':
-            ordering_keys = list(ordering_obj.keys())
+    if request.GET.get('ordering_status') == 'on':
+        tags_get = []
+        news_list = News.objects.all()
 
-            # Проверка GET данных из чекбоксов в форме сортировки
-            for i in range(len(ordering_keys)):
-                if request.GET.get('ordering__' + ordering_keys[i]) == 'on':
-                    ordering_keys[i] = '-' + ordering_keys[i]
-                else:
-                    pass
+        for tag in list(tags_list):
+            if request.GET.get('tags__' + tag.tagname) == 'on':
+                tags_get.append(tag)
 
-            return ordering_keys
+        for t in tags_get:
+            news_list = news_list.filter(tags__tagname__contains=t)
 
-    if request.GET.get('ordering') == 'off':
-        news_list = News.objects.all().order_by('-pub_date')
+        news_list = news_list.order_by(*ordering(request, ordering_obj))
     else:
-        news_list = News.objects.all().order_by(*ordering('keys'))
+        news_list = News.objects.filter().order_by('-pub_date')
 
     news_per_page = request.GET.get('news_per_page')
 
@@ -108,7 +108,8 @@ def news(request):
         'important_news_list': important_news_list,
         'penultimate_page': penultimate_page,
         'news_per_page': news_per_page,
-        'ordering_obj': ordering('obj')
+        'ordering_obj': ordering_obj,
+        'tags_list': tags_list,
     })
 
 
@@ -116,19 +117,19 @@ def vehisles(request):
 
     vehisles_per_page = request.GET.get('vehisles_per_page')
 
-    if request.GET.get('filters') == 'off':
-        vehisles_list = Vehisle.objects.all()
+    ordering_obj = {
+        'price_per_use': 'price per use',
+        'price_per_km': 'price per km',
+        'km_per_day': 'km per day',
+        'maximum_load': 'max load',
+        'cargo_volume': 'cargo volume',
+    }
 
-        # Здесь фильтры нужны только для вывода формы на страницу
-        filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
-
-        try:
-            paginator = Paginator(vehisles_list, vehisles_per_page)
-        except TypeError:
-            paginator = Paginator(vehisles_list, 10)
-            vehisles_per_page = 10
-    else:
-        filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
+    if request.GET.get('filters_status') == 'on':
+        filters = VehisleFilter(
+            request.GET, queryset=Vehisle.objects.all().order_by(
+                *ordering(request, ordering_obj))
+        )
 
         try:
             paginator = Paginator(filters.qs, vehisles_per_page)
@@ -141,6 +142,18 @@ def vehisles(request):
             filter_res_error = 'Nothing found by the specified parameters'
         else:
             filter_res_count = len(filters.qs)
+
+    else:
+        vehisles_list = Vehisle.objects.all().order_by(*ordering(request, ordering_obj))
+
+        # Здесь фильтры нужны только для вывода формы на страницу
+        filters = VehisleFilter(request.GET, queryset=Vehisle.objects.all())
+
+        try:
+            paginator = Paginator(vehisles_list, vehisles_per_page)
+        except TypeError:
+            paginator = Paginator(vehisles_list, 10)
+            vehisles_per_page = 10
 
     page_num = request.GET.get('page')
 
@@ -158,9 +171,10 @@ def vehisles(request):
         'penultimate_page': penultimate_page,
         'vehisles_per_page': vehisles_per_page,
         'filters': filters,
+        'ordering_obj': ordering_obj,
     }
 
-    if request.GET.get('filters') != 'off':
+    if request.GET.get('filters_status') == 'on':
         try:  # Проверка на существование переменных с результатами фильтрации
             context['filter_res_count'] = filter_res_count
         except UnboundLocalError:  # Если ничего нет, то в шаблон передается ошибка вместо результатов

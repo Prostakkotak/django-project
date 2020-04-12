@@ -10,20 +10,20 @@ export default function createSlider(obj) {
         let sliderTouchStart = 0,
             sliderTouchEnd = 0;
 
-        obj.list.addEventListener('touchstart', function (e) {
+        obj.list.addEventListener('touchstart', (e) => {
             sliderTouchStart = e.changedTouches[0].screenX;
         });
 
-        obj.list.addEventListener('touchend', function (e) {
+        obj.list.addEventListener('touchend', (e) => {
             sliderTouchEnd = e.changedTouches[0].screenX;
-
-            if (Math.abs(sliderTouchStart - sliderTouchEnd) >= 20) { // Чтобы нажатие на ссылки и т.д. в слайде не засчитывались как свайпы
+            /* Чтобы нажатие на ссылки и т.д. в слайде не засчитывались как свайпы свайп должен быть не короче чем 20 пикселей */
+            if (Math.abs(sliderTouchStart - sliderTouchEnd) >= 20) {
                 if (sliderTouchEnd > sliderTouchStart) scrollLeft();
                 else if (sliderTouchEnd < sliderTouchStart) scrollRight();
             }
         });
 
-        obj.container.addEventListener('click', function (e) {
+        obj.container.addEventListener('click', (e) => {
             let target = e.target;
 
             while (target != this) {
@@ -34,7 +34,7 @@ export default function createSlider(obj) {
             }
         });
 
-        addEventListener("resize", function () {
+        addEventListener("resize", () => {
             let currentItem = Math.floor(-currentScrollWidth / itemWidth); // Вычисления номера слайда отображаемого на экране
 
             if (currentItem > 0) {
@@ -47,7 +47,7 @@ export default function createSlider(obj) {
             itemWidth = obj.items[0].offsetWidth; // Запоминаем новую текущую ширину одного слайда
         });
 
-        let scrollLeft = function() {
+        let scrollLeft = () => {
             if (currentScrollWidth < 0) {
                 let currentItem = Math.floor(-currentScrollWidth / itemWidth);
 
@@ -60,7 +60,7 @@ export default function createSlider(obj) {
             }
         };
 
-        let scrollRight = function() {
+        let scrollRight = () => {
             if (currentScrollWidth > maxScrollWidth) {
                 let currentItem = Math.floor(-currentScrollWidth / itemWidth);
 

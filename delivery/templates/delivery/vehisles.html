@@ -30,8 +30,8 @@
         <ul class="nav__menu">
             <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
             <li class="nav__item"><a href="#" class="nav__link">company</a></li>
-            <li class="nav__item"><a href="{% url 'vehisles' %}?filters=off" class="nav__link">vehisles</a></li>
-            <li class="nav__item"><a href="{% url 'news' %}?ordering=off" class="nav__link">news</a></li>
+            <li class="nav__item"><a href="{% url 'vehisles' %}" class="nav__link">vehisles</a></li>
+            <li class="nav__item"><a href="{% url 'news' %}" class="nav__link">news</a></li>
             <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
         </ul>
     </nav>
@@ -43,10 +43,11 @@
     <div class="filters__header-container">
         <div class="filters__header">Filters</div>
         <div id="filters__button_open" class="filters__button filters__button_open">&gt;</div>
-        <a href="?filters=off&vehisles_per_page={{vehisles_per_page}}&page={{page_obj.number}}"
+        <a href="?vehisles_per_page={{vehisles_per_page}}&page={{page_obj.number}}"
             class="filters__button filters__button_reset">Reset</a>
     </div>
     <form method="GET" class="filters__form" name="filters__form" id='filters__form'>
+        <input type="checkbox" name="filters_status" checked hidden>
         <div class="filters__filter-container">
             <span class="filters__text">Can be booked?</span>{{filters.form.can_be_booked}}
         </div>
@@ -68,7 +69,22 @@
         <div class="filters__filter-container">
             <span class="filters__text">Cargo volume</span>{{filters.form.cargo_volume}}
         </div>
-        <input class="filters__submit" type="submit">
+        <div class="ordering">
+            <div class="ordering__header">Sort by:</div>
+            <div method="GET" class="ordering__form">
+                <ul class="ordering__list">
+                    {% for key, value in ordering_obj.items %}
+                    <li class="ordering__item">
+                        <input {% if 'ordering__'|add:key in request.GET %}checked{% endif %} class="ordering__checkbox"
+                            type="checkbox" name="ordering__{{key}}" id="ordering__{{key}}" hidden>
+                        <label for='ordering__{{key}}' class="ordering__label">&lt;</label>
+                        <div class="ordering__text">{{value}}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <input class="filters__submit" type="submit" value="apply">
     </form>
 </div>
 

@@ -1,0 +1,14 @@
+{% extends 'delivery/base-generation.html' %}
+{% load static %}
+
+{% block title %} <title>{{news_content.title}}</title> {% endblock %}
+
+{% block sidebar %}
+{% include 'delivery/header-news.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+<script src="{% static 'news_single.bundle.js' %}"></script>
+{% endblock %}

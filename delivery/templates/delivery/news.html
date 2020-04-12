@@ -5,38 +5,7 @@
 {% block title %}<title>News</title>{% endblock %}
 
 {% block sidebar %}
-<header id="header" class="header header_news">
-    <div class="logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <div class="logo__title">News</div>
-        <div class="logo__company-name">kallyas</div>
-    </div>
-    <div class="trigram" id="trigram">
-        <div class="trigram__line"></div>
-        <div class="trigram__line"></div>
-        <div class="trigram__line"></div>
-    </div>
-    <div class="header__options">
-        <a href="#" class="header__logout">logout</a>
-        <a href="" class="header__languages">languages</a>
-        <ul class="header__social-networks">
-            <li class="header__icon"><i class="fab fa-telegram-plane"></i></li>
-            <li class="header__icon"><i class="fab fa-vk"></i></li>
-            <li class="header__icon"><i class="fab fa-twitter"></i></li>
-        </ul>
-        <input type="text" class="header__search" placeholder="Search...">
-    </div>
-    </nav>
-    <nav class="nav">
-        <ul class="nav__menu">
-            <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
-            <li class="nav__item"><a href="#" class="nav__link">company</a></li>
-            <li class="nav__item"><a href="{% url 'vehisles' %}?filters=off" class="nav__link">vehisles</a></li>
-            <li class="nav__item"><a href="{% url 'news' %}?ordering=off" class="nav__link">news</a></li>
-            <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
-        </ul>
-    </nav>
-</header>
+{% include 'delivery/header-news.html' %}
 {% endblock %}
 
 {% block content %}
@@ -67,6 +36,7 @@
 <div class="ordering">
     <div class="ordering__header">Sort by:</div>
     <form method="GET" id="ordering__form" class="ordering__form">
+        <input type="checkbox" name="ordering_status" checked hidden>
         <ul class="ordering__list">
             {% for key, value in ordering_obj.items %}
             <li class="ordering__item">
@@ -76,7 +46,21 @@
                 <div class="ordering__text">{{value}}</div>
             </li>
             {% endfor %}
-            <input type="submit" class="ordering__submit">
+            <div class="tags">
+                <div class="tags__header">Tags</div>
+                <div id="tags__open-button" class="tags__open-button">&lt;</div>
+                <ul id="tags__list" class="tags__list">
+                    {% for tag in tags_list %}
+                    <li class="tags__item">
+                        <input {% if 'tags__'|add:tag.tagname in request.GET %}checked{% endif %} type="checkbox"
+                            class="tags__checkbox" name="tags__{{tag}}" id="tags__{{tag}}" hidden>
+                        <label for="tags__{{tag}}" class="tags__label">{{tag}}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <input type="submit" class="ordering__submit" value="apply">
+            <a href="?news_per_page={{news_per_page}}&page={{page_obj.number}}" class="ordering__reset">reset</a>
         </ul>
     </form>
 </div>
@@ -97,6 +81,7 @@
                 </div>
                 <div maxlength=100 class="news-content__text">{{news.short_description}}</div>
                 <div class="news-content__pub-date">{{news.pub_date}}</div>
+                <div class="news-content__views"><i class="far fa-eye"></i>{{news.views}}</div>
             </div>
         </li>
         {% else %}
@@ -110,6 +95,7 @@
                     {{news.short_description}}
                 </div>
                 <div class="news-content__pub-date">{{news.pub_date}}</div>
+                <div class="news-content__views"><i class="far fa-eye"></i>{{news.views}}</div>
             </div>
         </li>
         {% endif %}
