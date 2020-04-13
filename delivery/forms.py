@@ -1,5 +1,5 @@
 from django import forms
-from .models import QuickQuote
+from .models import QuickQuote, NewsComment
 
 
 class QuickQuoteForm(forms.ModelForm):
@@ -45,4 +45,18 @@ class QuickQuoteForm(forms.ModelForm):
                 'value': '',
                 'placeholder': 'Your message'
             }),
+        }
+
+
+class NewsCommentForm(forms.ModelForm):
+    class Meta:
+        model = NewsComment
+        fields = (
+            'message',
+        )
+        widgets = {
+            'message': forms.Textarea(attrs={
+                'class': 'news-comments__textarea',
+                'placeholder': 'Your message'
+            })
         }

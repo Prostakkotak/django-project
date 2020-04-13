@@ -66,6 +66,16 @@ class NewsTag(models.Model):
         return self.tagname
 
 
+class NewsComment(models.Model):
+    message = models.TextField()
+    news = models.ForeignKey(
+        'News', on_delete=models.CASCADE, related_name='news_comment')
+    pub_date = models.DateTimeField(default=datetime.now(), editable=False)
+
+    class Meta:
+        ordering = ['-pub_date', ]
+
+
 class News(models.Model):
     title = models.CharField(max_length=50)
     title_image = models.ImageField(default='none')

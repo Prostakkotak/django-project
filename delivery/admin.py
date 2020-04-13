@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment
 
 @admin.register(Vehisle)
 class VehisleAdmin(admin.ModelAdmin) :
@@ -24,3 +24,4 @@ class NewsAdmin(admin.ModelAdmin) :
 
 admin.site.register(QuickQuote)
 admin.site.register(NewsTag)
+admin.site.register(NewsComment)

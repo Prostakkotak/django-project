@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404, Http404
-from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag
-from .forms import QuickQuoteForm
+from django.shortcuts import render, get_object_or_404, Http404, redirect
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment
+from .forms import QuickQuoteForm, NewsCommentForm
 from .filters import VehisleFilter
 from .ordering import ordering
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import F, Q
+from django.utils import timezone
 
 
 def index(request):
@@ -48,15 +49,49 @@ def delivery_method(request, method):
 
 
 def news_single(request, pk):
+    context = {}
+
     news_content = get_object_or_404(News, pk=pk)
+
+    # инкрементируем счётчик просмотров и обновляем поле в базе данных
     News.objects.filter(id=pk).update(views=F('views')+1)
 
-    return render(request, 'delivery/news-single.html', context={
+    # Сбор тегов для поиска похожих статей
+    tags_get = list(news_content.tags.all())
+    news_list = News.objects.exclude(id=pk)
+
+    for t in tags_get:
+        news_list = news_list.filter(tags__tagname__contains=t)
+
+    if request.method == 'POST':
+        news_comment_form = NewsCommentForm(data=request.POST)
+
+        if news_comment_form.is_valid():
+            news_comment = news_comment_form.save(commit=False)
+            news_comment.news = news_content
+            news_comment.save()
+            news_comment_form = NewsCommentForm()
+    else:
+        news_comment_form = NewsCommentForm()
+
+    news_list = news_list[:4]
+
+    if len(news_list) == 0:
+        context['similar_news_error'] = 'There is nothing like that'
+
+    context.update({
         'news_content': news_content,
+        'similar_news_list': news_list,
+        'similar_news_tags': tags_get,
+        'news_comment_form': news_comment_form,
     })
+
+    return render(request, 'delivery/news-single.html', context)
 
 
 def news(request):
+
+    context = {}
 
     ordering_obj = {
         'pub_date': 'pub date',
@@ -90,7 +125,15 @@ def news(request):
         paginator = Paginator(news_list, 10)
         news_per_page = 10
 
-    important_news_list = News.objects.filter(important_status=True)
+    important_news_list = News.objects.filter(
+        important_status=True,
+        pub_date__range=[  # Выводятся новости только за последние 7 дней
+            timezone.now() - timezone.timedelta(7), timezone.now()
+        ]
+    )
+
+    if len(important_news_list) == 0:
+        context['important_news_empty'] = 'Nothing important in last 7 days'
 
     page_num = request.GET.get('page')
 
@@ -103,7 +146,7 @@ def news(request):
 
     penultimate_page = page_obj.paginator.num_pages - 1
 
-    return render(request, 'delivery/news.html', context={
+    context.update({
         'page_obj': page_obj,
         'important_news_list': important_news_list,
         'penultimate_page': penultimate_page,
@@ -112,8 +155,12 @@ def news(request):
         'tags_list': tags_list,
     })
 
+    return render(request, 'delivery/news.html', context)
+
 
 def vehisles(request):
+
+    context = {}
 
     vehisles_per_page = request.GET.get('vehisles_per_page')
 
@@ -166,18 +213,18 @@ def vehisles(request):
 
     penultimate_page = page_obj.paginator.num_pages - 1
 
-    context = {
-        'page_obj': page_obj,
-        'penultimate_page': penultimate_page,
-        'vehisles_per_page': vehisles_per_page,
-        'filters': filters,
-        'ordering_obj': ordering_obj,
-    }
-
     if request.GET.get('filters_status') == 'on':
         try:  # Проверка на существование переменных с результатами фильтрации
             context['filter_res_count'] = filter_res_count
         except UnboundLocalError:  # Если ничего нет, то в шаблон передается ошибка вместо результатов
             context['filter_res_error'] = filter_res_error
+
+    context.update({
+        'page_obj': page_obj,
+        'penultimate_page': penultimate_page,
+        'vehisles_per_page': vehisles_per_page,
+        'filters': filters,
+        'ordering_obj': ordering_obj,
+    })
 
     return render(request, 'delivery/vehisles.html', context)

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+{% if not important_news_empty %}
 <div id="important-news" class="important-news">
     <div class="title title_important-news">
         <div class="title__header">Important</div>
@@ -32,6 +33,7 @@
         {% endfor %}
     </ul>
 </div>
+{% endif %}
 
 <div class="ordering">
     <div class="ordering__header">Sort by:</div>

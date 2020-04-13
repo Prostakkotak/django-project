@@ -15,7 +15,7 @@ wrapper.appendChild(bodyShadow);
 
 bodyShadow = document.getElementById('body-shadow');
 
-header.addEventListener('click', function (e) {
+header.addEventListener('click', (e) => {
 
     target = e.target;
 
@@ -32,7 +32,7 @@ header.addEventListener('click', function (e) {
     }
 });
 
-addEventListener('resize', function () {
+addEventListener('resize', () => {
     if (document.body.offsetWidth >= 750) {
 
         wrapper.style.marginTop = '';

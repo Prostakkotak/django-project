@@ -8,7 +8,62 @@
 {% endblock %}
 
 {% block content %}
+<div class="news-single">
+    <div class="news-single__title-image"><img src="{{news_content.title_image.url}}" alt=""></div>
+    <div class="news-single__title">{{news_content.title}}</div>
+    <div class="news-single__views"><i class="far fa-eye"></i>{{news_content.views}}</div>
+    <div class="news-single__content">
+        {{news_content.content|safe}}
+    </div>
+    <div class="news-single__tags">
+        <div class="news-single__header">Tags</div>
+        <ul class="news-single__tags-list">
+            {% for tag in news_content.tags.all %}
+            <li class="news-single__tags-item">
+                {{tag}}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
+{% if not similar_news_error %}
+<div class="similar-news">
+    <div class="similar-news__header">Similar news</div>
+    <ul class="similar-news__list">
+        {% for similar_news in similar_news_list %}
+        <li class="similar-news__item">
+            <img src="{{similar_news.title_image.url}}" alt="" class="similar-news__image">
+            <div class="similar-news__shadow"></div>
+            <a href="{% url 'news_single' pk=similar_news.pk %}" class="similar-news__title">{{similar_news.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="news-comments">
+    <div class="news-comments__title">Comments</div>
+    <form method="POST" class="news-comments__form">
+        {% csrf_token %}
+        <div class="news-comments__input-block news-comments__input-block_message">
+            <div class="news-comments__input-name">Message</div>
+            {{news_comment_form.message}}
+        </div>
+        <div class="news-comments__submit-block">
+            <input type="submit" class="news-comments__submit">
+        </div>
+    </form>
+
+    <ul class="news-comments__list">
+        {% for comment in news_content.news_comment.all %}
+        <li class="news-comments__item">
+            <div class="news-comments__pub-date">{{comment.pub_date}}</div>
+            <div class="news-comments__message">{{comment.message}}</div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 <script src="{% static 'news_single.bundle.js' %}"></script>
 {% endblock %}
