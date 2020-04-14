@@ -1,7 +1,6 @@
 from django import forms
 from .models import QuickQuote, NewsComment
 
-
 class QuickQuoteForm(forms.ModelForm):
     class Meta:
         model = QuickQuote

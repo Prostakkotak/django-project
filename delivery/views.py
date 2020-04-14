@@ -68,6 +68,7 @@ def news_single(request, pk):
 
         if news_comment_form.is_valid():
             news_comment = news_comment_form.save(commit=False)
+            news_comment.user = request.user
             news_comment.news = news_content
             news_comment.save()
             news_comment_form = NewsCommentForm()

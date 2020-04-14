@@ -1,7 +1,7 @@
 from django.db import models
 from tinymce.models import HTMLField
 from datetime import datetime
-
+from django.contrib.auth.models import User
 
 class DeliveryClass(models.Model):
     delivery_class = models.CharField(max_length=50, default='econom')
@@ -71,6 +71,7 @@ class NewsComment(models.Model):
     news = models.ForeignKey(
         'News', on_delete=models.CASCADE, related_name='news_comment')
     pub_date = models.DateTimeField(default=datetime.now(), editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['-pub_date', ]
@@ -86,6 +87,8 @@ class News(models.Model):
         default=False, help_text='Are this news important or not')
     views = models.IntegerField(default=0, editable=False)
     tags = models.ManyToManyField(NewsTag)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['-pub_date']
@@ -103,3 +106,4 @@ class QuickQuote(models.Model):
     phone = models.IntegerField(default=0)
     service = models.CharField(max_length=50, default='Service')
     message = models.CharField(max_length=200, default='Message')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

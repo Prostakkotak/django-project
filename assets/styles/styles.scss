@@ -121,7 +121,7 @@ body {
 	text-align: right;
 }
 
-.header__logout,
+.header__login,
 .header__languages {
 	display: inline-block;
 	margin: 0 5px;
@@ -146,7 +146,7 @@ body {
 	cursor: pointer;
 }
 
-.header__logout:hover,
+.header__login:hover,
 .header__languages:hover,
 .header__icon:hover {
 	color: $primary-color-dark-blue;
@@ -1547,6 +1547,23 @@ body {
 	margin: 0 auto;
 }
 
+.news-comments__auth-error {
+	display: block;
+	margin: 20px 0;
+	padding: 15px 0;
+	border: 1px solid $primary-color-light-blue;
+	border-radius: 10px;
+	text-align: center;
+	color: $primary-color-light-blue;
+	transition: 200ms;
+}
+
+.news-comments__auth-error:hover {
+	color: #000000;
+	border-color: transparent;
+	transition: 200ms;
+}
+
 .news-comments__title {
 	font-family: $montserrat-bold-font;
 	font-size: 16px;
@@ -1586,8 +1603,11 @@ body {
 .news-comments__pub-date {
 	margin-bottom: 7px;
 	font-size: 14px;
-	text-transform: uppercase;
 	color: rgba(0, 0, 0, .8);
+}
+
+.news-comments__username {
+	font-family: $montserrat-bold-font;
 }
 
 .news-comments__message {
@@ -2019,6 +2039,81 @@ body {
 	color: #ffffff;
 }
 
+.login {
+	margin: 30px auto;
+	padding: 0 5px;
+	max-width: 1336px;
+	text-align: center;
+}
+
+.login__error {
+	margin: 10px 0;
+	padding: 15px 0;
+	border: 1px solid rgb(224, 18, 18);
+	border-radius: 10px;
+	font-size: 14px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: rgba(224, 18, 18, .05);
+	color: rgb(224, 18, 18);
+}
+
+.login-form {
+	display: inline-block;
+}
+
+.login-form__input-block {
+	position: relative;
+	padding: 10px 15px;
+	text-align: left;
+
+	input {
+		border: 1px solid $primary-color-dark-blue;
+		border-radius: 3px;
+		padding: 3px;
+		margin: 10px 0;
+	}
+}
+
+.login-form__label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 13px;
+	text-transform: uppercase;
+}
+
+.login-form__submit {
+	padding: 5px 10px;
+	border: 0;
+	border-radius: 3px;
+	text-transform: uppercase;
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
+}
+
+.login-form__submit:hover {
+	background-color: $primary-color-dark-blue;
+	transition: 200ms;
+	cursor: pointer;
+}
+
+.login__pass-reset {
+	margin: 8px 0;
+	
+
+	a {
+		color: $primary-color-light-blue;
+		transition: 200ms;
+	}
+
+	a:hover {
+		color: #000000;
+		transition: 200ms;
+	}
+}
+
 @media screen and (max-width: 1336px) {
 	.header {
 		margin-left: 0;
@@ -2429,13 +2524,13 @@ body {
 		color: $primary-color-light-blue;
 	}
 
-	.header__logout,
+	.header__login,
 	.header__languages {
 		padding: 5px 10px 5px 0;
 		margin: 0 0 30px 0;
 	}
 
-	.header__logout:hover,
+	.header__login:hover,
 	.header__languages:hover {
 		color: #ffffff;
 	}
