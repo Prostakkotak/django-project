@@ -1437,6 +1437,7 @@ body {
 }
 
 .news-single {
+	position: relative;
 	max-width: 1336px;
 	margin: 0 auto;
 	padding: 30px 5px;
@@ -1474,6 +1475,20 @@ body {
 	text-transform: uppercase;
 }
 
+.news-single__delete {
+	position: absolute;
+	bottom: 30px;
+	right: 0;
+	color: red;
+	transition: 200ms;
+}
+
+.news-single__delete:hover {
+	color: #000000;
+	transition: 200ms;
+	cursor: pointer;
+}
+
 .news-single__tags {
 	margin-top: 30px;
 }
@@ -1486,6 +1501,60 @@ body {
 	text-transform: uppercase;
 	background-color: $primary-color-dark-blue;
 	color: #ffffff;
+}
+
+.delete-pop-up {
+	position: fixed;
+	top: 40%;
+	left: calc((100% - 300px) / 2);
+	width: 300px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: #ffffff;
+	z-index: 9999;
+}
+
+.delete-pop-up.hidden {
+	display: none;
+}
+
+.delete-pop-up__confirmation {
+	display: block;
+	margin: 15px;
+	padding: 5px 0;
+	font-size: 18px;
+	text-decoration: none;
+	border: 1px solid green;
+	border-radius: 10px;
+	color: green;
+	transition: 200ms;
+}
+
+.delete-pop-up__confirmation:hover {
+	color: #ffffff;
+	background-color: green;
+	transition: 200ms;
+}
+
+.delete-pop-up__warning {
+	margin: 15px;
+	font-size: 14px;
+}
+
+.delete-pop-up__cancel {
+	margin: 15px;
+	padding: 5px 0;
+	border-radius: 10px;
+	border: 1px solid red;
+	color: red;
+	transition: 200ms;
+}
+
+.delete-pop-up__cancel:hover {
+	background-color: red;
+	color: #ffffff;
+	transition: 200ms;
+	cursor: pointer;
 }
 
 .similar-news {
@@ -1596,8 +1665,22 @@ body {
 }
 
 .news-comments__item {
+	position: relative;
 	padding: 20px 0;
 	border-top: 2px solid rgba(0, 0, 0, .2);
+}
+
+.news-comments__item-delete {
+	position: absolute;
+	right: 7px;
+	top: 10px;
+	color: red;
+	transition: 200ms;
+}
+
+.news-comments__item-delete:hover {
+	color: #000000;
+	transition: 200ms;
 }
 
 .news-comments__pub-date {

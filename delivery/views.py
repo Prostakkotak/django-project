@@ -89,8 +89,26 @@ def news_single(request, pk):
 
     return render(request, 'delivery/news-single.html', context)
 
+def news_single_delete(request, pk):
+    news = News.objects.get(pk=pk)
 
-def news(request):
+    if request.user.has_perm('can_delete_news') or request.user.pk == news.user.pk:
+        news.delete()
+
+    return redirect('news')
+
+
+def delete_news_comment(request, pk):
+    comment = NewsComment.objects.get(pk=pk)
+
+    if request.user.has_perm('can_delete_news_comment') or comment.user.pk == request.user.pk:
+        comment.delete()
+
+    return_path = request.META.get('HTTP_REFERER', '/')
+    return redirect(return_path)
+
+
+def news(request, comment_delete_res=''):
 
     context = {}
 

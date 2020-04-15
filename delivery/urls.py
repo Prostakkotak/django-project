@@ -7,6 +7,8 @@ urlpatterns = [
     path('<method>', views.delivery_method, name='delivery_method'),
     path('news/', views.news, name='news'),
     path('news_single/<pk>/', views.news_single, name='news_single'),
+    path('news_single_delete/<pk>', views.news_single_delete, name='news_single_delete'),
+    path('delete_news_comment/<pk>/', views.delete_news_comment, name='delete_news_comment'),
     path('vehisles/', views.vehisles, name='vehisles'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

@@ -9,7 +9,7 @@ module.exports = {
     entry: {
         index: ['@js_modules/index.js', '@js_modules/header.js'],
         news: ['@js_modules/news.js', '@js_modules/header.js'],
-        news_single: ['@js_modules/header.js'],
+        news_single: ['@js_modules/header.js', '@js_modules/news-single.js'],
         vehisles: ['@js_modules/vehisles.js', '@js_modules/header.js'],
         styles: '@styles/styles.scss',
     },
