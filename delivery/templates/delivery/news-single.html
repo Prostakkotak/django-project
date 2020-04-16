@@ -19,13 +19,7 @@
         {{news_content.content|safe}}
     </div>
     {% if perms.delivery.can_delete_news or user.pk == news_content.user.pk %}
-    <div id="delete-pop-up__link_news" class="news-single__delete">delete</div>
-    <div id="delete-pop-up_news" class="delete-pop-up">
-        <div class="delete-pop-up__warning">Are you sure you want to delete this news?</div>
-        <a href="{% url 'news_single_delete' pk=news_content.pk %}" id="delete-pop-up__confirmation_news"
-            class="delete-pop-up__confirmation">Yes</a>
-        <div id="delete-pop-up__cancel_news" class="delete-pop-up__cancel">Cancel</div>
-    </div>
+    <a href="{% url 'news_single_delete' pk=news_content.pk %}" id="delete-pop-up__link_news" class="news-single__delete">Delete this news</a>
     {% endif %}
     <div class="news-single__tags">
         <div class="news-single__header">Tags</div>

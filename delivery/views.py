@@ -4,6 +4,9 @@ from .forms import QuickQuoteForm, NewsCommentForm
 from .filters import VehisleFilter
 from .ordering import ordering
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import F, Q
 from django.utils import timezone
 
@@ -13,20 +16,43 @@ def index(request):
     delivery_class_list = DeliveryClass.objects.all()
     news_list = News.objects.all()[:3]
 
-    if request.method == 'POST':
-        quick_quote_form = QuickQuoteForm(request.POST)
+    quick_quote_form = QuickQuoteForm(data=request.POST or None)
 
-        if quick_quote_form.is_valid():
-            quick_quote_form.save()
-            quick_quote_form = QuickQuoteForm()
-    else:
-        quick_quote_form = QuickQuoteForm()
+    if request.method == 'POST' and quick_quote_form.is_valid():
+        quick_quote_form.save()
+        return redirect('index')
 
     return render(request, 'delivery/index.html', context={
         'vehisle_list': vehisle_list,
         'delivery_class_list': delivery_class_list,
         'news_list': news_list,
         'quick_quote_form': quick_quote_form,
+    })
+
+
+def registration(request):
+    form = UserCreationForm(data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        u_name = form.cleaned_data.get('username')
+        u_pass = form.cleaned_data.get('password2')
+
+        form.save()
+
+        user = authenticate(
+            username=u_name,
+            password=u_pass
+        )
+
+        my_group = Group.objects.get(name='users')
+        my_group.user_set.add(user) # Add new user to default users group
+
+        login(request, user) # User signing in
+
+        return redirect('index')
+        
+    return render(request, 'registration/registration.html', context={
+        'form': form,
     })
 
 
@@ -60,20 +86,18 @@ def news_single(request, pk):
     tags_get = list(news_content.tags.all())
     news_list = News.objects.exclude(id=pk)
 
+    news_comment_form = NewsCommentForm(data=request.POST or None)
+
     for t in tags_get:
         news_list = news_list.filter(tags__tagname__contains=t)
 
-    if request.method == 'POST':
-        news_comment_form = NewsCommentForm(data=request.POST)
+    if request.method == 'POST' and news_comment_form.is_valid():
+        news_comment = news_comment_form.save(commit=False)
+        news_comment.user = request.user
+        news_comment.news = news_content
+        news_comment.save()
 
-        if news_comment_form.is_valid():
-            news_comment = news_comment_form.save(commit=False)
-            news_comment.user = request.user
-            news_comment.news = news_content
-            news_comment.save()
-            news_comment_form = NewsCommentForm()
-    else:
-        news_comment_form = NewsCommentForm()
+        return redirect('news_single', pk=pk)
 
     news_list = news_list[:4]
 

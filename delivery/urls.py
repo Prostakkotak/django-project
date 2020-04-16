@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete_news_comment/<pk>/', views.delete_news_comment, name='delete_news_comment'),
     path('vehisles/', views.vehisles, name='vehisles'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/registration/', views.registration, name='registration'),
 ]
