@@ -2,6 +2,7 @@ from django.db import models
 from tinymce.models import HTMLField
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
 
 class DeliveryClass(models.Model):
     delivery_class = models.CharField(max_length=50, default='econom')

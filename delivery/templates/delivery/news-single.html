@@ -18,8 +18,11 @@
     <div class="news-single__content">
         {{news_content.content|safe}}
     </div>
-    {% if perms.delivery.can_delete_news or user.pk == news_content.user.pk %}
-    <a href="{% url 'news_single_delete' pk=news_content.pk %}" id="delete-pop-up__link_news" class="news-single__delete">Delete this news</a>
+    {% if user.is_authenticated %}
+    {% if perms.delivery.delete_news or user.pk == news_content.user.pk %}
+    <a href="{% url 'news_single_delete' pk=news_content.pk %}" id="delete-pop-up__link_news"
+        class="news-single__delete">Delete this news</a>
+    {% endif %}
     {% endif %}
     <div class="news-single__tags">
         <div class="news-single__header">Tags</div>
@@ -68,11 +71,17 @@
     <ul class="news-comments__list">
         {% for comment in news_content.news_comment.all %}
         <li class="news-comments__item">
-            {% if perms.delivery.can_delete_news_comment or comment.user.pk == user.pk %}
+            {% if perms.delivery.delete_newscomment or comment.user.pk == user.pk %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
             {% endif %}
-            <div class="news-comments__pub-date">{{comment.pub_date}} by: <span
-                    class="news-comments__username">{{comment.user.username}}</span></div>
+            <div class="news-comments__pub-date">{{comment.pub_date}} by:
+                {% if user.pk == comment.user.pk %}
+                <span class="news-comments__username"><span
+                        class="news-comments__username_light-colored">You</span> ({{user.username}})</span>
+                {% else %}
+                <span class="news-comments__username">{{comment.user.username}}</span>
+                {% endif %}
+            </div>
             <div class="news-comments__message">{{comment.message}}</div>
         </li>
         {% endfor %}
