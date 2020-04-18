@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_template_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,10 +17,10 @@
     <div class="wrapper">
 
         {% block sidebar %}
-        <header id="header" class="header">
+        <header id="header" class="header header_news">
             <div class="logo">
                 <img src="{% static 'images/logo.png' %}" alt="Logo">
-                <div class="logo__title">Cargo</div>
+                <div class="logo__title">kallyas</div>
                 <div class="logo__company-name">kallyas</div>
             </div>
             <div class="trigram" id="trigram">
@@ -44,6 +45,11 @@
             </nav>
             <nav class="nav">
                 <ul class="nav__menu">
+                    {% if user.is_authenticated %}
+                    {% if request.user|has_group:'news_moderators' or request.user|has_group:'news_admins' %}
+                    <li class="nav__item"><a href="{% url 'control' %}" class="nav__link">control</a></li>
+                    {% endif %}
+                    {% endif %}
                     <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
                     <li class="nav__item"><a href="#" class="nav__link">company</a></li>
                     <li class="nav__item"><a href="{% url 'vehisles' %}" class="nav__link">vehisles</a></li>

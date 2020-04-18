@@ -1,0 +1,14 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+{% load custom_template_tags %}
+
+{% block content %}
+<div class="offer-news">
+    <form method="POST" class="offer-news__form">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" class="offer-news__submit">
+    </form>
+</div>
+{% endblock %}

@@ -15,21 +15,11 @@ wrapper.appendChild(bodyShadow);
 
 bodyShadow = document.getElementById('body-shadow');
 
-header.addEventListener('click', (e) => {
-
-    target = e.target;
-
-    while (target != this) {
-
-        if (target == trigram) {
-            trigram.classList.toggle('open');
-            document.getElementsByClassName('nav')[0].classList.toggle('open');
-            document.getElementsByClassName('header__options')[0].classList.toggle('open');
-            bodyShadow.classList.toggle('active');
-        }
-
-        target = target.parentNode;
-    }
+trigram.addEventListener('click', () => {
+    trigram.classList.toggle('open');
+    document.getElementsByClassName('nav')[0].classList.toggle('open');
+    document.getElementsByClassName('header__options')[0].classList.toggle('open');
+    bodyShadow.classList.toggle('active');
 });
 
 addEventListener('resize', () => {

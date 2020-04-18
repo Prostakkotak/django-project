@@ -1,11 +1,8 @@
 {% extends 'delivery/base-generation.html' %}
 {% load static %}
+{% load custom_template_tags %}
 
 {% block title %} <title>{{news_content.title}}</title> {% endblock %}
-
-{% block sidebar %}
-{% include 'delivery/header-news.html' %}
-{% endblock %}
 
 {% block content %}
 {% if comment_delete_res %}
@@ -50,7 +47,6 @@
     </ul>
 </div>
 {% endif %}
-
 <div class="news-comments">
     <div class="news-comments__title">Comments</div>
     {% if user.is_authenticated %}
@@ -72,14 +68,33 @@
         {% for comment in news_content.news_comment.all %}
         <li class="news-comments__item">
             {% if perms.delivery.delete_newscomment or comment.user.pk == user.pk %}
+            {% if not comment.user|has_group:'news_moderators' or comment.user|has_group:'news_admins' %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
+            {% elif comment.user.pk == user.pk %}
+            <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
+            {% endif %}
             {% endif %}
             <div class="news-comments__pub-date">{{comment.pub_date}} by:
                 {% if user.pk == comment.user.pk %}
-                <span class="news-comments__username"><span
-                        class="news-comments__username_light-colored">You</span> ({{user.username}})</span>
+                <span class="news-comments__username">
+                    <span class="news-comments__username_light-colored">You</span> ({{user.username}})
+                </span>
                 {% else %}
                 <span class="news-comments__username">{{comment.user.username}}</span>
+                {% endif %}
+                </span>
+                {% if comment.user|has_group:'users' %}
+                <div class="news-comments__user-authority news-comments__user-authority_user">
+                    user
+                </div>
+                {% elif comment.user|has_group:'news_moderators' %}
+                <div class="news-comments__user-authority news-comments__user-authority_moderator">
+                    moderator
+                </div>
+                {% elif comment.user|has_group:'news_admins' %}
+                <div class="news-comments__user-authority news-comments__user-authority_admin">
+                    admin
+                </div>
                 {% endif %}
             </div>
             <div class="news-comments__message">{{comment.message}}</div>

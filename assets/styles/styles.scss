@@ -1697,6 +1697,27 @@ body {
 	color: $primary-color-light-blue;
 }
 
+.news-comments__user-authority {
+	display: inline-block;
+	padding: 2px 3px;
+	border-radius: 3px;
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #ffffff;
+}
+
+.news-comments__user-authority_user {
+	background-color: rgba(0, 0, 0, .4);
+}
+
+.news-comments__user-authority_moderator {
+	background-color: #008000;
+}
+
+.news-comments__user-authority_admin {
+	background-color: red;
+}
+
 .news-comments__message {
 	padding-left: 7px;
 	font-size: 16px;
@@ -2017,6 +2038,37 @@ body {
 	font-size: 20px;
 	text-align: center;
 	text-transform: uppercase;
+}
+
+.offer-news {
+	max-width: 1336px;
+	margin: 0 auto;
+	padding: 40px 5px;
+}
+
+.offer-news-button {
+	max-width: 1336px;
+	margin: 0 auto;
+	padding: 10px 5px;
+	border-top: 1px solid rgba(0, 0, 0, .2);
+}
+
+.offer-news-button__link {
+	display: inline-block;
+	padding: 5px 15px;
+	border-radius: 3px;
+	font-size: 14px;
+	text-transform: uppercase;
+	text-decoration: none;
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
+}
+
+.offer-news__link:hover {
+	background-color: $primary-color-dark-blue;
+	transition: 200ms;
+	cursor: pointer;
 }
 
 .vehisles {

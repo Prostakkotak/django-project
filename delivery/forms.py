@@ -1,5 +1,5 @@
 from django import forms
-from .models import QuickQuote, NewsComment
+from .models import QuickQuote, NewsComment, ProposedNews
 
 class QuickQuoteForm(forms.ModelForm):
     class Meta:
@@ -44,6 +44,22 @@ class QuickQuoteForm(forms.ModelForm):
                 'value': '',
                 'placeholder': 'Your message'
             }),
+        }
+
+
+class NewsProposeForm(forms.ModelForm):
+    class Meta:
+        model = ProposedNews
+        fields = (
+            'title',
+            'title_image',
+            'short_description',
+            'content',
+            'important_status',
+            'tags',
+        )
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple()
         }
 
 

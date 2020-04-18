@@ -3,45 +3,6 @@
 
 {% block title %}<title>Vehisles</title>{% endblock %}
 
-{% block sidebar %}
-<header id="header" class="header header_vehisles">
-    <div class="logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <div class="logo__title">Vehisles</div>
-        <div class="logo__company-name">kallyas</div>
-    </div>
-    <div class="trigram" id="trigram">
-        <div class="trigram__line"></div>
-        <div class="trigram__line"></div>
-        <div class="trigram__line"></div>
-    </div>
-    <div class="header__options">
-        {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}?next={{request.path}}" class="header__login">logout</a>
-        {% else %}
-        <a href="{% url 'login' %}?next={{request.path}}" class="header__login">login</a>
-        {% endif %}
-        <a href="" class="header__languages">languages</a>
-        <ul class="header__social-networks">
-            <li class="header__icon"><i class="fab fa-telegram-plane"></i></li>
-            <li class="header__icon"><i class="fab fa-vk"></i></li>
-            <li class="header__icon"><i class="fab fa-twitter"></i></li>
-        </ul>
-        <input type="text" class="header__search" placeholder="Search...">
-    </div>
-    </nav>
-    <nav class="nav">
-        <ul class="nav__menu">
-            <li class="nav__item"><a href="{% url 'index' %}" class="nav__link">home</a></li>
-            <li class="nav__item"><a href="#" class="nav__link">company</a></li>
-            <li class="nav__item"><a href="{% url 'vehisles' %}" class="nav__link">vehisles</a></li>
-            <li class="nav__item"><a href="{% url 'news' %}" class="nav__link">news</a></li>
-            <li class="nav__item"><a href="#" class="nav__link">contact</a></li>
-        </ul>
-    </nav>
-</header>
-{% endblock %}
-
 {% block content %}
 <div class="filters">
     <div class="filters__header-container">

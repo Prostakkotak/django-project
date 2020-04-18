@@ -93,8 +93,30 @@ class News(models.Model):
 
     class Meta:
         ordering = ['-pub_date']
-        verbose_name = 'News'
+        verbose_name = ' News'
         verbose_name_plural = 'News'
+
+    def __str__(self):
+        return self.title
+
+
+class ProposedNews(models.Model):
+    title = models.CharField(max_length=50)
+    title_image = models.ImageField(default='none')
+    short_description = models.CharField(max_length=200, default='Description')
+    content = HTMLField()
+    pub_date = models.DateTimeField(default=datetime.now(), blank=True)
+    important_status = models.BooleanField(
+        default=False, help_text='Are this news important or not')
+    views = models.IntegerField(default=0, editable=False)
+    tags = models.ManyToManyField(NewsTag)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-pub_date']
+        verbose_name = 'Proposed news'
+        verbose_name_plural = 'Proposed news'
 
     def __str__(self):
         return self.title

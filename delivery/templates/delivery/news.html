@@ -4,11 +4,8 @@
 
 {% block title %}<title>News</title>{% endblock %}
 
-{% block sidebar %}
-{% include 'delivery/header-news.html' %}
-{% endblock %}
-
 {% block content %}
+
 {% if not important_news_empty %}
 <div id="important-news" class="important-news">
     <div class="title title_important-news">
@@ -18,7 +15,6 @@
     <div id="important-news__button_right" class="important-news__button important-news__button_right">&gt;</div>
     <ul id="important-news__list" class="important-news__list">
         {% for important_news in important_news_list %}
-        {% if important_news.important_status %}
 
         <li class="important-news__item">
             <img src="{{important_news.title_image.url}}" alt="" class="important-news__image">
@@ -29,7 +25,6 @@
             <div class="important-news__shadow"></div>
         </li>
 
-        {% endif %}
         {% endfor %}
     </ul>
 </div>
@@ -66,6 +61,11 @@
         </ul>
     </form>
 </div>
+{% if user.is_authenticated %}
+<div class="offer-news-button">
+    <a href="{% url 'offer_news' %}" class="offer-news-button__link">Offer news</a>
+</div>
+{% endif %}
 
 <div class="news-content">
     <div class="title title_news-content">

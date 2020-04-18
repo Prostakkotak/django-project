@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, Http404, redirect
 from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment
-from .forms import QuickQuoteForm, NewsCommentForm
+from .forms import QuickQuoteForm, NewsCommentForm, NewsProposeForm
 from .filters import VehisleFilter
 from .ordering import ordering
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -29,6 +29,9 @@ def index(request):
         'quick_quote_form': quick_quote_form,
     })
 
+def control(request):
+    return render(request, 'delivery/control-panel.html')
+
 
 def registration(request):
     form = UserCreationForm(data=request.POST or None)
@@ -44,13 +47,14 @@ def registration(request):
             password=u_pass
         )
 
+        # Добавляем нового пользователя в стандартную группу users
         my_group = Group.objects.get(name='users')
-        my_group.user_set.add(user) # Add new user to default users group
+        my_group.user_set.add(user)
 
-        login(request, user) # User signing in
+        login(request, user)  # Логиним пользователя после успешной регистрации
 
         return redirect('index')
-        
+
     return render(request, 'registration/registration.html', context={
         'form': form,
     })
@@ -113,6 +117,26 @@ def news_single(request, pk):
 
     return render(request, 'delivery/news-single.html', context)
 
+
+def offer_news(request):
+    context = {}
+
+    form = NewsProposeForm(data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        proposed_news = form.save(commit=False)
+        proposed_news.user = request.user
+        proposed_news.save()
+
+        return redirect('news')
+
+    context.update({
+        'form': form,
+    })
+
+    return render(request, 'delivery/offer-news.html', context)
+
+
 def news_single_delete(request, pk):
     news = News.objects.get(pk=pk)
 
@@ -135,7 +159,7 @@ def delete_news_comment(request, pk):
 def news(request):
 
     context = {}
-
+    
     ordering_obj = {
         'pub_date': 'pub date',
         'title': 'title',
@@ -169,9 +193,9 @@ def news(request):
         news_per_page = 10
 
     important_news_list = News.objects.filter(
-        important_status=True,
+        important_status = True,
         pub_date__range=[  # Выводятся новости только за последние 7 дней
-            timezone.now() - timezone.timedelta(7), timezone.now()
+            timezone.now() - timezone.timedelta(days=7), timezone.now() + timezone.timedelta(days=1)
         ]
     )
 
