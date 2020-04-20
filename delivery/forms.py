@@ -1,4 +1,5 @@
 from django import forms
+from tinymce.widgets import  TinyMCE
 from .models import QuickQuote, NewsComment, ProposedNews
 
 class QuickQuoteForm(forms.ModelForm):
@@ -59,7 +60,24 @@ class NewsProposeForm(forms.ModelForm):
             'tags',
         )
         widgets = {
-            'tags': forms.CheckboxSelectMultiple()
+            'title': forms.TextInput(attrs={
+                'class': 'offer-news-form__input',
+                'placeholder': 'News title',
+            }),
+            'title_image': forms.FileInput(attrs={
+                'class': 'offer-news-form__image-input',
+            }),
+            'short_description': forms.TextInput(attrs={
+                'class': 'offer-news-form__input',
+                'placeholder': 'News short description',
+            }),
+            'content': TinyMCE(attrs={
+                'class': 'offer-news-form__textarea',
+                'placeholder': 'Your content',
+            }),
+            'tags': forms.CheckboxSelectMultiple(attrs={
+                'class': 'offer-news-form__checkbox'
+            }),
         }
 
 

@@ -5,10 +5,40 @@
 
 {% block content %}
 <div class="offer-news">
-    <form method="POST" class="offer-news__form">
+    <form method="POST" class="offer-news-form offer-news__form">
         {% csrf_token %}
-        {{form}}
-        <input type="submit" class="offer-news__submit">
+        {% for field in form %}
+        {% if field.name == 'content' %}
+        <div class="offer-news-form__input-block offer-news-form__input-block_content">
+            <div class="offer-news-form__label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+        </div>
+        {% elif field.name == 'tags' %}
+        <div class="offer-news-form__input-block offer-news-form__input-block_tags">
+            <div class="offer-news-form__label">
+                {{field.label_tag}}
+            </div>
+            <ul class="offer-news-form__list">
+                {% for choice_id, choice_label in field.field.widget.choices %}
+                <div class="offer-news-form__item offer-news-form__item_tag">
+                    <input value='{{choice_id}}' name="{{field.name}}" type="checkbox" class="offer-news-form__checkbox" id='id_tags_{{choice_id}}'>
+                    <label for="id_tags_{{choice_id}}" class="offer-news-form__checkbox-label">{{choice_label}}</label>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="offer-news-form__input-block">
+            <span class="offer-news-form__label">
+                {{field.label_tag}}
+            </span>
+            {{field}}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" class="offer-news-form__submit">
     </form>
 </div>
 {% endblock %}

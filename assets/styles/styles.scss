@@ -594,7 +594,7 @@ body {
 	}
 
 	.title__header:hover {
-		color: rgba(0, 0, 0, .5);
+		color: rgba(0, 0, 0, 0.5);
 		transition: 200ms;
 	}
 
@@ -1379,7 +1379,7 @@ body {
 	margin: 0 20px 20px 0;
 	width: 300px;
 	overflow: hidden;
-	box-shadow: 0 0 2px 0 rgba(0,0,0,.15);
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
 }
 
 .news-content__image {
@@ -1420,7 +1420,7 @@ body {
 	bottom: 5px;
 	right: 5px;
 	font-size: 13px;
-	color: rgba(0, 0, 0, .8);
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .news-content__views {
@@ -1428,7 +1428,7 @@ body {
 	bottom: 5px;
 	left: 10px;
 	font-size: 13px;
-	color: rgba(0, 0, 0, .8);
+	color: rgba(0, 0, 0, 0.8);
 
 	i {
 		font-size: 90%;
@@ -1592,7 +1592,7 @@ body {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, .5);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .similar-news__title {
@@ -1605,7 +1605,7 @@ body {
 }
 
 .similar-news__title:hover {
-	color: rgba(255, 255, 255, .8);
+	color: rgba(255, 255, 255, 0.8);
 	text-decoration: underline;
 	transition: 200ms;
 }
@@ -1667,7 +1667,7 @@ body {
 .news-comments__item {
 	position: relative;
 	padding: 20px 0;
-	border-top: 2px solid rgba(0, 0, 0, .2);
+	border-top: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .news-comments__item-delete {
@@ -1686,7 +1686,7 @@ body {
 .news-comments__pub-date {
 	margin-bottom: 7px;
 	font-size: 14px;
-	color: rgba(0, 0, 0, .8);
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .news-comments__username {
@@ -1707,7 +1707,7 @@ body {
 }
 
 .news-comments__user-authority_user {
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .news-comments__user-authority_moderator {
@@ -1792,7 +1792,7 @@ body {
 }
 
 .ordering__label:hover {
-	color: rgba(255, 255, 255, .5);
+	color: rgba(255, 255, 255, 0.5);
 	transition: 200ms;
 	cursor: pointer;
 }
@@ -1883,12 +1883,12 @@ body {
 .tags__list {
 	max-height: 0;
 	overflow: hidden;
-	transition: .6s;
+	transition: 0.6s;
 }
 
 .tags__list.open {
 	max-height: 1000px;
-	transition: .6s;
+	transition: 0.6s;
 }
 
 .tags__item {
@@ -2046,11 +2046,99 @@ body {
 	padding: 40px 5px;
 }
 
+.offer-news-form__input-block {
+	padding: 7px 0;
+
+	input:not([type="file"]),
+	select,
+	textarea {
+		border-radius: 2px;
+		border: 1px solid $primary-color-light-blue;
+	}
+}
+
+.offer-news-form__input-block_content {
+	.offer-news-form__label {
+		margin-bottom: 5px;
+	}
+}
+
+.offer-news-form__input-block_tags {
+	.offer-news-form__label {
+		margin-bottom: 5px;
+	}
+
+	.offer-news-form__checkbox {
+		display: none;
+	}
+
+	.offer-news-form__checkbox:checked + label {
+		background-color: $primary-color-light-blue;
+		color: #ffffff;
+	}
+}
+
+.offer-news-form__item_tag {
+	display: inline-block;
+}
+
+.offer-news-form__label {
+	margin-right: 10px;
+	font-size: 13.5px;
+	text-transform: uppercase;
+}
+
+.offer-news-form__checkbox-label {
+	display: block;
+	padding: 3px;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: 1px solid $primary-color-light-blue;
+	border-radius: 4px;
+	color: $primary-color-dark-blue;
+	transition: 200ms;
+}
+
+.offer-news-form__checkbox-label:hover {
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
+	cursor: pointer;
+}
+
+.offer-news-form__input,
+.offer-news-form__textarea {
+	padding: 2px 3px;
+}
+
+.offer-news-form__textarea {
+	width: 100%;
+	max-width: 100%;
+	resize: none;
+}
+
+.offer-news-form__submit {
+	margin-top: 20px;
+	padding: 5px 10px;
+	border: 0;
+	border-radius: 3px;
+	text-transform: uppercase;
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
+}
+
+.offer-news-form__submit:hover {
+	background-color: $primary-color-dark-blue;
+	transition: 200ms;
+	cursor: pointer;
+}
+
 .offer-news-button {
 	max-width: 1336px;
 	margin: 0 auto;
 	padding: 10px 5px;
-	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .offer-news-button__link {
@@ -2088,7 +2176,7 @@ body {
 	width: 100%;
 	max-width: 300px;
 	overflow: hidden;
-	box-shadow: 0 0 2px 0 rgba(0,0,0,.15);
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
 }
 
 .vehisles__image {
@@ -2123,7 +2211,7 @@ body {
 
 .vehisles__type {
 	font-size: 14px;
-	color: rgba(0, 0, 0, .8);
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .vehisles__extra-info {
@@ -2193,7 +2281,7 @@ body {
 	font-size: 14px;
 	text-align: center;
 	text-transform: uppercase;
-	background-color: rgba(224, 18, 18, .05);
+	background-color: rgba(224, 18, 18, 0.05);
 	color: rgb(224, 18, 18);
 }
 
@@ -2240,7 +2328,6 @@ body {
 
 .login__pass-reset {
 	margin: 8px 0;
-	
 
 	a {
 		color: $primary-color-light-blue;

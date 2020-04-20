@@ -68,8 +68,10 @@
         {% for comment in news_content.news_comment.all %}
         <li class="news-comments__item">
             {% if perms.delivery.delete_newscomment or comment.user.pk == user.pk %}
-            {% if not comment.user|has_group:'news_moderators' or comment.user|has_group:'news_admins' %}
+            {% if not comment.user|has_group:'news_moderators' %}
+            {% if not comment.user|has_group:'news_admins' %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
+            {% endif %}
             {% elif comment.user.pk == user.pk %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
             {% endif %}
