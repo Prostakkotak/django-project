@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, Http404, redirect
-from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment
-from .forms import QuickQuoteForm, NewsCommentForm, NewsProposeForm
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment, ProposedNews
+from .forms import QuickQuoteForm, NewsCommentForm, NewsProposeForm, CreateNewsForm, CreateDeliveryClassForm, CreateVehisleForm
 from .filters import VehisleFilter
 from .ordering import ordering
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -20,6 +20,11 @@ def index(request):
 
     if request.method == 'POST' and quick_quote_form.is_valid():
         quick_quote_form.save()
+        '''
+        Редирект здесь нужен для сброса типа запроса,
+        без этого при каждом обновлении страницы тип запроса будет POST,
+        что приведет к отправке формы при каждом обновлении
+        '''
         return redirect('index')
 
     return render(request, 'delivery/index.html', context={
@@ -29,8 +34,59 @@ def index(request):
         'quick_quote_form': quick_quote_form,
     })
 
+
 def control(request):
-    return render(request, 'delivery/control-panel.html')
+    context = {
+        'proposed_news_count': ProposedNews.objects.all().count(),
+        'quick_quote_count': QuickQuote.objects.all().count(),
+        'news_count': News.objects.all().count(),
+        'vehisles_count': Vehisle.objects.all().count(),
+        'delivery_class_count': DeliveryClass.objects.all().count(),
+    }
+
+    return render(request, 'delivery/control-panel.html', context)
+
+
+def create_news(request):
+    form = CreateNewsForm(data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_news'):
+        created_news = form.save()
+        created_news.user = request.user
+        created_news.title_image = request.POST.get('title_image')
+        created_news.save()
+        return redirect('control')
+
+
+    context = {'form':form}
+
+    return render(request, 'delivery/create-news.html', context)
+
+
+def create_vehisle(request):
+    form = CreateVehisleForm(data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_vehisle'):
+        form.save()
+        return redirect('control')
+
+
+    context = {'form':form}
+
+    return render(request, 'delivery/create-vehisle.html', context)
+
+
+def create_delivery_class(request):
+    form = CreateDeliveryClassForm(data=request.POST or None)
+
+    if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_deliveryclass'):
+        form.save()
+        return redirect('control')
+
+
+    context = {'form':form}
+
+    return render(request, 'delivery/create-delivery-class.html', context)
 
 
 def registration(request):
@@ -124,8 +180,9 @@ def offer_news(request):
     form = NewsProposeForm(data=request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
-        proposed_news = form.save(commit=False)
+        proposed_news = form.save()
         proposed_news.user = request.user
+        proposed_news.title_image = request.POST.get('title_image')
         proposed_news.save()
 
         return redirect('news')
@@ -134,7 +191,7 @@ def offer_news(request):
         'form': form,
     })
 
-    return render(request, 'delivery/offer-news.html', context)
+    return render(request, 'delivery/create-news.html', context)
 
 
 def news_single_delete(request, pk):
@@ -159,7 +216,7 @@ def delete_news_comment(request, pk):
 def news(request):
 
     context = {}
-    
+
     ordering_obj = {
         'pub_date': 'pub date',
         'title': 'title',
@@ -193,9 +250,10 @@ def news(request):
         news_per_page = 10
 
     important_news_list = News.objects.filter(
-        important_status = True,
+        important_status=True,
         pub_date__range=[  # Выводятся новости только за последние 7 дней
-            timezone.now() - timezone.timedelta(days=7), timezone.now() + timezone.timedelta(days=1)
+            timezone.now() - timezone.timedelta(days=7), timezone.now() + \
+            timezone.timedelta(days=1)
         ]
     )
 

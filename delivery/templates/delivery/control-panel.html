@@ -3,9 +3,98 @@
 {% load static %}
 {% load custom_template_tags %}
 
-{% block content %}
-<div class="control-panel">
+{% block title %}<title>Control panel</title>{% endblock %}
 
+{% block content %}
+{% if user.is_authenticated %}
+{% if user|has_group:'news_admins' or user|has_group:'news_moderators' or user.is_superuser %}
+<div class="control-panel">
+    <div class="control-panel__title">
+        <span class="control-panel__title_colored">{{user.username}}'s</span> control panel
+    </div>
+    <div class="control-panel__block control-panel__access-level">
+        <div class="access-level">
+            <span class="control-panel__header">Access level:</span>
+            {% if not user.is_superuser %}
+            {% for group in user|show_groups %}
+            <span class="access-level__level">{{group}}</span>
+            {% endfor %}
+            {% else %}
+            <span class="access-level__level">Superuser</span>
+            {% endif %}
+        </div>
+    </div>
+    {% if perms.delivery.view_proposednews %}
+    <div class="control-panel__block control-panel__proposed-news-control">
+        <div class="control-panel__header">Proposed news</div>
+        <div class="proposed-news-control">
+            <div class="proposed-news-control__count">
+                Total offers: {{proposed_news_count}},
+                <a href="#" class="control-panel__link proposed-news-control__link">show list</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if perms.delivery.view_quickquote %}
+    <div class="control-panel__block control-panel__quick-quotes">
+        <div class="control-panel__header">Quick quotes</div>
+        <div class="quick-quotes">
+            <div class="control-panel__text quick-quotes__count">
+                Total quotes: {{quick_quote_count}},
+                <a href="#" class="control-panel__link quick-quotes__link">show list</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if perms.delivery.view_news %}
+    <div class="control-panel__block  control-panel__news-control">
+        <div class="control-panel__header">News</div>
+        <div class="news-control">
+            <div class="control-panel__text news-control__count">Total news: {{news_count}}, 
+                <a href="#" class="control-panel__link news-control__link">show list</a></div>
+            {% if perms.delivery.add_news %}
+            <a href="{% url 'create_news' %}" class="control-panel__create-button news-control__add-news">Create news</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if perms.delivery.view_vehisle %}
+    <div class="control-panel__block control-panel__vehisles-control">
+        <div class="control-panel__header">Vehisles</div>
+        <div class="vehisles-control">
+            <div class="control-panel__text vehisles-control__link">
+                Total vehisles: {{vehisles_count}},
+                <a href="#" class="control-panel__link vehisles-control__link">show list</a>
+            </div>
+            {% if perms.delivery.add_vehisle %}
+            <a href="{% url 'create_vehisle' %}" class="control-panel__create-button">add vehisle</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if perms.delivery.view_deliveryclass %}
+    <div class="control-panel__block control-panel__delivery-class-control">
+        <div class="control-panel__header">Delivery classes</div>
+        <div class="control-panel__text">
+            Total classes: {{delivery_class_count}},
+            <a href="#" class="control-panel__link">show list</a>
+        </div>
+        {% if perms.delivery.add_deliveryclass %}
+        <a href="{% url 'create_delivery_class' %}" class="control-panel__create-button">add delivery class</a>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
+{% else %}
+<div class="page-access-error">
+    Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.
+</div>
+{% endif %}
+{% else %}
+<div class="page-access-error">
+    You need to sign-in!
+</div>
+{% endif %}
 <script src="{% static 'control_panel.bundle.js' %}"></script>
 {% endblock %}

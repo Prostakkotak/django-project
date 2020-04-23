@@ -1718,6 +1718,10 @@ body {
 	background-color: red;
 }
 
+.news-comments__user-authority_superuser {
+	background-color: black;
+}
+
 .news-comments__message {
 	padding-left: 7px;
 	font-size: 16px;
@@ -2040,13 +2044,13 @@ body {
 	text-transform: uppercase;
 }
 
-.offer-news {
+.create-news {
 	max-width: 1336px;
 	margin: 0 auto;
 	padding: 40px 5px;
 }
 
-.offer-news-form__input-block {
+.create-news-form__input-block {
 	padding: 7px 0;
 
 	input:not([type="file"]),
@@ -2057,38 +2061,38 @@ body {
 	}
 }
 
-.offer-news-form__input-block_content {
-	.offer-news-form__label {
+.create-news-form__input-block_content {
+	.create-news-form__label {
 		margin-bottom: 5px;
 	}
 }
 
-.offer-news-form__input-block_tags {
-	.offer-news-form__label {
+.create-news-form__input-block_tags {
+	.create-news-form__label {
 		margin-bottom: 5px;
 	}
 
-	.offer-news-form__checkbox {
+	.create-news-form__checkbox {
 		display: none;
 	}
 
-	.offer-news-form__checkbox:checked + label {
+	.create-news-form__checkbox:checked + label {
 		background-color: $primary-color-light-blue;
 		color: #ffffff;
 	}
 }
 
-.offer-news-form__item_tag {
+.create-news-form__item_tag {
 	display: inline-block;
 }
 
-.offer-news-form__label {
+.create-news-form__label {
 	margin-right: 10px;
 	font-size: 13.5px;
 	text-transform: uppercase;
 }
 
-.offer-news-form__checkbox-label {
+.create-news-form__checkbox-label {
 	display: block;
 	padding: 3px;
 	font-size: 14px;
@@ -2099,25 +2103,25 @@ body {
 	transition: 200ms;
 }
 
-.offer-news-form__checkbox-label:hover {
+.create-news-form__checkbox-label:hover {
 	background-color: $primary-color-light-blue;
 	color: #ffffff;
 	transition: 200ms;
 	cursor: pointer;
 }
 
-.offer-news-form__input,
-.offer-news-form__textarea {
+.create-news-form__input,
+.create-news-form__textarea {
 	padding: 2px 3px;
 }
 
-.offer-news-form__textarea {
+.create-news-form__textarea {
 	width: 100%;
 	max-width: 100%;
 	resize: none;
 }
 
-.offer-news-form__submit {
+.create-news-form__submit {
 	margin-top: 20px;
 	padding: 5px 10px;
 	border: 0;
@@ -2128,7 +2132,7 @@ body {
 	transition: 200ms;
 }
 
-.offer-news-form__submit:hover {
+.create-news-form__submit:hover {
 	background-color: $primary-color-dark-blue;
 	transition: 200ms;
 	cursor: pointer;
@@ -2157,6 +2161,89 @@ body {
 	background-color: $primary-color-dark-blue;
 	transition: 200ms;
 	cursor: pointer;
+}
+
+.page-access-error {
+	display: inline-block;
+	margin: 20px auto;
+	padding: 20px;
+	width: 100%;
+	border: 1px solid rgb(224, 18, 18);
+	border-radius: 10px;
+	max-width: 1336px;
+	text-align: center;
+	background-color: rgba(224, 18, 18, 0.05);
+	color: rgb(224, 18, 18);
+}
+
+.control-panel {
+	margin: 30px auto;
+	padding: 0 5px;
+	max-width: 1336px;
+}
+
+.control-panel__title {
+	margin-bottom: 20px;
+	font-size: 24px;
+}
+
+.control-panel__block {
+	margin: 30px 0;
+}
+
+.control-panel__text {
+	margin-bottom: 7px;
+	font-size: 15px;
+}
+
+.control-panel__link {
+	padding: 0 4px;
+	border-radius: 3px;
+	color: $primary-color-light-blue;
+	transition: 200ms;
+}
+
+.control-panel__link:hover {
+	text-decoration: none;
+	background-color: $primary-color-dark-blue;
+	color: #ffffff;
+	transition: 200ms;
+}
+
+.control-panel__title_colored {
+	color: $primary-color-light-blue;
+}
+
+.control-panel__header {
+	margin-bottom: 7px;
+	font-family: $montserrat-bold-font;
+	font-size: 16px;
+}
+
+.control-panel__create-button {
+	display: inline-block;
+	padding: 4px 7px;
+	border-radius: 3px;
+	font-size: 14px;
+	text-transform: uppercase;
+	text-decoration: none;
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
+}
+
+.control-panel__create-button:hover {
+	background-color: $primary-color-dark-blue;
+	transition: 200ms;
+}
+
+.access-level__level {
+	padding: 0 7px;
+	border-radius: 3px;
+	font-size: 14px;
+	text-transform: uppercase;
+	background-color: #000000;
+	color: #ffffff;
 }
 
 .vehisles {

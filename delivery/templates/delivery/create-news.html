@@ -1,0 +1,46 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %}<title>Offer news</title>{% endblock %}
+
+{% block content %}
+<div class="create-news">
+    <form method="POST" class="create-news-form create-news__form">
+        {% csrf_token %}
+        {% for field in form %}
+        {% if field.name == 'content' %}
+        <div class="create-news-form__input-block create-news-form__input-block_content">
+            <div class="create-news-form__label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+        </div>
+        {% elif field.name == 'tags' %}
+        <div class="create-news-form__input-block create-news-form__input-block_tags">
+            <div class="create-news-form__label">
+                {{field.label_tag}}
+            </div>
+            <ul class="create-news-form__list">
+                {% for choice_id, choice_label in field.field.widget.choices %}
+                <div class="create-news-form__item create-news-form__item_tag">
+                    <input value='{{choice_id}}' name="{{field.name}}" type="checkbox" class="create-news-form__checkbox" id='id_tags_{{choice_id}}'>
+                    <label for="id_tags_{{choice_id}}" class="create-news-form__checkbox-label">{{choice_label}}</label>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="create-news-form__input-block">
+            <span class="create-news-form__label">
+                {{field.label_tag}}
+            </span>
+            {{field}}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" class="create-news-form__submit">
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from tinymce.widgets import  TinyMCE
-from .models import QuickQuote, NewsComment, ProposedNews
+from .models import QuickQuote, NewsComment, ProposedNews, News, Vehisle, DeliveryClass
 
 class QuickQuoteForm(forms.ModelForm):
     class Meta:
@@ -46,6 +46,63 @@ class QuickQuoteForm(forms.ModelForm):
                 'placeholder': 'Your message'
             }),
         }
+
+
+class CreateNewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = (
+            'title',
+            'title_image',
+            'short_description',
+            'content',
+            'important_status',
+            'tags',
+        )
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'create-news-form__input',
+                'placeholder': 'News title',
+            }),
+            'title_image': forms.FileInput(attrs={
+                'class': 'create-news-form__image-input',
+            }),
+            'short_description': forms.TextInput(attrs={
+                'class': 'create-news-form__input',
+                'placeholder': 'News short description',
+            }),
+            'content': TinyMCE(attrs={
+                'class': 'create-news-form__textarea',
+                'placeholder': 'Your content',
+            }),
+        }
+
+
+class CreateVehisleForm(forms.ModelForm):
+    class Meta:
+        model = Vehisle
+        fields = (
+            'model',
+            'kind_of_vehisle',
+            'photo',
+            'can_be_booked',
+            'delivery_method',
+            'status',
+            'price_per_use',
+            'price_per_km',
+            'km_per_day',
+            'maximum_load',
+            'cargo_volume',
+        )
+
+
+class CreateDeliveryClassForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryClass
+        fields = (
+            'delivery_class',
+            'price_multiplier',
+        )
 
 
 class NewsProposeForm(forms.ModelForm):
