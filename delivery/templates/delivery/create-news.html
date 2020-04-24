@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="create-news">
-    <form method="POST" class="create-news-form create-news__form">
+    <form enctype="multipart/form-data" method="POST" class="create-news-form create-news__form">
         {% csrf_token %}
         {% for field in form %}
         {% if field.name == 'content' %}
@@ -25,7 +25,8 @@
             <ul class="create-news-form__list">
                 {% for choice_id, choice_label in field.field.widget.choices %}
                 <div class="create-news-form__item create-news-form__item_tag">
-                    <input value='{{choice_id}}' name="{{field.name}}" type="checkbox" class="create-news-form__checkbox" id='id_tags_{{choice_id}}'>
+                    <input value='{{choice_id}}' name="{{field.name}}" type="checkbox"
+                        class="create-news-form__checkbox" id='id_tags_{{choice_id}}'>
                     <label for="id_tags_{{choice_id}}" class="create-news-form__checkbox-label">{{choice_label}}</label>
                 </div>
                 {% endfor %}
@@ -43,4 +44,5 @@
         <input type="submit" class="create-news-form__submit">
     </form>
 </div>
+<script src="{% static 'create_news.bundle.js' %}"></script>
 {% endblock %}

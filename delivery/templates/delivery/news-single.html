@@ -10,7 +10,14 @@
 {% endif %}
 <div class="news-single">
     <div class="news-single__title-image"><img src="{{news_content.title_image.url}}" alt=""></div>
-    <div class="news-single__title">{{news_content.title}}</div>
+    <div class="news-single__title">
+        {{news_content.title}}
+        {% if user.is_authenticated %}
+        {% if perms.delivery.change_news %}
+        <a href="{% url 'change_news' pk=news_content.pk %}" class="news-single__change">Change</a>
+        {% endif %}
+        {% endif %}
+    </div>
     <div class="news-single__views"><i class="far fa-eye"></i>{{news_content.views}}</div>
     <div class="news-single__content">
         {{news_content.content|safe}}
@@ -71,6 +78,8 @@
             {% if not comment.user|has_group:'news_admins' and not comment.user.is_superuser and not comment.user|has_group:'news_moderators' %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
             {% elif comment.user.pk == user.pk %}
+            <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
+            {% elif user.is_superuser %}
             <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
             {% endif %}
             {% endif %}

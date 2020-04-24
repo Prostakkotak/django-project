@@ -8,82 +8,155 @@
 {% block content %}
 {% if user.is_authenticated %}
 {% if user|has_group:'news_admins' or user|has_group:'news_moderators' or user.is_superuser %}
+<div class="control-panel__title">
+    <span class="control-panel__title_colored">{{user.username}}'s</span> control panel
+</div>
 <div class="control-panel">
-    <div class="control-panel__title">
-        <span class="control-panel__title_colored">{{user.username}}'s</span> control panel
-    </div>
-    <div class="control-panel__block control-panel__access-level">
-        <div class="access-level">
-            <span class="control-panel__header">Access level:</span>
-            {% if not user.is_superuser %}
-            {% for group in user|show_groups %}
-            <span class="access-level__level">{{group}}</span>
-            {% endfor %}
-            {% else %}
-            <span class="access-level__level">Superuser</span>
-            {% endif %}
-        </div>
-    </div>
-    {% if perms.delivery.view_proposednews %}
-    <div class="control-panel__block control-panel__proposed-news-control">
-        <div class="control-panel__header">Proposed news</div>
-        <div class="proposed-news-control">
-            <div class="proposed-news-control__count">
-                Total offers: {{proposed_news_count}},
-                <a href="#" class="control-panel__link proposed-news-control__link">show list</a>
+    <ul class="control-panel__list" id="control-panel__menu">
+        {% if perms.delivery.view_news %}
+        <li class="control-panel__item" data-model-name='news'>
+            News
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_proposednews %}
+        <li class="control-panel__item" data-model-name='proposed_news'>
+            Proposed news
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_quickquote %}
+        <li class="control-panel__item" data-model-name='quick_quote'>
+            Quick quotes
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_vehisle %}
+        <li class="control-panel__item" data-model-name='vehisle'>
+            Vehisles
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_deliveryclass %}
+        <li class="control-panel__item" data-model-name='delivery_class'>
+            Delivery classes
+        </li>
+        {% endif %}
+    </ul>
+    <ul class="control-panel__block-list" id="control-panel__block-list">
+        {% if perms.delivery.view_news %}
+        <li data-model-name="news" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">News</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total news published: {{news_count}}</div>
+                {% if perms.delivery.add_news %}
+                <a href="{% url 'create_news' %}" class="control-panel__create-button">Create news</a>
+                {% endif %}
+                <div class="models-list__header">News list <div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in news_list %}
+                    <li class="models-list__item">
+                        <a href="{% url 'news_single' pk=item.pk %}" class="models-list__link">{{item.title}}</a>
+                        {% if perms.delivery.change_news %}
+                        <a href="{% url 'change_news' pk=item.pk %}" class="models-list__link models-list__link_change">
+                            Change
+                        </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
-    </div>
-    {% endif %}
-    {% if perms.delivery.view_quickquote %}
-    <div class="control-panel__block control-panel__quick-quotes">
-        <div class="control-panel__header">Quick quotes</div>
-        <div class="quick-quotes">
-            <div class="control-panel__text quick-quotes__count">
-                Total quotes: {{quick_quote_count}},
-                <a href="#" class="control-panel__link quick-quotes__link">show list</a>
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_proposednews %}
+        <li data-model-name="proposed_news" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">Proposed news</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total news offered: {{proposed_news_count}}</div>
+                {% if perms.delivery.add_proposednews %}
+                <a href="{% url 'offer_news' %}" class="control-panel__create-button">Offer news</a>
+                {% endif %}
+                <div class="models-list__header">Proposed news list <div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in proposed_news_list %}
+                    <li class="models-list__item">
+                        <a href="#" class="models-list__link">{{item.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
-    </div>
-    {% endif %}
-    {% if perms.delivery.view_news %}
-    <div class="control-panel__block  control-panel__news-control">
-        <div class="control-panel__header">News</div>
-        <div class="news-control">
-            <div class="control-panel__text news-control__count">Total news: {{news_count}}, 
-                <a href="#" class="control-panel__link news-control__link">show list</a></div>
-            {% if perms.delivery.add_news %}
-            <a href="{% url 'create_news' %}" class="control-panel__create-button news-control__add-news">Create news</a>
-            {% endif %}
-        </div>
-    </div>
-    {% endif %}
-    {% if perms.delivery.view_vehisle %}
-    <div class="control-panel__block control-panel__vehisles-control">
-        <div class="control-panel__header">Vehisles</div>
-        <div class="vehisles-control">
-            <div class="control-panel__text vehisles-control__link">
-                Total vehisles: {{vehisles_count}},
-                <a href="#" class="control-panel__link vehisles-control__link">show list</a>
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_quickquote %}
+        <li data-model-name="quick_quote" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">Quick quotes</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total quotes: {{quick_quote_count}}</div>
+                <div class="models-list__header">Quick quotes list<div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in quick_quote_list %}
+                    <li class="models-list__item">
+                        <a href="#" class="models-list__link">{{item.name}}, about: {{item.subject}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-            {% if perms.delivery.add_vehisle %}
-            <a href="{% url 'create_vehisle' %}" class="control-panel__create-button">add vehisle</a>
-            {% endif %}
-        </div>
-    </div>
-    {% endif %}
-    {% if perms.delivery.view_deliveryclass %}
-    <div class="control-panel__block control-panel__delivery-class-control">
-        <div class="control-panel__header">Delivery classes</div>
-        <div class="control-panel__text">
-            Total classes: {{delivery_class_count}},
-            <a href="#" class="control-panel__link">show list</a>
-        </div>
-        {% if perms.delivery.add_deliveryclass %}
-        <a href="{% url 'create_delivery_class' %}" class="control-panel__create-button">add delivery class</a>
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_vehisle %}
+        <li data-model-name="vehisle" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">Vehisles</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total vehisles: {{proposed_news_count}}</div>
+                {% if perms.delivery.add_vehisle %}
+                <a href="#" class="control-panel__create-button">Add vehisle</a>
+                {% endif %}
+                <div class="models-list__header">Vehisles list <div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in vehisles_list %}
+                    <li class="models-list__item">
+                        <a href="#" class="models-list__link">{{item}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_deliveryclass %}
+        <li data-model-name="delivery_class" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">Delivery classes</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total classes: {{delivery_class_count}}</div>
+                {% if perms.delivery.add_deliveryclass %}
+                <a href="#" class="control-panel__create-button">Add delivery class</a>
+                {% endif %}
+                <div class="models-list__header">Delivery classes list <div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in vehisles_list %}
+                    <li class="models-list__item">
+                        <a href="#" class="models-list__link">{{item}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<div class="control-panel__user-authority">
+    <div class="control-panel__text">
+        Your authoriry level:
+        {% if not user.is_superuser %}
+        {% for group in user|show_groups %}
+        <span class="control-panel__user-authority-level">
+            {{group}}
+        </span>
+        {% endfor %}
+        {% else %}
+        <span class="control-panel__user-authority-level">superuser</span>
         {% endif %}
     </div>
-    {% endif %}
 </div>
 {% else %}
 <div class="page-access-error">
