@@ -1,0 +1,52 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %}<title>Offer news</title>{% endblock %}
+
+{% block content %}
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="create-model">
+    <form enctype="multipart/form-data" method="POST" class="create-model-form create-model__form">
+        {% csrf_token %}
+        {% for field in form %}
+        {% if field.name == 'content' %}
+        <div class="create-model-form__input-block create-model-form__input-block_content">
+            <div class="create-model-form__label">
+                {{field.label_tag}}
+            </div>
+            {{field}}
+        </div>
+        {% elif field.name == 'tags' %}
+        <div class="create-model-form__input-block create-model-form__input-block_tags">
+            <div class="create-model-form__label">
+                {{field.label_tag}}
+            </div>
+            <ul class="create-model-form__list">
+                {% for choice_id, choice_label in field.field.widget.choices %}
+                <div class="create-model-form__item create-model-form__item_tag">
+                    <input value='{{choice_id}}' name="{{field.name}}" type="checkbox"
+                        class="create-model-form__checkbox" id='id_tags_{{choice_id}}'>
+                    <label for="id_tags_{{choice_id}}" class="create-model-form__checkbox-label">{{choice_label}}</label>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="create-model-form__input-block">
+            <span class="create-model-form__label">
+                {{field.label_tag}}
+            </span>
+            {{field}}
+        </div>
+        {% endif %}
+        {% endfor %}
+        <input type="submit" class="create-model-form__submit">
+    </form>
+</div>
+<script src="{% static 'create_news.bundle.js' %}"></script>
+{% endblock %}

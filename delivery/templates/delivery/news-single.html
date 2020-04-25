@@ -5,9 +5,11 @@
 {% block title %} <title>{{news_content.title}}</title> {% endblock %}
 
 {% block content %}
-{% if comment_delete_res %}
-{{comment_delete_res}}
-{% endif %}
+<!-- Честно, такое решение для возвращения на предыдущую страницу довольно кривое, но пока-что мои альтернативные решения тоже не идеальны -->
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
 <div class="news-single">
     <div class="news-single__title-image"><img src="{{news_content.title_image.url}}" alt=""></div>
     <div class="news-single__title">
@@ -48,7 +50,8 @@
         <li class="similar-news__item">
             <img src="{{similar_news.title_image.url}}" alt="" class="similar-news__image">
             <div class="similar-news__shadow"></div>
-            <a href="{% url 'news_single' pk=similar_news.pk %}" class="similar-news__title">{{similar_news.title}}</a>
+            <a href="{% url 'news_single' pk=similar_news.pk %}?next={{request.path}}"
+                class="similar-news__title">{{similar_news.title}}</a>
         </li>
         {% endfor %}
     </ul>

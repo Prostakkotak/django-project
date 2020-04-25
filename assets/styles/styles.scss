@@ -2059,13 +2059,13 @@ body {
 	text-transform: uppercase;
 }
 
-.create-news {
+.create-model {
 	max-width: 1336px;
 	margin: 0 auto;
 	padding: 40px 5px;
 }
 
-.create-news-form__input-block {
+.create-model-form__input-block {
 	padding: 7px 0;
 
 	input:not([type="file"]),
@@ -2076,38 +2076,38 @@ body {
 	}
 }
 
-.create-news-form__input-block_content {
-	.create-news-form__label {
+.create-model-form__input-block_content {
+	.create-model-form__label {
 		margin-bottom: 5px;
 	}
 }
 
-.create-news-form__input-block_tags {
-	.create-news-form__label {
+.create-model-form__input-block_tags {
+	.create-model-form__label {
 		margin-bottom: 5px;
 	}
 
-	.create-news-form__checkbox {
+	.create-model-form__checkbox {
 		display: none;
 	}
 
-	.create-news-form__checkbox:checked + label {
+	.create-model-form__checkbox:checked + label {
 		background-color: $primary-color-light-blue;
 		color: #ffffff;
 	}
 }
 
-.create-news-form__item_tag {
+.create-model-form__item_tag {
 	display: inline-block;
 }
 
-.create-news-form__label {
+.create-model-form__label {
 	margin-right: 10px;
 	font-size: 13.5px;
 	text-transform: uppercase;
 }
 
-.create-news-form__checkbox-label {
+.create-model-form__checkbox-label {
 	display: block;
 	padding: 3px;
 	font-size: 14px;
@@ -2118,25 +2118,25 @@ body {
 	transition: 200ms;
 }
 
-.create-news-form__checkbox-label:hover {
+.create-model-form__checkbox-label:hover {
 	background-color: $primary-color-light-blue;
 	color: #ffffff;
 	transition: 200ms;
 	cursor: pointer;
 }
 
-.create-news-form__input,
-.create-news-form__textarea {
+.create-model-form__input,
+.create-model-form__textarea {
 	padding: 2px 3px;
 }
 
-.create-news-form__textarea {
+.create-model-form__textarea {
 	width: 100%;
 	max-width: 100%;
 	resize: none;
 }
 
-.create-news-form__submit {
+.create-model-form__submit {
 	margin-top: 20px;
 	padding: 5px 10px;
 	border: 0;
@@ -2147,7 +2147,7 @@ body {
 	transition: 200ms;
 }
 
-.create-news-form__submit:hover {
+.create-model-form__submit:hover {
 	background-color: $primary-color-dark-blue;
 	transition: 200ms;
 	cursor: pointer;
@@ -2189,6 +2189,29 @@ body {
 	text-align: center;
 	background-color: rgba(224, 18, 18, 0.05);
 	color: rgb(224, 18, 18);
+}
+
+.previous-page-button {
+	margin: 5px auto;
+	padding: 0 5px;
+	max-width: 1336px;
+	width: 100%;
+}
+
+.previous-page-button__button {
+	display: inline-block;
+	padding: 3px 7px;
+	border: 1px solid $primary-color-light-blue;
+	border-radius: 3px;
+	text-decoration: none;
+	color: $primary-color-light-blue;
+	transition: 200ms;
+}
+
+.previous-page-button__button:hover {
+	background-color: $primary-color-light-blue;
+	color: #ffffff;
+	transition: 200ms;
 }
 
 .control-panel {
@@ -2254,6 +2277,7 @@ body {
 
 .control-panel__item.current {
 	border-right: 1px solid rgba(0, 0, 0, 0.2);
+	transition: .5s;
 }
 
 .control-panel__block-list {
@@ -2264,11 +2288,20 @@ body {
 	display: none;
 	padding: 0 20px 20px 20px;
 	background-color: rgba(0, 0, 0, 0.1);
+	transition: .5s;
 }
 
 .control-panel__block.current {
 	display: block;
+	opacity: 0;
+	transition: .5s;
 }
+
+.control-panel__block.opening {
+	opacity: 1;
+	transition: .5s;
+}
+
 
 .control-panel__text {
 	margin-bottom: 7px;
@@ -2319,13 +2352,16 @@ body {
 
 	.models-list__button {
 		position: absolute;
-		top: 0;
+		top: 1px;
 		right: 7px;
-		padding: 0 4px;
+		width: 25px;
+		height: 25px;
+		line-height: 25px;
 		border-radius: 3px;
 		font-size: 210%;
 		transform: rotate(-90deg);
 		transition: 200ms;
+		text-align: center;
 	}
 
 	.models-list__button:hover {

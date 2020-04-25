@@ -35,6 +35,10 @@ def index(request):
     })
 
 
+def return_button(request, path):
+    return redirect(path)
+
+
 def control(request):
     context = {
         'proposed_news_count': ProposedNews.objects.all().count(),
@@ -50,28 +54,6 @@ def control(request):
     }
 
     return render(request, 'delivery/control-panel.html', context)
-
-
-def create_vehisle(request):
-    form = CreateVehisleForm(data=request.POST or None)
-
-    if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_vehisle'):
-        form.save()
-        return redirect('control')
-    context = {'form': form}
-
-    return render(request, 'delivery/create-vehisle.html', context)
-
-
-def create_delivery_class(request):
-    form = CreateDeliveryClassForm(data=request.POST or None)
-
-    if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_deliveryclass'):
-        form.save()
-        return redirect('control')
-    context = {'form': form}
-
-    return render(request, 'delivery/create-delivery-class.html', context)
 
 
 def registration(request):
@@ -176,7 +158,34 @@ def offer_news(request):
         'form': form,
     })
 
-    return render(request, 'delivery/create-news.html', context)
+    return render(request, 'delivery/create-model.html', context)
+
+
+def proposed_news_demo(request, pk):
+    news_content = get_object_or_404(ProposedNews, pk=pk)
+
+    context = {
+        'news_content': news_content,
+    }
+
+    return render(request, 'delivery/propose-news-demo.html', context)
+
+
+def confirmed_proposed_news(request, pk):
+    if request.user.has_perm('delivery.add_news'):
+        proposed_news = get_object_or_404(ProposedNews, pk=pk)
+
+        created_news = CreateNewsForm(instance=proposed_news)
+        created_news.save()
+
+
+def delete_proposed_news(request, pk):
+    proposed_news = ProposedNews.objects.get(pk=pk)
+
+    if request.user.has_perm('delivery.delete_proposednews') or request.user.pk == proposed_news.user.pk:
+        proposed_news.delete()
+
+    return redirect('control')
 
 
 def create_news(request):
@@ -193,7 +202,7 @@ def create_news(request):
 
         context = {'form': form}
 
-        return render(request, 'delivery/create-news.html', context)
+        return render(request, 'delivery/create-model.html', context)
 
     else:
         return redirect('index')
@@ -214,7 +223,7 @@ def change_news(request, pk):
 
     context['form'] = form
 
-    return render(request, 'delivery/create-news.html', context)
+    return render(request, 'delivery/create-model.html', context)
         
 
 def news_single_delete(request, pk):
@@ -376,3 +385,44 @@ def vehisles(request):
     })
 
     return render(request, 'delivery/vehisles.html', context)
+
+
+def create_vehisle(request):
+
+    if request.user.has_perm('delivery.add_vehisle'):
+
+        form = CreateVehisleForm(data=request.POST or None)
+
+        if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_vehisle'):
+            form = CreateVehisleForm(request.POST, request.FILES)
+            created_vehisle = form.save()
+            created_vehisle.save()
+            return redirect('control')
+
+        context = {'form': form}
+
+        return render(request, 'delivery/create-model.html', context)
+
+    else:
+        return redirect('index')
+
+
+def create_delivery_class(request):
+
+    if request.user.has_perm('delivery.add_deliveryclass'):
+
+        form = CreateDeliveryClassForm(data=request.POST or None)
+
+        if request.method == 'POST' and form.is_valid() and request.user.has_perm('delivery.add_deliveryclass'):
+            form = CreateDeliveryClassForm(request.POST)
+            created_delivery_class = form.save()
+            created_delivery_class.save()
+            return redirect('control')
+
+        context = {'form': form}
+
+        return render(request, 'delivery/create-model.html', context)
+
+    else:
+        return redirect('index')
+    

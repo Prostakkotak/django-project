@@ -1,0 +1,41 @@
+{% extends 'delivery/base-generation.html' %}
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %} <title>{{news_content.title}}</title> {% endblock %}
+
+{% block content %}
+<!-- Честно, такое решение для возвращения на предыдущую страницу довольно кривое, но пока-что мои альтернативные решения тоже не идеальны -->
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="news-single">
+    <div class="news-single__title-image"><img src="{{news_content.title_image.url}}" alt=""></div>
+    <div class="news-single__title">
+        {{news_content.title}}
+    </div>
+    <div class="news-single__views"><i class="far fa-eye"></i>{{news_content.views}}</div>
+    <div class="news-single__content">
+        {{news_content.content|safe}}
+    </div>
+    {% if user.is_authenticated %}
+    {% if perms.delivery.delete_news or user.pk == news_content.user.pk %}
+    <a href="{% url 'delete_proposed_news' pk=news_content.pk %}" id="delete-pop-up__link_news"
+        class="news-single__delete">Delete this proposed news</a>
+    {% endif %}
+    {% endif %}
+    <div class="news-single__tags">
+        <div class="news-single__header">Tags</div>
+        <ul class="news-single__tags-list">
+            {% for tag in news_content.tags.all %}
+            <li class="news-single__tags-item">
+                {{tag}}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script src="{% static 'news_single.bundle.js' %}"></script>
+{% endblock %}

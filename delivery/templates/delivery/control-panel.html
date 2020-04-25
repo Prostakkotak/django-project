@@ -78,7 +78,7 @@
                 <ul class="models-list">
                     {% for item in proposed_news_list %}
                     <li class="models-list__item">
-                        <a href="#" class="models-list__link">{{item.title}}</a>
+                        <a href="{% url 'proposed_news_demo' pk=item.pk %}" class="models-list__link">{{item.title}}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -106,9 +106,9 @@
         <li data-model-name="vehisle" class="control-panel__block control-panel__news-control">
             <div class="control-panel__header">Vehisles</div>
             <div class="news-control">
-                <div class="control-panel__text">Total vehisles: {{proposed_news_count}}</div>
+                <div class="control-panel__text">Total vehisles: {{vehisles_count}}</div>
                 {% if perms.delivery.add_vehisle %}
-                <a href="#" class="control-panel__create-button">Add vehisle</a>
+                <a href="{% url 'create_vehisle' %}" class="control-panel__create-button">Add vehisle</a>
                 {% endif %}
                 <div class="models-list__header">Vehisles list <div class="models-list__button">&lt;</div>
                 </div>
@@ -128,12 +128,12 @@
             <div class="news-control">
                 <div class="control-panel__text">Total classes: {{delivery_class_count}}</div>
                 {% if perms.delivery.add_deliveryclass %}
-                <a href="#" class="control-panel__create-button">Add delivery class</a>
+                <a href="{% url 'create_delivery_class' %}" class="control-panel__create-button">Add delivery class</a>
                 {% endif %}
                 <div class="models-list__header">Delivery classes list <div class="models-list__button">&lt;</div>
                 </div>
                 <ul class="models-list">
-                    {% for item in vehisles_list %}
+                    {% for item in delivery_class_list %}
                     <li class="models-list__item">
                         <a href="#" class="models-list__link">{{item}}</a>
                     </li>

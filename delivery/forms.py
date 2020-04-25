@@ -61,18 +61,18 @@ class CreateNewsForm(forms.ModelForm):
         )
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'create-news-form__input',
+                'class': 'create-model-form__input',
                 'placeholder': 'News title',
             }),
             'title_image': forms.FileInput(attrs={
-                'class': 'create-news-form__image-input',
+                'class': 'create-model-form__image-input',
             }),
             'short_description': forms.TextInput(attrs={
-                'class': 'create-news-form__input',
+                'class': 'create-model-form__input',
                 'placeholder': 'News short description',
             }),
             'content': TinyMCE(attrs={
-                'class': 'create-news-form__textarea',
+                'class': 'create-model-form__textarea',
                 'placeholder': 'Your content',
             }),
         }
@@ -95,6 +95,42 @@ class CreateVehisleForm(forms.ModelForm):
             'cargo_volume',
         )
 
+        widgets = {
+            'model': forms.TextInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'kind_of_vehisle': forms.TextInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'can_be_booked': forms.CheckboxInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'delivery_method': forms.Select(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'status': forms.Select(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'price_per_use': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'price_per_km': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'km_per_day': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'maximum_load': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'cargo_volume': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+        }
+
 
 class CreateDeliveryClassForm(forms.ModelForm):
     class Meta:
@@ -103,6 +139,15 @@ class CreateDeliveryClassForm(forms.ModelForm):
             'delivery_class',
             'price_multiplier',
         )
+
+        widgets = {
+            'delivery_class': forms.TextInput(attrs={
+                'class': 'create-model-form__input'
+            }),
+            'price_multiplier': forms.NumberInput(attrs={
+                'class': 'create-model-form__input'
+            })
+        }
 
 
 class NewsProposeForm(forms.ModelForm):
@@ -118,22 +163,22 @@ class NewsProposeForm(forms.ModelForm):
         )
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'offer-news-form__input',
+                'class': 'create-model-form__input',
                 'placeholder': 'News title',
             }),
             'title_image': forms.FileInput(attrs={
-                'class': 'offer-news-form__image-input',
+                'class': 'create-model-form__image-input',
             }),
             'short_description': forms.TextInput(attrs={
-                'class': 'offer-news-form__input',
+                'class': 'create-model-form__input',
                 'placeholder': 'News short description',
             }),
             'content': TinyMCE(attrs={
-                'class': 'offer-news-form__textarea',
+                'class': 'create-model-form__textarea',
                 'placeholder': 'Your content',
             }),
             'tags': forms.CheckboxSelectMultiple(attrs={
-                'class': 'offer-news-form__checkbox'
+                'class': 'create-model-form__checkbox'
             }),
         }
 
