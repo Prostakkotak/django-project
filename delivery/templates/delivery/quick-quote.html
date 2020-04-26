@@ -1,0 +1,30 @@
+{% extends 'delivery/base-generation.html' %}
+{% load static %}
+
+
+{% block title %} <title>Question</title> {% endblock %}
+
+{% block content %}
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="quick-quote">
+    {% for field, value in quote.items %}
+    <div class="quick-quote__text-block">
+        <div class="quick-quote__header">
+            {{field}}:
+        </div>
+        <div class="quick-quote__text">
+            {{value}}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="quick-quote__delete">
+        <a href="{% url 'delete_quick_quote' pk=quote_id %}" class="quick-quote__button quick-quote__button_delete">
+            delete
+        </a>
+    </div>
+</div>
+<script src="{% static 'quick_quote.bundle.js' %}"></script>
+{% endblock %}

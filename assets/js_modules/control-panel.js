@@ -74,9 +74,9 @@ for (let i = 0; i < blockList.length; i++) {
     blockList[i].style.minHeight = minBlockHeight + 'px';
 
     let modelsList = blockList[i].getElementsByClassName('models-list')[0],
-        modelsListButton = blockList[i].getElementsByClassName('models-list__button')[0];
+        modelsListHeader = blockList[i].getElementsByClassName('models-list__header')[0];
 
-    modelsListButton.addEventListener('click', () => {
+    modelsListHeader.addEventListener('click', () => {
         blockList[i].getElementsByClassName('models-list__header')[0].classList.toggle('open');
         modelsList.classList.toggle('open');
     });

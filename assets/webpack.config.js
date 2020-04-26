@@ -14,6 +14,7 @@ module.exports = {
         login: '@js_modules/header.js',
         control_panel: ['@js_modules/header.js', '@js_modules/control-panel.js'],
         create_news: '@js_modules/header.js',
+        quick_quote: '@js_modules/header.js',
         styles: '@styles/styles.scss',
     },
     output: {

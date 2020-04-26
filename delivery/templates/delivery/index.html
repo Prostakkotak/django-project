@@ -229,31 +229,20 @@
         </div>
         <form class="customer-action__quote-form" method="POST" name="customer-quote">
             {% csrf_token %}
-            <div class="customer-action__form-header">request a quick quote</div>
-            <div class="customer-action__input-container">
-                <div class="customer-action__input-title">your name</div>
-                {{quick_quote_form.name}}
-            </div>
-            <div class="customer-action__input-container">
-                <div class="customer-action__input-title">Subject</div>
-                {{quick_quote_form.subject}}
-            </div>
-            <div class="customer-action__input-container">
-                <div class="customer-action__input-title">E-mail Adress</div>
-                {{quick_quote_form.email}}
-            </div>
-            <div class="customer-action__input-container">
-                <div class="customer-action__input-title">Phone number</div>
-                {{quick_quote_form.phone}}
-            </div>
+            {% for field in quick_quote_form %}
+            {% if field.name == 'service' or field.name == 'message' %}
             <div class="customer-action__input-container customer-action__input-container_extended">
-                <div class="customer-action__input-title">Service</div>
-                {{quick_quote_form.service}}
+                <div class="customer-action__input-title">{{field.name}}</div>
+                {{field}}
             </div>
-            <div class="customer-action__input-container customer-action__input-container_extended">
-                <div class="customer-action__input-title">Message</div>
-                {{quick_quote_form.message}}
+            {% else %}
+            <div class="customer-action__input-container">
+                <div class="customer-action__input-title">{{field.name}}</div>
+                {{field}}
             </div>
+            {% endif %}
+            {% endfor %}
+
             <button class="customer-action__form-submit" type="submit">send message</button>
         </form>
     </div>

@@ -19,12 +19,21 @@ def index(request):
     quick_quote_form = QuickQuoteForm(data=request.POST or None)
 
     if request.method == 'POST' and quick_quote_form.is_valid():
-        quick_quote_form.save()
-        '''
-        Редирект здесь нужен для сброса типа запроса,
-        без этого при каждом обновлении страницы тип запроса будет POST,
-        что приведет к отправке формы при каждом обновлении
-        '''
+        if request.user.has_perm('delivery.add_quickquote'):
+            quick_quote_form = QuickQuoteForm(data=request.POST)
+            created_quote = quick_quote_form.save()
+            created_quote.user = request.user
+            created_quote.save()
+
+            '''
+            Редирект здесь нужен для сброса типа запроса,
+            без этого при каждом обновлении страницы тип запроса будет POST,
+            что приведет к отправке формы при каждом обновлении
+            '''
+            return redirect('index')
+        else:
+            return redirect('index')
+    elif request.method == 'POST' and not quick_quote_form.is_valid():
         return redirect('index')
 
     return render(request, 'delivery/index.html', context={
@@ -175,8 +184,23 @@ def confirmed_proposed_news(request, pk):
     if request.user.has_perm('delivery.add_news'):
         proposed_news = get_object_or_404(ProposedNews, pk=pk)
 
-        created_news = CreateNewsForm(instance=proposed_news)
-        created_news.save()
+        confirmed_news = News(
+            user=proposed_news.user,
+            title=proposed_news.title,
+            title_image=proposed_news.title_image,
+            short_description=proposed_news.short_description,
+            content=proposed_news.content,
+            important_status=proposed_news.important_status,
+        )
+
+        confirmed_news.save()
+
+        for tag in proposed_news.tags.all():
+            confirmed_news.tags.add(tag)
+
+        proposed_news.delete()
+
+        return redirect('control')
 
 
 def delete_proposed_news(request, pk):
@@ -216,15 +240,14 @@ def change_news(request, pk):
     form = CreateNewsForm(data=request.POST or None, instance=news)
 
     if request.method == 'POST' and form.is_valid():
-        form = CreateNewsForm(request.POST, request.FILES , instance=news)
-        form.title_image = request.POST.get('title_image')
+        form = CreateNewsForm(request.POST, request.FILES, instance=news)
         form.save()
         return redirect('control')
 
     context['form'] = form
 
     return render(request, 'delivery/create-model.html', context)
-        
+
 
 def news_single_delete(request, pk):
     news = News.objects.get(pk=pk)
@@ -407,6 +430,37 @@ def create_vehisle(request):
         return redirect('index')
 
 
+def delete_vehisle(request, pk):
+    vehisle = Vehisle.objects.get(pk=pk)
+
+    if request.user.has_perm('delivery.delete_vehisle'):
+        vehisle.delete()
+
+    return redirect('control')
+
+
+def change_vehisle(request, pk):
+    if request.user.has_perm('delivery.change_vehisle'):
+        context = {}
+
+        vehisle = get_object_or_404(Vehisle, pk=pk)
+
+        form = CreateVehisleForm(data=request.POST or None, instance=vehisle)
+
+        if request.method == 'POST' and form.is_valid():
+            form = CreateVehisleForm(
+                request.POST, request.FILES, instance=vehisle)
+            form.save()
+
+            return redirect('control')
+
+        context['form'] = form
+
+        return render(request, 'delivery/create-model.html', context)
+    else:
+        return redirect('index')
+
+
 def create_delivery_class(request):
 
     if request.user.has_perm('delivery.add_deliveryclass'):
@@ -425,4 +479,65 @@ def create_delivery_class(request):
 
     else:
         return redirect('index')
-    
+
+
+def delete_delivery_class(request, pk):
+    delivery_class = DeliveryClass.objects.get(pk=pk)
+
+    if request.user.has_perm('delivery.delete_deliveryclass'):
+        delivery_class.delete()
+
+    return redirect('control')
+
+
+def change_delivery_class(request, pk):
+    if request.user.has_perm('delivery.change_deliveryclass'):
+        context = {}
+
+        delivery_class = get_object_or_404(DeliveryClass, pk=pk)
+
+        form = CreateDeliveryClassForm(
+            data=request.POST or None, instance=delivery_class)
+
+        if request.method == 'POST' and form.is_valid():
+            form = CreateDeliveryClassForm(
+                request.POST, request.FILES, instance=delivery_class)
+            form.save()
+
+            return redirect('control')
+
+        context['form'] = form
+
+        return render(request, 'delivery/create-model.html', context)
+    else:
+        return redirect('index')
+
+
+def show_quick_quote(request, pk):
+    if request.user.has_perm('delivery.view_quickquote'):
+        context = {}
+
+        quote_content = get_object_or_404(QuickQuote, pk=pk)
+        quote = {}
+        fields = quote_content.__dict__
+
+        for field, value in fields.items():
+            if field != '_state' and field != 'id' and field != 'user_id':
+                quote[str(field)] = value
+
+        context['quote'] = quote
+        context['quote_id'] = quote_content.pk
+
+        return render(request, 'delivery/quick-quote.html', context)
+    else:
+        return redirect('index')
+
+
+def delete_quick_quote(request, pk):
+    if request.user.has_perm('delivery.delete_quickquote'):
+        quick_quote = get_object_or_404(QuickQuote, pk=pk)
+        quick_quote.delete()
+
+        return redirect('control')
+    else:
+        return redirect('index')

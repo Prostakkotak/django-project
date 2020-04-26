@@ -14,6 +14,11 @@
     <div class="news-single__title-image"><img src="{{news_content.title_image.url}}" alt=""></div>
     <div class="news-single__title">
         {{news_content.title}}
+        {% if user.is_authenticated %}
+        {% if perms.delivery.add_news %}
+        <a href="{% url 'confirmed_proposed_news' pk=news_content.pk %}" class="news-single__confirm">Confirm</a>
+        {% endif %}
+        {% endif %}
     </div>
     <div class="news-single__views"><i class="far fa-eye"></i>{{news_content.views}}</div>
     <div class="news-single__content">

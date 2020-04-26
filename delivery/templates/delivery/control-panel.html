@@ -24,7 +24,7 @@
         </li>
         {% endif %}
         {% if perms.delivery.view_quickquote %}
-        <li class="control-panel__item" data-model-name='quick_quote'>
+        <li href="#quick_quote" class="control-panel__item" data-model-name='quick_quote'>
             Quick quotes
         </li>
         {% endif %}
@@ -54,11 +54,20 @@
                     {% for item in news_list %}
                     <li class="models-list__item">
                         <a href="{% url 'news_single' pk=item.pk %}" class="models-list__link">{{item.title}}</a>
-                        {% if perms.delivery.change_news %}
-                        <a href="{% url 'change_news' pk=item.pk %}" class="models-list__link models-list__link_change">
-                            Change
-                        </a>
-                        {% endif %}
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.change_news %}
+                            <a href="{% url 'change_news' pk=item.pk %}"
+                                class="models-list__link models-list__link_change">
+                                change
+                            </a>
+                            {% endif %}
+                            {% if perms.delivery.delete_news %}
+                            <a href="{% url 'news_single_delete' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -79,6 +88,20 @@
                     {% for item in proposed_news_list %}
                     <li class="models-list__item">
                         <a href="{% url 'proposed_news_demo' pk=item.pk %}" class="models-list__link">{{item.title}}</a>
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.add_news %}
+                            <a href="{% url 'confirmed_proposed_news' pk=item.pk %}"
+                                class="models-list__link models-list__link_confirm">
+                                confirm
+                            </a>
+                            {% endif %}
+                            {% if perms.delivery.delete_proposednews %}
+                            <a href="{% url 'delete_proposed_news' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -95,7 +118,15 @@
                 <ul class="models-list">
                     {% for item in quick_quote_list %}
                     <li class="models-list__item">
-                        <a href="#" class="models-list__link">{{item.name}}, about: {{item.subject}}</a>
+                        <a href="{% url 'show_quick_quote' pk=item.pk %}" class="models-list__link">{{item.name}}, about: {{item.subject}}</a>
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.delete_quickquote %}
+                            <a href="{% url 'delete_quick_quote' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -116,6 +147,20 @@
                     {% for item in vehisles_list %}
                     <li class="models-list__item">
                         <a href="#" class="models-list__link">{{item}}</a>
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.change_vehisle %}
+                            <a href="{% url 'change_vehisle' pk=item.pk %}"
+                                class="models-list__link models-list__link_change">
+                                change
+                            </a>
+                            {% endif %}
+                            {% if perms.delivery.delete_vehisle %}
+                            <a href="{% url 'delete_vehisle' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -136,6 +181,20 @@
                     {% for item in delivery_class_list %}
                     <li class="models-list__item">
                         <a href="#" class="models-list__link">{{item}}</a>
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.change_deliveryclass %}
+                            <a href="{% url 'change_delivery_class' pk=item.pk %}"
+                                class="models-list__link models-list__link_change">
+                                change
+                            </a>
+                            {% endif %}
+                            {% if perms.delivery.delete_deliveryclass %}
+                            <a href="{% url 'delete_delivery_class' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
