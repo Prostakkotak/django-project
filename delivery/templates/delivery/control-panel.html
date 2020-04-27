@@ -62,7 +62,7 @@
                             </a>
                             {% endif %}
                             {% if perms.delivery.delete_news %}
-                            <a href="{% url 'news_single_delete' pk=item.pk %}"
+                            <a href="{% url 'news_single_delete' pk=item.pk %}?next=control"
                                 class="models-list__link models-list__link_delete">
                                 delete
                             </a>

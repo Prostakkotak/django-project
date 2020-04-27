@@ -70,9 +70,11 @@ class NewsTag(models.Model):
 class NewsComment(models.Model):
     message = models.TextField()
     news = models.ForeignKey(
-        'News', on_delete=models.CASCADE, related_name='news_comment')
+        'News', on_delete=models.CASCADE, related_name='news_comment', null=True, blank=True)
     pub_date = models.DateTimeField(default=datetime.now(), editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    answer = models.ForeignKey('NewsComment', related_name='comment_answer', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['-pub_date', ]

@@ -1317,8 +1317,7 @@ body {
 .important-news__item {
 	position: relative;
 	margin-right: 5px;
-	width: 100%;
-	max-width: 300px;
+	width: 300px;
 	height: 150px;
 	overflow: hidden;
 }
@@ -1448,6 +1447,13 @@ body {
 	margin: 10px 0;
 	font-size: 24px;
 	text-transform: uppercase;
+}
+
+.news-single__pub-date {
+	margin: 5px 0;
+	font-size: 13px;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, .8);
 }
 
 .news-single__views {
@@ -1671,6 +1677,18 @@ body {
 	text-transform: uppercase;
 }
 
+.news-comments__input-name_cancel {
+	color: #ff0000;
+	text-decoration: underline;
+	transition: 200ms;
+}
+
+.news-comments__input-name_cancel:hover {
+	color: #000000;
+	transition: 200ms;
+	cursor: pointer;
+}
+
 .news-comments__input-block_message {
 	text-align: center;
 }
@@ -1685,23 +1703,17 @@ body {
 	text-align: center;
 }
 
+
 .news-comments__item {
 	position: relative;
+	margin-left: 5px;
 	padding: 20px 0;
-	border-top: 2px solid rgba(0, 0, 0, 0.2);
+	width: 100%;
 }
 
-.news-comments__item-delete {
-	position: absolute;
-	right: 7px;
-	top: 10px;
-	color: red;
-	transition: 200ms;
-}
-
-.news-comments__item-delete:hover {
-	color: #000000;
-	transition: 200ms;
+.news-comments__item_answer {
+	padding-left: 30px;
+	border-left: 2px solid rgba(0, 0, 0, .2);
 }
 
 .news-comments__pub-date {
@@ -1719,8 +1731,7 @@ body {
 }
 
 .news-comments__user-authority {
-	display: inline-block;
-	padding: 2px 3px;
+	padding: 1px 3px;
 	border-radius: 3px;
 	font-size: 12px;
 	text-transform: uppercase;
@@ -1748,6 +1759,10 @@ body {
 	font-size: 16px;
 }
 
+.news-comments__message_colored {
+	color: $primary-color-light-blue;
+}
+
 .news-comments__submit {
 	margin: 5px 0;
 	padding: 3px 5px;
@@ -1764,6 +1779,29 @@ body {
 	background-color: $primary-color-dark-blue;
 	transition: 200ms;
 	cursor: pointer;
+}
+
+.news-comments__extra-links {
+	margin-top: 10px;
+	padding-left: 7px;
+	font-size: 15px;
+}
+
+.news-comments__link {
+	font-size: 15px;
+	text-decoration: underline;
+	color: $primary-color-light-blue;
+	transition: 200ms;
+}
+
+.news-comments__link:hover {
+	color: #000000;
+	transition: 200ms;
+	cursor: pointer;
+}
+
+.news-comments__link_delete {
+	color: #ff0000;
 }
 
 .ordering {
@@ -2294,18 +2332,18 @@ body {
 	display: none;
 	padding: 0 20px 20px 20px;
 	background-color: rgba(0, 0, 0, 0.1);
-	transition: 0.5s;
+	transition: .7s;
 }
 
 .control-panel__block.current {
 	display: block;
 	opacity: 0;
-	transition: 0.5s;
+	transition: .7s;
 }
 
 .control-panel__block.opening {
 	opacity: 1;
-	transition: 0.5s;
+	transition: .7s;
 }
 
 .control-panel__text {

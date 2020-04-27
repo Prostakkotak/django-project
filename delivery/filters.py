@@ -22,4 +22,10 @@ class VehisleFilter(django_filters.FilterSet) :
                     'widget': forms.CheckboxInput,
                 },
             },
+            models.IntegerField: {
+                'filter_class': django_filters.RangeFilter,
+                'extra': lambda f: {
+                    'widget': forms.NumberInput(),
+                }
+            }
         }

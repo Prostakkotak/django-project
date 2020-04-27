@@ -20,6 +20,7 @@
         {% endif %}
         {% endif %}
     </div>
+    <div class="news-single__pub-date">publish date: {{news_content.pub_date}}</div>
     <div class="news-single__views"><i class="far fa-eye"></i>{{news_content.views}}</div>
     <div class="news-single__content">
         {{news_content.content|safe}}
@@ -57,10 +58,13 @@
     </ul>
 </div>
 {% endif %}
+{% for error in errors %}
+{{error}}
+{% endfor %}
 <div class="news-comments">
     <div class="news-comments__title">Comments</div>
     {% if user.is_authenticated %}
-    <form method="POST" class="news-comments__form">
+    <form method="POST" class="news-comments__form" id="comment-create-form">
         {% csrf_token %}
         <div class="news-comments__input-block news-comments__input-block_message">
             <div class="news-comments__input-name">Message</div>
@@ -77,15 +81,6 @@
     <ul class="news-comments__list">
         {% for comment in news_content.news_comment.all %}
         <li class="news-comments__item">
-            {% if perms.delivery.delete_newscomment or comment.user.pk == user.pk %}
-            {% if not comment.user|has_group:'news_admins' and not comment.user.is_superuser and not comment.user|has_group:'news_moderators' %}
-            <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
-            {% elif comment.user.pk == user.pk %}
-            <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
-            {% elif user.is_superuser %}
-            <a href="{% url 'delete_news_comment' pk=comment.pk %}" class="news-comments__item-delete">Delete</a>
-            {% endif %}
-            {% endif %}
             <div class="news-comments__pub-date">{{comment.pub_date}} by:
                 {% if user.pk == comment.user.pk %}
                 <span class="news-comments__username">
@@ -96,24 +91,96 @@
                 {% endif %}
                 </span>
                 {% if comment.user|has_group:'users' %}
-                <div class="news-comments__user-authority news-comments__user-authority_user">
+                <span class="news-comments__user-authority news-comments__user-authority_user">
                     user
-                </div>
+                </span>
                 {% elif comment.user|has_group:'news_moderators' %}
-                <div class="news-comments__user-authority news-comments__user-authority_moderator">
+                <span class="news-comments__user-authority news-comments__user-authority_moderator">
                     moderator
-                </div>
+                </span>
                 {% elif comment.user|has_group:'news_admins' %}
-                <div class="news-comments__user-authority news-comments__user-authority_admin">
+                <span class="news-comments__user-authority news-comments__user-authority_admin">
                     admin
-                </div>
+                </span>
                 {% elif comment.user.is_superuser %}
-                <div class="news-comments__user-authority news-comments__user-authority_superuser">
+                <span class="news-comments__user-authority news-comments__user-authority_superuser">
                     superuser
-                </div>
+                </span>
                 {% endif %}
             </div>
             <div class="news-comments__message">{{comment.message}}</div>
+            <div class="news-comments__extra-links">
+                {% if perms.delivery.delete_newscomment or comment.user.pk == user.pk %}
+                {% if not comment.user|has_group:'news_admins' and not comment.user.is_superuser and not comment.user|has_group:'news_moderators' %}
+                <a href="{% url 'delete_news_comment' pk=comment.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% elif comment.user.pk == user.pk %}
+                <a href="{% url 'delete_news_comment' pk=comment.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% elif user.is_superuser %}
+                <a href="{% url 'delete_news_comment' pk=comment.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% endif %}
+                {% endif %}
+
+                {% if not comment.user.pk == user.pk %}
+                <span class="news-comments__link news-comments__link_answer">
+                    <div class="news-comments__user-id" hidden>{{comment.pk}}</div>
+                    <div class="news-comments__answer-target" hidden>{{comment.user.username}}</div>
+                    answer
+                </span>
+                {% endif %}
+            </div>
+        </li>
+        {% for answer in comment.comment_answer.all %}
+        <li class="news-comments__item news-comments__item_answer">
+            <div class="news-comments__pub-date">{{answer.pub_date}} by:
+                {% if user.pk == answer.user.pk %}
+                <span class="news-comments__username">
+                    <span class="news-comments__username_light-colored">You</span> ({{user.username}})
+                </span>
+                {% else %}
+                <span class="news-comments__username">{{answer.user.username}}</span>
+                {% endif %}
+                </span>
+                {% if answer.user|has_group:'users' %}
+                <span class="news-comments__user-authority news-comments__user-authority_user">
+                    user
+                </span>
+                {% elif answer.user|has_group:'news_moderators' %}
+                <span class="news-comments__user-authority news-comments__user-authority_moderator">
+                    moderator
+                </span>
+                {% elif answer.user|has_group:'news_admins' %}
+                <span class="news-comments__user-authority news-comments__user-authority_admin">
+                    admin
+                </span>
+                {% elif answer.user.is_superuser %}
+                <span class="news-comments__user-authority news-comments__user-authority_superuser">
+                    superuser
+                </span>
+                {% endif %}
+            </div>
+            <div class="news-comments__message">
+                <span class="news-comments__message_colored">{{comment.user.username}}</span>,
+                {{answer.message}}
+            </div>
+            <div class="news-comments__extra-links">
+                {% if perms.delivery.delete_newscomment or answer.user.pk == user.pk %}
+                {% if not answer.user|has_group:'news_admins' and not answer.user.is_superuser and not answer.user|has_group:'news_moderators' %}
+                <a href="{% url 'delete_news_comment' pk=answer.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% elif answer.user.pk == user.pk %}
+                <a href="{% url 'delete_news_comment' pk=answer.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% elif user.is_superuser %}
+                <a href="{% url 'delete_news_comment' pk=answer.pk %}"
+                    class="news-comments__link news-comments__link_delete">Delete</a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
         </li>
         {% endfor %}
     </ul>

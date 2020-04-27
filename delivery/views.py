@@ -130,7 +130,12 @@ def news_single(request, pk):
     if request.method == 'POST' and news_comment_form.is_valid():
         news_comment = news_comment_form.save(commit=False)
         news_comment.user = request.user
-        news_comment.news = news_content
+        
+        if request.POST.get('answer'):
+            news_comment.answer = get_object_or_404(NewsComment, pk=int(request.POST.get('answer')))
+        else:
+            news_comment.news = news_content
+            
         news_comment.save()
 
         return redirect('news_single', pk=pk)
@@ -255,7 +260,10 @@ def news_single_delete(request, pk):
     if request.user.has_perm('delivery.delete_news') or request.user.pk == news.user.pk:
         news.delete()
 
-    return redirect('news')
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next'))
+    else:
+        return redirect('news')
 
 
 def delete_news_comment(request, pk):
