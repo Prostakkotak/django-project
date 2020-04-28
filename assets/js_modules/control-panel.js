@@ -1,3 +1,11 @@
+import deleteConfirmationPopUp from './delete-confirmation';
+
+let deleteLinksList = document.getElementsByClassName('models-list__link_delete');
+
+for (let i = 0; i < deleteLinksList.length; i++) {
+    deleteConfirmationPopUp(deleteLinksList[i], 'model');
+}
+
 let controlMenu = document.getElementById('control-panel__menu');
 
 let blockList = document.getElementsByClassName('control-panel__block'),

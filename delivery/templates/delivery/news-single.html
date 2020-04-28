@@ -62,7 +62,7 @@
 {{error}}
 {% endfor %}
 <div class="news-comments">
-    <div class="news-comments__title">Comments</div>
+    <div class="news-comments__title" id="news-comments__title">Comments</div>
     {% if user.is_authenticated %}
     <form method="POST" class="news-comments__form" id="comment-create-form">
         {% csrf_token %}
@@ -80,7 +80,9 @@
     {% endif %}
     <ul class="news-comments__list">
         {% for comment in news_content.news_comment.all %}
+        {% if comment.answer == None %}
         <li class="news-comments__item">
+            <div class="news-comments__comment-id">{{comment.pk}}</div>
             <div class="news-comments__pub-date">{{comment.pub_date}} by:
                 {% if user.pk == comment.user.pk %}
                 <span class="news-comments__username">
@@ -90,11 +92,7 @@
                 <span class="news-comments__username">{{comment.user.username}}</span>
                 {% endif %}
                 </span>
-                {% if comment.user|has_group:'users' %}
-                <span class="news-comments__user-authority news-comments__user-authority_user">
-                    user
-                </span>
-                {% elif comment.user|has_group:'news_moderators' %}
+                {% if comment.user|has_group:'news_moderators' %}
                 <span class="news-comments__user-authority news-comments__user-authority_moderator">
                     moderator
                 </span>
@@ -124,16 +122,22 @@
                 {% endif %}
 
                 {% if not comment.user.pk == user.pk %}
-                <span class="news-comments__link news-comments__link_answer">
+                <a href="#news-comments__title" class="news-comments__link news-comments__link_answer">
                     <div class="news-comments__user-id" hidden>{{comment.pk}}</div>
                     <div class="news-comments__answer-target" hidden>{{comment.user.username}}</div>
                     answer
-                </span>
+                </a>
                 {% endif %}
             </div>
+            <ul class="news-comments__answers-list"></ul>
         </li>
-        {% for answer in comment.comment_answer.all %}
-        <li class="news-comments__item news-comments__item_answer">
+        {% endif %}
+        {% endfor %}
+        {% for answer in news_content.news_comment.all %}
+        {% if not answer.answer == None %}
+        <li class="news-comments__item news-comments__item_answer hidden">
+            <div class="news-comments__answer-id">{{answer.answer.pk}}</div>
+            <div class="news-comments__comment-id">{{answer.pk}}</div>
             <div class="news-comments__pub-date">{{answer.pub_date}} by:
                 {% if user.pk == answer.user.pk %}
                 <span class="news-comments__username">
@@ -143,11 +147,7 @@
                 <span class="news-comments__username">{{answer.user.username}}</span>
                 {% endif %}
                 </span>
-                {% if answer.user|has_group:'users' %}
-                <span class="news-comments__user-authority news-comments__user-authority_user">
-                    user
-                </span>
-                {% elif answer.user|has_group:'news_moderators' %}
+                {% if answer.user|has_group:'news_moderators' %}
                 <span class="news-comments__user-authority news-comments__user-authority_moderator">
                     moderator
                 </span>
@@ -162,7 +162,6 @@
                 {% endif %}
             </div>
             <div class="news-comments__message">
-                <span class="news-comments__message_colored">{{comment.user.username}}</span>,
                 {{answer.message}}
             </div>
             <div class="news-comments__extra-links">
@@ -178,10 +177,18 @@
                     class="news-comments__link news-comments__link_delete">Delete</a>
                 {% endif %}
                 {% endif %}
+
+                {% if not answer.user.pk == user.pk %}
+                <a href="#news-comments__title" class="news-comments__link news-comments__link_answer">
+                    <div class="news-comments__user-id" hidden>{{answer.pk}}</div>
+                    <div class="news-comments__answer-target" hidden>{{answer.user.username}}</div>
+                    answer
+                </a>
+                {% endif %}
             </div>
+            <ul class="news-comments__answers-list"></ul>
         </li>
-        {% endfor %}
-        </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>

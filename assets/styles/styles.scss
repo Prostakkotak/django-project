@@ -1703,17 +1703,24 @@ body {
 	text-align: center;
 }
 
+.news-comments__answers-list {
+	padding-left: 30px;
+	border-left: 2px solid rgba(0, 0, 0, .2);
+}
 
 .news-comments__item {
 	position: relative;
 	margin-left: 5px;
-	padding: 20px 0;
+	margin: 20px 0;
 	width: 100%;
 }
 
 .news-comments__item_answer {
-	padding-left: 30px;
-	border-left: 2px solid rgba(0, 0, 0, .2);
+	padding-top: 5px;
+}
+
+.news-comments__item_answer.hidden {
+	display: none;
 }
 
 .news-comments__pub-date {
@@ -1759,8 +1766,9 @@ body {
 	font-size: 16px;
 }
 
-.news-comments__message_colored {
-	color: $primary-color-light-blue;
+.news-comments__answer-id,
+.news-comments__comment-id {
+	display: none;
 }
 
 .news-comments__submit {
@@ -3363,6 +3371,10 @@ body {
 		display: block;
 		text-align: center;
 		height: auto;
+	}
+
+	.news-comments__answers-list {
+		padding-left: 15px;
 	}
 }
 

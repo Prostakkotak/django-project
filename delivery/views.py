@@ -133,8 +133,8 @@ def news_single(request, pk):
         
         if request.POST.get('answer'):
             news_comment.answer = get_object_or_404(NewsComment, pk=int(request.POST.get('answer')))
-        else:
-            news_comment.news = news_content
+            
+        news_comment.news = news_content
             
         news_comment.save()
 
@@ -260,8 +260,10 @@ def news_single_delete(request, pk):
     if request.user.has_perm('delivery.delete_news') or request.user.pk == news.user.pk:
         news.delete()
 
-    if request.GET.get('next'):
-        return redirect(request.GET.get('next'))
+        if request.GET.get('next'):
+            return redirect(request.GET.get('next'))
+        else:
+            return redirect('news')
     else:
         return redirect('news')
 

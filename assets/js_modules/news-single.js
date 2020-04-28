@@ -2,10 +2,31 @@ import deleteConfirmationPopUp from './delete-confirmation';
 
 deleteConfirmationPopUp(document.getElementById('delete-pop-up__link_news'), 'news');
 
-let comments = document.getElementsByClassName('news-comments__link_delete');
 
-for (let i = 0; i < comments.length; i++) {
-    deleteConfirmationPopUp(comments[i], 'comment');
+let commentsList = document.getElementsByClassName('news-comments__item'),
+    answersList = document.getElementsByClassName('news-comments__item_answer');
+
+for (let i = 0; i < answersList.length; i++) {
+    answersList[i].classList.remove('hidden');
+    let tempAnswer = answersList[i].cloneNode(true);
+
+    for (let k = 0; k < commentsList.length; k++) {
+        if (
+            commentsList[k].getElementsByClassName('news-comments__comment-id')[0].textContent ==
+            answersList[i].getElementsByClassName('news-comments__answer-id')[0].textContent
+        ) {
+            answersList[i].remove();
+            commentsList[k].getElementsByClassName('news-comments__answers-list')[0].appendChild(tempAnswer);
+            commentsList = document.getElementsByClassName('news-comments__item');
+            break;
+        }
+    }
+}
+
+let commentsDeleteLinks = document.getElementsByClassName('news-comments__link_delete');
+
+for (let i = 0; i < commentsDeleteLinks.length; i++) {
+    deleteConfirmationPopUp(commentsDeleteLinks[i], 'comment');
 }
 
 let commentCreationForm = document.getElementById('comment-create-form'),

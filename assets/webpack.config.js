@@ -52,7 +52,10 @@ module.exports = {
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
-            proxy: 'http://localhost:8000'
+            proxy: 'http://localhost:8000',
+        },
+        {
+            injectCss: true
         })
     ],
     optimization: {

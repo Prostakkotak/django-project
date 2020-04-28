@@ -1,5 +1,5 @@
 import createSlider from './slider';
-import connectTagsButton from './tags'
+import connectTagsButton from './tags';
 
 let tags = {
     tagsOpenButton: document.getElementById('tags__open-button'),
