@@ -10,10 +10,6 @@ class VehisleFilter(django_filters.FilterSet) :
             'can_be_booked',
             'delivery_method',
             'status',
-            'price_per_use',
-            'price_per_km',
-            'maximum_load',
-            'cargo_volume',
         ]
         filter_overrides = {
             models.BooleanField: {

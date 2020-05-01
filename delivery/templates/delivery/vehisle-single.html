@@ -1,0 +1,80 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %} <title>{{vehisle.model}}</title> {% endblock %}
+
+{% block content %}
+
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="vehisle-single">
+    {% if vehisle.photo != 'photo' %}
+    <div class="vehisle-single__image">
+        <img src="{{vehisle.photo.url}}">
+    </div>
+    {% endif %}
+    <div class="vehisle-single__model">{{vehisle.model}}</div>
+    <ul class="vehisle-single__characteristics">
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">kind of vehisle</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.kind_of_vehisle}}</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">can be booked?</span>
+            <span class="vehisle-single__characteristic-value">
+                {% if vehisle.can_be_booked == True %}
+                Yes
+                {% elif vehisle.can_be_booked == False %}
+                No
+                {% endif %}
+            </span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">delivery method</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.delivery_method}}</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">status</span>
+            <span class="vehisle-single__characteristic-value">
+                {% if vehisle.status == 'a' %}
+                avaible
+                {% elif vehisle.status == 'u' %}
+                Unavailable
+                {% elif vehisle.status == 'm' %}
+                Maintenance
+                {% elif vehisle.status == 'b' %}
+                Booked
+                {% endif %}
+            </span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">price per use</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.price_per_use}}$</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">price per km</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.price_per_km}}$</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">km per day</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.km_per_day}}km</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">maximum load</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.maximum_load}}kg</span>
+        </li>
+        <li class="vehisle-single__characteristic">
+            <span class="vehisle-single__characteristic-name">cargo volume</span>
+            <span class="vehisle-single__characteristic-value">{{vehisle.cargo_volume}}M<span
+                    class="vehisles__text_degree">3</span></span>
+        </li>
+    </ul>
+</div>
+
+
+<script src="{% static 'vehisle_single.bundle.js' %}"></script>
+{% endblock %}

@@ -11,6 +11,7 @@ module.exports = {
         news: ['@js_modules/news.js', '@js_modules/header.js'],
         news_single: ['@js_modules/header.js', '@js_modules/news-single.js'],
         vehisles: ['@js_modules/vehisles.js', '@js_modules/header.js'],
+        vehisle_single: '@js_modules/header.js',
         login: '@js_modules/header.js',
         control_panel: ['@js_modules/header.js', '@js_modules/control-panel.js'],
         create_news: '@js_modules/header.js',

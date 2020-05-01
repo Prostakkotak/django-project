@@ -10,7 +10,7 @@ for (let i = 0; i < answersList.length; i++) {
     answersList[i].classList.remove('hidden');
     let tempAnswer = answersList[i].cloneNode(true);
 
-    for (let k = 0; k < commentsList.length; k++) {
+    for (let k = 0; k < commentsList.length - 1; k++) {
         if (
             commentsList[k].getElementsByClassName('news-comments__comment-id')[0].textContent ==
             answersList[i].getElementsByClassName('news-comments__answer-id')[0].textContent

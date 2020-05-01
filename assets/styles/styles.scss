@@ -1453,7 +1453,7 @@ body {
 	margin: 5px 0;
 	font-size: 13px;
 	text-transform: uppercase;
-	color: rgba(0, 0, 0, .8);
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .news-single__views {
@@ -1705,7 +1705,7 @@ body {
 
 .news-comments__answers-list {
 	padding-left: 30px;
-	border-left: 2px solid rgba(0, 0, 0, .2);
+	border-left: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .news-comments__item {
@@ -2077,6 +2077,7 @@ body {
 
 	input,
 	select {
+		padding: 3px;
 		border-radius: 2px;
 		border: 1px solid $primary-color-light-blue;
 	}
@@ -2340,18 +2341,18 @@ body {
 	display: none;
 	padding: 0 20px 20px 20px;
 	background-color: rgba(0, 0, 0, 0.1);
-	transition: .7s;
+	transition: 0.7s;
 }
 
 .control-panel__block.current {
 	display: block;
 	opacity: 0;
-	transition: .7s;
+	transition: 0.7s;
 }
 
 .control-panel__block.opening {
 	opacity: 1;
-	transition: .7s;
+	transition: 0.7s;
 }
 
 .control-panel__text {
@@ -2464,7 +2465,7 @@ body {
 
 	.models-list__link {
 		margin-left: 5px;
-		font-size: .8em;
+		font-size: 0.8em;
 		text-transform: uppercase;
 	}
 }
@@ -2529,6 +2530,15 @@ body {
 	font-family: $montserrat-bold-font;
 	font-size: 14px;
 	text-transform: uppercase;
+	text-decoration: none;
+	color: #000000;
+	transition: 200ms;
+}
+
+.vehisles__model:hover {
+	text-decoration: underline;
+	color: rgba(0, 0, 0, 0.5);
+	transition: 200ms;
 }
 
 .vehisles__type {
@@ -2538,6 +2548,57 @@ body {
 
 .vehisles__extra-info {
 	margin-top: 10px;
+}
+
+.vehisle-single {
+	max-width: 1336px;
+	margin: 30px auto;
+	padding: 0 5px;
+}
+
+.vehisle-single__image {
+	width: 100%;
+	overflow: hidden;
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+}
+
+.vehisle-single__model {
+	margin: 5px 0;
+	font-family: $montserrat-bold-font;
+	font-size: 18px;
+	text-align: center;
+}
+
+.vehisle-single__characteristics {
+	margin: 10px 0;
+}
+
+.vehisle-single__characteristic {
+	display: flex;
+	align-items: center;
+	border-top: 1px solid #000000;
+}
+
+.vehisle-single__characteristic-name {
+	display: inline-block;
+	width: 50%;
+	padding: 5px 0;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.vehisle-single__characteristic-value {
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+}
+
+.vehisle-single__characteristic:last-child {
+	border-bottom: 1px solid #000000;
 }
 
 .pagination {
@@ -3273,6 +3334,16 @@ body {
 
 	.control-panel__list {
 		max-width: 100%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.filters__filter-container {
+		.filters__input-from,
+		.filters__input-to {
+			margin: 5px 0;
+			display: block;
+		}
 	}
 }
 

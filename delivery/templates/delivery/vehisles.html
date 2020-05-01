@@ -23,16 +23,24 @@
             <span class="filters__text">Status</span>{{filters.form.status}}
         </div>
         <div class="filters__filter-container">
-            <span class="filters__text">Price per use</span>{{filters.form.price_per_use}}
+            <span class="filters__text">Price per use($): </span>
+            <span class="filters__input-from">from <input type="number" name="price_per_use_from" value="0"></span>
+            <span class="filters__input-to">to <input type="number" name="price_per_use_to" value="{{price_per_use_max}}"></span>
         </div>
         <div class="filters__filter-container">
-            <span class="filters__text">Price per km</span>{{filters.form.price_per_km}}
+            <span class="filters__text">Price per km($): </span>
+            <span class="filters__input-from">from <input type="number" name="price_per_km_from" value="0"></span>
+            <span class="filters__input-to">to <input type="number" name="price_per_km_to" value="{{price_per_km_max}}"></span>
         </div>
         <div class="filters__filter-container">
-            <span class="filters__text">Maximum load</span>{{filters.form.maximum_load}}
+            <span class="filters__text">Maximum load(kg): </span>
+            <span class="filters__input-from">from <input type="number" name="maximum_load_from" value="0"></span>
+            <span class="filters__input-to">to <input type="number" name="maximum_load_to" value="{{maximum_load_max}}"></span>
         </div>
         <div class="filters__filter-container">
-            <span class="filters__text">Cargo volume</span>{{filters.form.cargo_volume}}
+            <span class="filters__text">Cargo volume(M<span class="vehisles__text_degree">3</span>): </span>
+            <span class="filters__input-from">from <input type="number" name="cargo_volume_from" value="0"></span>
+            <span class="filters__input-to">to <input type="number" name="cargo_volume_to" value="{{cargo_volume_max}}"></span>
         </div>
         <div class="ordering">
             <div class="ordering__header">Sort by:</div>
@@ -75,7 +83,7 @@
             <img src="{{vehisle.photo.url}}" class="vehisles__image">
             {% endif %}
             <div class="vehisles__text-container">
-                <div class="vehisles__model">{{vehisle.model}}</div>
+                <a href="{% url 'vehisle_single' pk=vehisle.pk %}" class="vehisles__model">{{vehisle.model}}</a>
                 <div class="vehisles__type">{{vehisle.kind_of_vehisle}}</div>
                 {% if vehisle.photo == 'photo' %}
                 <div class="vehisles__extra-info">

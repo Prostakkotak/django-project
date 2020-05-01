@@ -130,12 +130,13 @@ def news_single(request, pk):
     if request.method == 'POST' and news_comment_form.is_valid():
         news_comment = news_comment_form.save(commit=False)
         news_comment.user = request.user
-        
+
         if request.POST.get('answer'):
-            news_comment.answer = get_object_or_404(NewsComment, pk=int(request.POST.get('answer')))
-            
+            news_comment.answer = get_object_or_404(
+                NewsComment, pk=int(request.POST.get('answer')))
+
         news_comment.news = news_content
-            
+
         news_comment.save()
 
         return redirect('news_single', pk=pk)
@@ -317,7 +318,7 @@ def news(request):
     important_news_list = News.objects.filter(
         important_status=True,
         pub_date__range=[  # Выводятся новости только за последние 7 дней
-            timezone.now() - timezone.timedelta(days=7), timezone.now() + \
+            timezone.now() - timezone.timedelta(days=7), timezone.now() +
             timezone.timedelta(days=1)
         ]
     )
@@ -362,10 +363,52 @@ def vehisles(request):
         'cargo_volume': 'cargo volume',
     }
 
+    price_per_use_max = 0
+    price_per_km_max = 0
+    maximum_load_max = 0
+    cargo_volume_max = 0
+
+    for item in Vehisle.objects.all():
+        if item.price_per_use > price_per_use_max:
+            price_per_use_max = item.price_per_use
+        if item.price_per_km > price_per_km_max:
+            price_per_km_max = item.price_per_km
+        if item.maximum_load > maximum_load_max:
+            maximum_load_max = item.maximum_load
+        if item.cargo_volume > cargo_volume_max:
+            cargo_volume_max = item.cargo_volume
+
+    
+    context.update({
+        'price_per_use_max': price_per_use_max,
+        'price_per_km_max': price_per_km_max,
+        'maximum_load_max': maximum_load_max,
+        'cargo_volume_max': cargo_volume_max,
+    })
+
+
     if request.GET.get('filters_status') == 'on':
+        vehisles_list = Vehisle.objects.filter(
+            price_per_use__range=[
+                request.GET.get('price_per_use_from'),
+                request.GET.get('price_per_use_to')
+            ],
+            price_per_km__range=[
+                request.GET.get('price_per_km_from'),
+                request.GET.get('price_per_km_to')
+            ],
+            maximum_load__range=[
+                request.GET.get('maximum_load_from'),
+                request.GET.get('maximum_load_to')
+            ],
+            cargo_volume__range=[
+                request.GET.get('cargo_volume_from'),
+                request.GET.get('cargo_volume_to')
+            ]
+        ).order_by(*ordering(request, ordering_obj))
+
         filters = VehisleFilter(
-            request.GET, queryset=Vehisle.objects.all().order_by(
-                *ordering(request, ordering_obj))
+            request.GET, queryset=vehisles_list
         )
 
         try:
@@ -418,6 +461,16 @@ def vehisles(request):
     })
 
     return render(request, 'delivery/vehisles.html', context)
+
+
+def vehisle_single(request, pk):
+    vehisle = get_object_or_404(Vehisle, pk=pk)
+
+    context = {
+        'vehisle': vehisle,
+    }
+
+    return render(request, 'delivery/vehisle-single.html', context)
 
 
 def create_vehisle(request):
