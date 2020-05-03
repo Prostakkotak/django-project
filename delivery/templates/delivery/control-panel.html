@@ -38,6 +38,11 @@
             Delivery classes
         </li>
         {% endif %}
+        {% if perms.delivery.view_deliveryorder %}
+        <li class="control-panel__item" data-model-name="delivery_order">
+            Delivery orders
+        </li>
+        {% endif %}
     </ul>
     <ul class="control-panel__block-list" id="control-panel__block-list">
         {% if perms.delivery.view_news %}
@@ -146,7 +151,7 @@
                 <ul class="models-list">
                     {% for item in vehisles_list %}
                     <li class="models-list__item">
-                        <a href="#" class="models-list__link">{{item}}</a>
+                        <a href="{% url 'vehisle_single' pk=item.pk %}" class="models-list__link">{{item}}</a>
                         <div class="models-list__extra-links">
                             {% if perms.delivery.change_vehisle %}
                             <a href="{% url 'change_vehisle' pk=item.pk %}"
@@ -190,6 +195,34 @@
                             {% endif %}
                             {% if perms.delivery.delete_deliveryclass %}
                             <a href="{% url 'delete_delivery_class' pk=item.pk %}"
+                                class="models-list__link models-list__link_delete">
+                                delete
+                            </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        {% if perms.delivery.view_deliveryorder %}
+        <li data-model-name="delivery_order" class="control-panel__block control-panel__news-control">
+            <div class="control-panel__header">Delivery orders</div>
+            <div class="news-control">
+                <div class="control-panel__text">Total orders: {{delivery_order_count}}</div>
+                {% if perms.delivery.add_deliveryorder %}
+                <a href="{% url 'delivery_order' %}" class="control-panel__create-button">Create delivery order</a>
+                {% endif %}
+                <div class="models-list__header">Delivery orders list <div class="models-list__button">&lt;</div>
+                </div>
+                <ul class="models-list">
+                    {% for item in delivery_order_list %}
+                    <li class="models-list__item">
+                        <a href="{% url 'show_delivery_order' pk=item.pk %}" class="models-list__link">{{item}}</a>
+                        <div class="models-list__extra-links">
+                            {% if perms.delivery.delete_deliveryorder %}
+                            <a href="{% url 'delete_delivery_order' pk=item.pk %}"
                                 class="models-list__link models-list__link_delete">
                                 delete
                             </a>

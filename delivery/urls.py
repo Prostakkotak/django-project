@@ -4,8 +4,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<method>', views.delivery_method, name='delivery_method'),
     path('news/', views.news, name='news'),
+    path('delivery_order/', views.delivery_order, name='delivery_order'),
+    path('control/delete_delivery_order/<pk>/', views.delete_delivery_order, name='delete_delivery_order'),
+    path('control/show_delivery_order/<pk>/', views.show_delivery_order, name='show_delivery_order'),
     path('news_single/<pk>/', views.news_single, name='news_single'),
     path('news_single_delete/<pk>/', views.news_single_delete, name='news_single_delete'),
     path('offer_news/', views.offer_news, name='offer_news'),

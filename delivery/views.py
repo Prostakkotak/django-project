@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, Http404, redirect
-from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment, ProposedNews
+from .models import Vehisle, DeliveryClass, News, QuickQuote, NewsTag, NewsComment, ProposedNews, DeliveryOrder
 from .forms import QuickQuoteForm, NewsCommentForm, NewsProposeForm, CreateNewsForm, CreateDeliveryClassForm, CreateVehisleForm
 from .filters import VehisleFilter
 from .ordering import ordering
@@ -30,6 +30,7 @@ def index(request):
             без этого при каждом обновлении страницы тип запроса будет POST,
             что приведет к отправке формы при каждом обновлении
             '''
+
             return redirect('index')
         else:
             return redirect('index')
@@ -44,8 +45,114 @@ def index(request):
     })
 
 
-def return_button(request, path):
-    return redirect(path)
+def delivery_order(request):
+    if request.user.has_perm('delivery.add_deliveryorder'):
+        context = {}
+
+        maximum_load_max = 0
+        cargo_volume_max = 0
+
+        for item in Vehisle.objects.all():
+            if item.maximum_load > maximum_load_max:
+                maximum_load_max = item.maximum_load
+            if item.cargo_volume > cargo_volume_max:
+                cargo_volume_max = item.cargo_volume
+
+        if request.GET.get('confirmation') == 'on':
+            choosed_vehisle = Vehisle.objects.get(
+                pk=request.GET.get('vehisle'))
+            choosed_delivery_class = DeliveryClass.objects.get(
+                pk=request.GET.get('delivery_class'))
+
+            delivery_request = DeliveryOrder()
+            delivery_request.user = request.user
+            delivery_request.cost = choosed_delivery_class.price_multiplier * ((int(request.GET.get('path_length')) *
+                                                                                choosed_vehisle.price_per_km) + choosed_vehisle.price_per_use)
+
+            delivery_request.package_volume = request.GET.get('package_volume')
+            delivery_request.package_weight = request.GET.get('package_weight')
+            delivery_request.path_length = request.GET.get('path_length')
+
+            delivery_request.vehisle = choosed_vehisle
+            delivery_request.delivery_class = choosed_delivery_class
+
+            delivery_request.save()
+
+            return redirect('index')
+
+        elif request.GET.get('check_conditions') == 'on':
+            choosed_vehisle = Vehisle.objects.get(
+                pk=request.GET.get('vehisle'))
+            choosed_delivery_class = DeliveryClass.objects.get(
+                pk=request.GET.get('delivery_class'))
+
+            delivery_cost = choosed_delivery_class.price_multiplier * ((int(request.GET.get('path_length')) *
+                                                                        choosed_vehisle.price_per_km) + choosed_vehisle.price_per_use)
+
+            context.update({
+                'choosed_vehisle': choosed_vehisle.model,
+                'choosed_delivery_class': choosed_delivery_class.delivery_class,
+                'delivery_cost': delivery_cost,
+            })
+
+        elif request.GET.get('delivery_info') == 'exists':
+            vehisles_list = Vehisle.objects.filter(
+                delivery_method=request.GET.get('delivery_method'),
+                maximum_load__range=[
+                    request.GET.get('package_weight'), maximum_load_max
+                ],
+                cargo_volume__range=[
+                    request.GET.get('package_volume'), cargo_volume_max
+                ],
+                status='a'
+            )
+
+            if len(vehisles_list) != 0:
+                context['vehisles_list'] = vehisles_list
+
+                context['price_multiplier'] = DeliveryClass.objects.get(
+                    pk=request.GET.get('delivery_class')).price_multiplier
+
+            else:
+                context['error_msg'] = 'Sorry, no vehisles were found by your request'
+
+        context.update({
+            'delivery_class_list': DeliveryClass.objects.all(),
+        })
+
+        return render(request, 'delivery/delivery-order.html', context)
+    else:
+        return redirect('index')
+
+
+def delete_delivery_order(request, pk):
+    if request.user.has_perm('delivery.delete_deliveryorder'):
+        delivery_order = get_object_or_404(DeliveryOrder, pk=pk)
+        delivery_order.delete()
+
+        return redirect('control')
+
+
+def show_delivery_order(request, pk):
+    if request.user.has_perm('delivery.view_deliveryorder'):
+        context = {}
+
+        delivery_order = get_object_or_404(DeliveryOrder, pk=pk)
+        model_info = {}
+        fields = delivery_order.__dict__
+
+        for field, value in fields.items():
+            if field != '_state' and field != 'id' and field != 'user_id':
+                model_info[str(field)] = value
+
+        context['model_info'] = model_info
+        context['model_id'] = delivery_order.pk
+        context['model_type'] = 'delivery_order'
+
+        return render(request, 'delivery/model-info.html', context)
+    else:
+        return redirect('index')
+
 
 
 def control(request):
@@ -60,6 +167,8 @@ def control(request):
         'vehisles_list': Vehisle.objects.all(),
         'delivery_class_count': DeliveryClass.objects.all().count(),
         'delivery_class_list': DeliveryClass.objects.all(),
+        'delivery_order_list': DeliveryOrder.objects.all(),
+        'delivery_order_count': DeliveryOrder.objects.all().count(),
     }
 
     return render(request, 'delivery/control-panel.html', context)
@@ -89,24 +198,6 @@ def registration(request):
 
     return render(request, 'registration/registration.html', context={
         'form': form,
-    })
-
-
-def delivery_method(request, method):
-
-    vehisle_list = Vehisle.objects.all()
-    delivery_class_list = DeliveryClass.objects.all()
-
-    if (method == 'ground'):  # Method это метод доставки, для каждого типа доставки своя страница и шаблон
-        htmlPath = 'delivery/ground-delivery.html'
-    elif (method == 'air'):
-        htmlPath = 'delivery/air-delivery.html'
-    elif (method == 'sea'):
-        htmlPath = 'delivery/sea-delivery.html'
-
-    return render(request, htmlPath, context={
-        'vehisle_list': vehisle_list,
-        'delivery_class_list': delivery_class_list,
     })
 
 
@@ -378,14 +469,12 @@ def vehisles(request):
         if item.cargo_volume > cargo_volume_max:
             cargo_volume_max = item.cargo_volume
 
-    
     context.update({
         'price_per_use_max': price_per_use_max,
         'price_per_km_max': price_per_km_max,
         'maximum_load_max': maximum_load_max,
         'cargo_volume_max': cargo_volume_max,
     })
-
 
     if request.GET.get('filters_status') == 'on':
         vehisles_list = Vehisle.objects.filter(
@@ -588,10 +677,11 @@ def show_quick_quote(request, pk):
             if field != '_state' and field != 'id' and field != 'user_id':
                 quote[str(field)] = value
 
-        context['quote'] = quote
-        context['quote_id'] = quote_content.pk
+        context['model_info'] = quote
+        context['model_id'] = quote_content.pk
+        context['model_type'] = 'quick_quote'
 
-        return render(request, 'delivery/quick-quote.html', context)
+        return render(request, 'delivery/model-info.html', context)
     else:
         return redirect('index')
 

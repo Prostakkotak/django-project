@@ -46,12 +46,15 @@ class Vehisle(models.Model):
     price_per_use = models.IntegerField(default=100)
     price_per_km = models.IntegerField(default=20)
     km_per_day = models.PositiveSmallIntegerField(
-        help_text='How much transport does it cover kilometers per day', default=50)
+        help_text='How much transport does it cover kilometers per day', default=50
+    )
 
     maximum_load = models.IntegerField(
-        help_text='Enter maximum load in kilogramms', default=1000)
+        help_text='Enter maximum load in kilogramms', default=1000
+    )
     cargo_volume = models.IntegerField(
-        help_text='Enter cargo volume in cubic meter', default=10)
+        help_text='Enter cargo volume in cubic meter', default=10
+    )
 
     class Meta:
         ordering = ['price_per_use', 'maximum_load', 'cargo_volume']
@@ -122,6 +125,19 @@ class ProposedNews(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class DeliveryOrder(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    package_weight = models.IntegerField()
+    package_volume = models.IntegerField()
+    path_length = models.IntegerField()
+    delivery_class = models.ForeignKey(DeliveryClass, on_delete=models.CASCADE, null=True, blank=True)
+    vehisle = models.ForeignKey(Vehisle, on_delete=models.CASCADE, null=True, blank=True)
+    cost = models.FloatField()
+
+    def __str__(self):
+        return 'Delivery order from ' + self.user.username
 
 
 class QuickQuote(models.Model):

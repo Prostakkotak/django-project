@@ -9,13 +9,14 @@ module.exports = {
     entry: {
         index: ['@js_modules/index.js', '@js_modules/header.js'],
         news: ['@js_modules/news.js', '@js_modules/header.js'],
+        delivery_order: ['@js_modules/header.js', '@js_modules/order-delivery.js'],
         news_single: ['@js_modules/header.js', '@js_modules/news-single.js'],
         vehisles: ['@js_modules/vehisles.js', '@js_modules/header.js'],
         vehisle_single: '@js_modules/header.js',
         login: '@js_modules/header.js',
         control_panel: ['@js_modules/header.js', '@js_modules/control-panel.js'],
         create_news: '@js_modules/header.js',
-        quick_quote: '@js_modules/header.js',
+        model_info: '@js_modules/header.js',
         styles: '@styles/styles.scss',
     },
     output: {

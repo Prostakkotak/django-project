@@ -1,0 +1,36 @@
+{% extends 'delivery/base-generation.html' %}
+{% load static %}
+
+
+{% block title %} <title>Question</title> {% endblock %}
+
+{% block content %}
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="model-info">
+    {% for field, value in model_info.items %}
+    <div class="model-info__text-block">
+        <div class="model-info__header">
+            {{field}}:
+        </div>
+        <div class="model-info__text">
+            {{value}}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="model-info__delete">
+        {% if model_type == 'quick_quote' %}
+        <a href="{% url 'delete_quick_quote' pk=model_id %}" class="model-info__button model-info__button_delete">
+            delete
+        </a>
+        {% elif model_type == 'delivery_order' %}
+        <a href="{% url 'delete_delivery_order' pk=model_id %}" class="model-info__button model-info__button_delete">
+            delete
+        </a>
+        {% endif %}
+    </div>
+</div>
+<script src="{% static 'model_info.bundle.js' %}"></script>
+{% endblock %}

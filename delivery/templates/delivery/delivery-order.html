@@ -1,0 +1,123 @@
+{% extends 'delivery/base-generation.html' %}
+
+{% load static %}
+{% load custom_template_tags %}
+
+{% block title %} <title>Order delivery</title> {% endblock %}
+
+{% block content %}
+
+<div class="previous-page-button">
+    <a href="#" onclick="javascript: history.go(-1)" class="previous-page-button__button">&lt; Previous page</a>
+</div>
+
+<div class="order-delivery">
+    {% if choosed_vehisle %}
+    <div class="order-delivery__title">(Step 3) Confirm your delivery request</div>
+    <div class="order-confirmation order-delivery__order-confirmation">
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Vehisle:</span>
+            {{choosed_vehisle}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Delivery class:</span>
+            {{choosed_delivery_class}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Delivery method:</span>
+            {{request.GET.delivery_method}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Package volume:</span>
+            {{request.GET.package_weight}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Package volume:</span>
+            {{request.GET.package_volume}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Path length:</span>
+            {{request.GET.path_length}}
+        </div>
+        <div class="order-confirmation__item">
+            <span class="order-confirmation__item-name">Cost:</span>
+            {{delivery_cost}}$
+        </div>
+
+        <a href="{% url 'delivery_order' %}?confirmation=on{% for key, value in request.GET.items %}&{{key}}={{value}}{% endfor %}"
+            class="order-confirmation__button order-confirmation__button_confirm">Confirm</a>
+        <a href="{% url 'delivery_order' %}" class="order-confirmation__button order-confirmation__button_cancel">Cancel</a>
+    </div>
+
+    {% elif vehisles_list %}
+    <div class="order-delivery__title">(Step 2)Choose vehisle for delivery</div>
+    <div id="order-delivery__price-multiplier" hidden>{{price_multiplier}}</div>
+    <div id="order-delivery__path-length" hidden>{{request.GET.path_length}}</div>
+    <ul class="order-delivery__vehisles-list">
+        {% for vehisle in vehisles_list %}
+        <li class="order-delivery__vehisle">
+            {% if not vehisle.photo == 'photo' %}
+            <div class="order-delivery__vehisle-image">
+                <img src="{{vehisle.photo.url}}" alt="">
+            </div>
+            {% endif %}
+            <a href="{% url 'vehisle_single' pk=vehisle.pk %}"
+                class="order-delivery__vehisle-model">{{vehisle.model}}</a>
+            <div class="order-delivery__price-per-km" hidden>{{vehisle.price_per_km}}</div>
+            <div class="order-delivery__price-per-use" hidden>{{vehisle.price_per_use}}</div>
+            <div class="order-delivery__vehisle-text">It will cost:</div>
+            <div class="order-delivery__delivery-cost"></div>
+            <a href="{% url 'delivery_order' %}?vehisle={{vehisle.pk}}&check_conditions=on{% for key, value in request.GET.items %}&{{key}}={{value}}{% endfor %}"
+                class="order-delivery__choose-vehisle-link">Choose this</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% elif error_msg %}
+    <div class="order-delivery__title">{{error_msg}}</div>
+    <div class="order-delivery__return-button-wrapper">
+        <a href="{% url 'delivery_order' %}" class="order-delivery__return-button">Return to step 1</a>
+    </div>
+    {% else %}
+    <div class="order-delivery__title">(Step 1) Enter your package info and choose delivery class</div>
+    <form method="GET" class="order-delivery__form">
+        <input type="text" name="delivery_info" value="exists" hidden>
+        <div class="order-delivery__input-block">
+            <span class="order-delivery__label">Your package weight(kg)</span>
+            <input required type="number" class="order-delivery__input" name="package_weight">
+        </div>
+        <div class="order-delivery__input-block">
+            <span class="order-delivery__label">Your package volume(M<span
+                    class="vehisles__text_degree">3</span>)</span>
+            <input required type="number" class="order-delivery__input" name="package_volume">
+        </div>
+        <div class="order-delivery__input-block">
+            <span class="order-delivery__label">Path length(km)</span>
+            <input required type="number" class="order-delivery__input" name="path_length">
+        </div>
+        <div class="order-delivery__input-block">
+            <span class="order-delivery__label">Delivery class</span>
+            <select required name="delivery_class" class="order-delivery__select">
+                {% for class in delivery_class_list %}
+                <option class="order-delivery__option" value="{{class.pk}}">
+                    {{class.delivery_class}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="order-delivery__input-block">
+            <span class="order-delivery__label">Delivery method</span>
+            <select required name="delivery_method" class="order-delivery__select">
+                <option value="ground" class="order-delivery__option">Ground</option>
+                <option value="sea" class="order-delivery__option">Sea</option>
+                <option value="air" class="order-delivery__option">Air</option>
+            </select>
+        </div>
+        <div class="order-delivery__input-block_submit">
+            <input type="submit" class="order-delivery__submit">
+        </div>
+    </form>
+    {% endif %}
+</div>
+
+<script src="{% static 'delivery_order.bundle.js' %}"></script>
+{% endblock %}
