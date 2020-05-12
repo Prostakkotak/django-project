@@ -27,7 +27,7 @@
     </div>
     {% if user.is_authenticated %}
     {% if perms.delivery.delete_news or user.pk == news_content.user.pk %}
-    <a href="{% url 'news_single_delete' pk=news_content.pk %}" id="delete-pop-up__link_news"
+    <a href="{% url 'news_single_delete' pk=news_content.pk %}?next=news" id="delete-pop-up__link_news"
         class="news-single__delete">Delete this news</a>
     {% endif %}
     {% endif %}

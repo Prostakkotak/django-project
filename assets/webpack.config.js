@@ -7,10 +7,10 @@ const path = require('path'),
 module.exports = {
     mode: 'development',
     entry: {
-        index: ['@js_modules/index.js', '@js_modules/header.js'],
+        index: ['@js_modules/index.js', '@js_modules/header.js', '@js_modules/messages.js'],
         news: ['@js_modules/news.js', '@js_modules/header.js'],
         delivery_order: ['@js_modules/header.js', '@js_modules/order-delivery.js'],
-        news_single: ['@js_modules/header.js', '@js_modules/news-single.js'],
+        news_single: ['@js_modules/header.js', '@js_modules/news-single.js', '@js_modules/messages.js'],
         vehisles: ['@js_modules/vehisles.js', '@js_modules/header.js'],
         vehisle_single: '@js_modules/header.js',
         login: '@js_modules/header.js',

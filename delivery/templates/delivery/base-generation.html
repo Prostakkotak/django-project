@@ -15,8 +15,16 @@
 
 <body>
     <div class="wrapper">
-
+        
         {% block sidebar %}
+        {% if messages %}
+        <ul class="messages" id="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="messages__message messages__message_{{ message.tags }} " {% endif %}>
+                {{ message }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <header id="header" class="header header_news">
             <div class="logo">
                 <img src="{% static 'images/logo.png' %}" alt="Logo">
